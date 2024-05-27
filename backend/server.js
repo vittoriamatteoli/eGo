@@ -22,8 +22,17 @@ app.use(express.json())
 
 // Start defining your routes here
 
-app.get("/", (req, res) => {
-  res.send("Hello Technigo!")
+app.get("/user", (req, res) => {
+  res.send("Endpoint to get user details from DB!")
+})
+app.post("/registration", (req, res) => {
+  res.send("to register user !")
+})
+app.post("/login", (req, res) => {
+  res.send("to login user!")
+})
+app.get("/dashboard", (req, res) => {
+  res.send("Authenticated endpoint to show the dashboard.!")
 })
 
 // Start the server
