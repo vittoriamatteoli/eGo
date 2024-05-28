@@ -1,8 +1,9 @@
-export const App = () => {
+import { Landing } from "./pages/Landing";
 
+export const App = () => {
   return (
     <>
-      <h1>Welcome to Final Project!</h1>
+      <Landing />
     </>
   );
 };
