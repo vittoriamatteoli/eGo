@@ -1,3 +1,8 @@
+
+export const Register = () => {
+  return <div>Register</div>;
+};
+
 import { styled } from "styled-components"
 
 const Container = styled.div`
@@ -149,3 +154,4 @@ export const Register = () => {
     </Container>
   )
 }
+

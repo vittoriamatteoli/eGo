@@ -22,11 +22,12 @@ const userSchema = new mongoose.Schema({
     required: [true, "Password is required"],
     minlength: [6, "Password must be at least 6 characters long"],
   },
+  //role if we want to differ on paying or non payin users or admin. 
+  //we need to have some way of differentiate the users to use autorization in our project
   role:{
     type: String,
     default: "user",
   },
-
   // optional field for a refresh token if we want to keep the user logged in for a longer period of time
   //refreshToken: {
   //  type: String,

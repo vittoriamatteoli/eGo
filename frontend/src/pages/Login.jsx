@@ -1,3 +1,8 @@
+
+export const Login = () => {
+  return <div>Login</div>;
+};
+
 import { styled } from "styled-components"
 
 const Container = styled.div`
@@ -154,3 +159,4 @@ export const Login = () => {
     </Container>
   )
 }
+
