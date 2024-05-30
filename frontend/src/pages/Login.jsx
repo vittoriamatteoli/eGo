@@ -112,15 +112,12 @@ text-decoration: none;
 }
 }
 `
-
-
-
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const apikey = import.meta.env.VITE_API_KEY;
-  const API = `${apikey}/login`;
+  const API = `${apikey}/sessions`;
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -188,11 +185,11 @@ export const Login = () => {
             <ForgotPassword href="#">Forgot password?</ForgotPassword>
           </form>
           <BottomText>
-          {message && (
-        <div>
-          <p>{message}</p>
-        </div>
-      )}
+            {message && (
+              <div>
+                <p>{message}</p>
+              </div>
+            )}
             <p>
               Don't have an account yet? <Link to="/register">Register</Link>
             </p>

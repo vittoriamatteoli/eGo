@@ -7,14 +7,25 @@ const SECRET = process.env.SECRET || "toast is the best secret";
 
 const authenticateUser = async (req, res, next) => {
   try {
-    const accessToken = req.header("Authorization");
-    req.accessToken = accessToken; // add the token to the request object in case we need it for later use in other middlewares..
-    if (!accessToken) {
+    const authHeader = req.header("Authorization");
+    if (!authHeader) {
       return res.status(401).json({
         loggedOut: true,
-        message: "Access token is missing",
+        message: "Authorization header is missing",
       });
     }
+
+    const parts = authHeader.split(' ');
+    if (parts.length !== 2 || parts[0] !== 'Bearer') {
+      return res.status(401).json({
+        loggedOut: true,
+        message: "Invalid authorization format. Expected 'Bearer <token>'",
+      });
+    }
+
+    const accessToken = parts[1];
+    req.accessToken = accessToken; // add the token to the request object in case we need it for later use in other middlewares..
+
     const decoded = jwt.verify(accessToken, SECRET);
     if (!decoded) {
       return res.status(403).json({

@@ -40,7 +40,7 @@ router.get("/user/:id", (req, res) => {
 });
 
 // post a new user to the db, if they don't already exist
-router.post("/registration", async (req, res) => {
+router.post("/user", async (req, res) => {
   const { username, email, password } = req.body;
   try {
     // check if the user already exists with the same username or email using the Mongodb $or operator
@@ -48,23 +48,23 @@ router.post("/registration", async (req, res) => {
     if (existingUser) {
       return res
         .status(400)
-        .send({message:"User with this username or email already exists"});
+        .send({ message: "User with this username or email already exists" });
     }
     const newUser = await new User({
       username,
       email,
       password,
     }).save();
-    res.status(201).send({message:"User created successfully!"});
+    res.status(201).send({ message: "User created successfully!" });
   } catch (error) {
     console.error(error);
-    res.status(500).send({message:"Error creating user"});
+    res.status(500).send({ message: "Error creating user" });
   }
 });
 
 // login the user and create a new session token for the users session if the user exists
 //optional to add a refresh token if we want to keep the user logged in for a longer period of time
-router.post("/login", async (req, res) => {
+router.post("/sessions", async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });

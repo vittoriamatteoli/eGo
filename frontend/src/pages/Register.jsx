@@ -1,6 +1,6 @@
-import {useState} from "react";
-import {useNavigate, Link} from "react-router-dom";
-import  styled  from "styled-components"
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import styled from "styled-components"
 
 const Container = styled.div`
   display: flex;
@@ -101,38 +101,38 @@ const BottomText = styled.div`
 `
 
 export const Register = () => {
-const [username, setUsername] = useState("");
-const [email, setEmail] = useState("");
-const [password, setPassword] = useState("");
-const[message, setMessage] = useState("");
-const navigate = useNavigate();
-const apikey = import.meta.env.VITE_API_KEY;
-const API = `${apikey}/registration`;
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  const apikey = import.meta.env.VITE_API_KEY;
+  const API = `${apikey}/user`;
 
-const handleRegister = async (e) => {
-  e.preventDefault();
-  fetch(API, {
-    method: "POST",
-    body: JSON.stringify({ username, email, password }),
-    headers: { "Content-Type": "application/json" },
-  })
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error("Invalid registration");
-      }
-      return res.json();
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    fetch(API, {
+      method: "POST",
+      body: JSON.stringify({ username, email, password }),
+      headers: { "Content-Type": "application/json" },
     })
-    .then((data) => {
-      console.log(data);
-      setMessage("Registration successful");
-      navigate("/login");
-    })
-    .catch((error) => {
-      console.error(error);
-      setMessage("Failed to register");
-    });
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Invalid registration");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setMessage("Registration successful");
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.error(error);
+        setMessage("Failed to register");
+      });
 
-};
+  };
 
 
 
@@ -164,7 +164,7 @@ const handleRegister = async (e) => {
                 id="email"
                 name="email"
                 value={email}
-                onChange={(e)=> setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
                 required
               />
@@ -184,11 +184,11 @@ const handleRegister = async (e) => {
 
           </form>
           <BottomText>
-          {message && (
-        <div>
-          <p>{message}</p>
-        </div>
-      )}
+            {message && (
+              <div>
+                <p>{message}</p>
+              </div>
+            )}
             <p>
               Do you already have an account? <Link to="/login"> login</Link>
             </p>
