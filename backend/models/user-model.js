@@ -22,12 +22,17 @@ const userSchema = new mongoose.Schema({
     required: [true, "Password is required"],
     minlength: [6, "Password must be at least 6 characters long"],
   },
-  accessToken: {
+  //role if we want to differ on paying or non payin users or admin. 
+  //we need to have some way of differentiate the users to use autorization in our project
+  role:{
     type: String,
-    default: () => {
-      return bcrypt.hashSync(Math.random().toString(36).substring(2), 10);
-    },
+    default: "user",
   },
+  // optional field for a refresh token if we want to keep the user logged in for a longer period of time
+  //refreshToken: {
+  //  type: String,
+  //  default: null,
+ // },
   points: {
     type: Number,
     default: 0,

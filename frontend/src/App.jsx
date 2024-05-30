@@ -5,5 +5,5 @@ export const App = () => {
     <>
       <Landing />
     </>
-  );
-};
+  )
+}

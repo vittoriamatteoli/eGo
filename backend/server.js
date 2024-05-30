@@ -2,17 +2,15 @@ import express from "express"
 import cors from "cors"
 import mongoose from "mongoose"
 import dotenv from "dotenv"
-// import crypto from "crypto"
-// import bcrypt from "bcryptjs"
+import router from "./routes/routes"
+import expressListEndpoints from "express-list-endpoints"
+
 dotenv.config()
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/eGo"
 mongoose.connect(mongoUrl)
 mongoose.Promise = Promise
 
-// Defines the port the app will run on. Defaults to 8080, but can be overridden
-// when starting the server. Example command to overwrite PORT env variable value:
-// PORT=9000 npm start
 const port = process.env.PORT || 8080
 const app = express()
 
@@ -20,20 +18,49 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-// Start defining your routes here
+// import the routes
+app.use("/", router);
 
-app.get("/user", (req, res) => {
-  res.send("Endpoint to get user details from DB!")
-})
-app.post("/registration", (req, res) => {
-  res.send("to register user !")
-})
-app.post("/login", (req, res) => {
-  res.send("to login user!")
-})
-app.get("/dashboard", (req, res) => {
-  res.send("Authenticated endpoint to show the dashboard.!")
-})
+// list all endpoints
+app.get("/", (res) => {
+  try {
+    const routerEndpoints = expressListEndpoints(router);
+    const descriptions = {
+      "/signout":
+        "This endpoint make sure to log out the user and delete session token (and potentially adds used token to a blacklist if we want to set that up).",
+      "/registration":
+        "This endpoint posts all the data provided from the new user to the  db.",
+      "/login":
+        "This endpoint authenticate the user and creates a new session token for the users session.",
+        "/dashboard":
+        "This endpoint is a protected route who lets autenticated users visit and see the data in the dashboard.",
+      "/users/:id":
+        "This endpoint returns the data for a specific user matching the id provided .",
+      "/users": "This route retrieves all users from the database.",
+      "/": "This endpoint retrieves all endpoints available in the API.",
+    };
+
+    const updatedEndpoints = routerEndpoints.map((endpoint) => {
+      return {
+        path: endpoint.path,
+        methods: endpoint.methods,
+        description: descriptions[endpoint.path] || "No description provided",
+      };
+    });
+    res.json(updatedEndpoints);
+  } catch (error) {
+    // If an error occurred, create a new error with a custom message
+    const customError = new Error(
+      "An error occurred while fetching the endpoints"
+    );
+    res.status(404).json({
+      success: false,
+      response: error,
+      message: customError.message,
+    });
+  }
+});
+
 
 // Start the server
 app.listen(port, () => {
