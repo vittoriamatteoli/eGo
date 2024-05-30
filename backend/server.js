@@ -21,8 +21,19 @@ app.use(express.json())
 // import the routes
 app.use("/", router);
 
+app.get('/test-db', async (req, res) => {
+  try {
+    await mongoose.connection.db.admin().ping();
+    res.send('Connected to MongoDB');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error connecting to MongoDB');
+  }
+});
+
+
 // list all endpoints
-app.get("/", (res) => {
+app.get("/", (req, res) => {
   try {
     const routerEndpoints = expressListEndpoints(router);
     const descriptions = {

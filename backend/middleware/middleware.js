@@ -1,4 +1,4 @@
-import User from "../models/2User-model.js";
+import User from "../models/user-model.js";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
@@ -45,15 +45,15 @@ const authorizeUser = (roles) => {
   };
 };
 
-// log out the user and delete the session token
+// log out the user (and lets remmeberdelete the session token)
 const signOut = async (req, res) => {
   try {
     const user = req.user;
     // option to add the used token to a blacklist if we want to set that up
     //option to add a refresh token if we want the service to "remember" the user and keep the user logged in for a longer period of time.
     //user.refreshToken = null;
-    await user.save();
-    res.status(200).json({ message: "User logged out successfully" });
+    //await user.save();
+    res.json({ message: "User logged out successfully" });
   } catch (error) {
     res
       .status(500)

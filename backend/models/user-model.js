@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+
+import bcryptjs from 'bcryptjs';
 
 const SALT_ROUNDS = 12; // make this configurable so we can adjust the security level if needed
 
@@ -22,7 +23,7 @@ const userSchema = new mongoose.Schema({
     required: [true, "Password is required"],
     minlength: [6, "Password must be at least 6 characters long"],
   },
-  //role if we want to differ on paying or non payin users or admin. 
+  //role if we want to differ on paying or non payin users or admin.
   //we need to have some way of differentiate the users to use autorization in our project
   role:{
     type: String,
@@ -50,7 +51,7 @@ const userSchema = new mongoose.Schema({
 
 //this uses matchPassword method to compare the entered password with the hashed password in the database
 userSchema.methods.matchPassword = async function(enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
+  return await bcryptjs.compare(enteredPassword, this.password);
 }
 //This adds a pre-save (pre) hook to hash the password *before* saving it to the database so we don't store the password in plain text
 userSchema.pre('save', async function(next) {
@@ -60,7 +61,7 @@ userSchema.pre('save', async function(next) {
   }
   // hash the password before saving it to the database with the SALT_ROUNDS we can easoly adjust the security level.
   //high=more secure but slower to hash - (10-12 is supposed to be a good balance)
-  this.password = await bcrypt.hash(this.password, SALT_ROUNDS);
+  this.password = await bcryptjs.hash(this.password, SALT_ROUNDS);
 });
 
 export default mongoose.model('User', userSchema);
