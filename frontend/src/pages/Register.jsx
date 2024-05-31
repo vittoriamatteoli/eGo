@@ -1,9 +1,6 @@
-
-export const Register = () => {
-  return <div>Register</div>;
-};
-
-import { styled } from "styled-components"
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import styled from "styled-components"
 
 const Container = styled.div`
   display: flex;
@@ -102,7 +99,43 @@ const BottomText = styled.div`
     }
   }
 `
+
 export const Register = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  const apikey = import.meta.env.VITE_API_KEY;
+  const API = `${apikey}/user`;
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    fetch(API, {
+      method: "POST",
+      body: JSON.stringify({ username, email, password }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Invalid registration");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setMessage("Registration successful");
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.error(error);
+        setMessage("Failed to register");
+      });
+
+  };
+
+
+
   return (
     <Container>
       <LeftColumn>
@@ -113,12 +146,14 @@ export const Register = () => {
       <RightColumn>
         <FormContainer>
           <h2>Register</h2>
-          <form>
+          <form onSubmit={handleRegister}>
             <FormGroup>
               <Input
                 type="text"
                 id="username"
                 name="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 placeholder="Username"
                 required
               />
@@ -128,6 +163,8 @@ export const Register = () => {
                 type="email"
                 id="email"
                 name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
                 required
               />
@@ -137,15 +174,23 @@ export const Register = () => {
                 type="password"
                 id="password"
                 name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
                 required
               />
             </FormGroup>
             <Button type="submit">Sign up</Button>
+
           </form>
           <BottomText>
+            {message && (
+              <div>
+                <p>{message}</p>
+              </div>
+            )}
             <p>
-              Do you already have an account? <a href="#">Sign in</a>
+              Do you already have an account? <Link to="/login"> login</Link>
             </p>
             <p>By clicking the button above, you agree to Terms and Privacy</p>
           </BottomText>

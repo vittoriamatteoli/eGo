@@ -1,3 +1,10 @@
+import { Logout } from "./Logout";
+
 export const Dashboard = () => {
-  return <div>Dashboard</div>;
+
+  return (<div>
+    Dashboard
+    <Logout />
+  </div>
+  )
 };

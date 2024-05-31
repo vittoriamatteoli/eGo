@@ -1,6 +1,6 @@
 {
-  "name": "project-final-backend",
-  "description": "Client part of final project",
+  "name": "ego_app_final_project",
+  "description": "an application who help you with finding the best route and transport suggestions for you based upon eco friendly criterias and your day to day needs, energy and mood",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
@@ -10,10 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "glob": "^10.4.1",
+    "lru-cache": "^10.2.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router": "^6.23.1",
     "react-router-dom": "^6.23.1",
+    "rimraf": "^5.0.7",
     "styled-components": "^6.1.11"
   },
   "devDependencies": {

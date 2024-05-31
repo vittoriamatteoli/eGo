@@ -1,4 +1,4 @@
-import User from "../models/2User-model.js";
+import User from "../models/user-model.js";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
@@ -7,14 +7,25 @@ const SECRET = process.env.SECRET || "toast is the best secret";
 
 const authenticateUser = async (req, res, next) => {
   try {
-    const accessToken = req.header("Authorization");
-    req.accessToken = accessToken; // add the token to the request object in case we need it for later use in other middlewares..
-    if (!accessToken) {
+    const authHeader = req.header("Authorization");
+    if (!authHeader) {
       return res.status(401).json({
         loggedOut: true,
-        message: "Access token is missing",
+        message: "Authorization header is missing",
       });
     }
+
+    const parts = authHeader.split(' ');
+    if (parts.length !== 2 || parts[0] !== 'Bearer') {
+      return res.status(401).json({
+        loggedOut: true,
+        message: "Invalid authorization format. Expected 'Bearer <token>'",
+      });
+    }
+
+    const accessToken = parts[1];
+    req.accessToken = accessToken; // add the token to the request object in case we need it for later use in other middlewares..
+
     const decoded = jwt.verify(accessToken, SECRET);
     if (!decoded) {
       return res.status(403).json({
@@ -45,15 +56,15 @@ const authorizeUser = (roles) => {
   };
 };
 
-// log out the user and delete the session token
+// log out the user (and lets remmeberdelete the session token)
 const signOut = async (req, res) => {
   try {
     const user = req.user;
     // option to add the used token to a blacklist if we want to set that up
     //option to add a refresh token if we want the service to "remember" the user and keep the user logged in for a longer period of time.
     //user.refreshToken = null;
-    await user.save();
-    res.status(200).json({ message: "User logged out successfully" });
+    //await user.save();
+    res.json({ message: "User logged out successfully" });
   } catch (error) {
     res
       .status(500)

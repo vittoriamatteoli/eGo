@@ -1,6 +1,7 @@
 import express from "express";
-import User from "../models/2User-model.js";
+import User from "../models/user-model.js";
 import Travel from "../models/travel-model";
+import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import {
   authenticateUser,
@@ -39,7 +40,7 @@ router.get("/user/:id", (req, res) => {
 });
 
 // post a new user to the db, if they don't already exist
-router.post("/registration", async (req, res) => {
+router.post("/user", async (req, res) => {
   const { username, email, password } = req.body;
   try {
     // check if the user already exists with the same username or email using the Mongodb $or operator
@@ -47,25 +48,26 @@ router.post("/registration", async (req, res) => {
     if (existingUser) {
       return res
         .status(400)
-        .send("User with this username or email already exists");
+        .send({ message: "User with this username or email already exists" });
     }
     const newUser = await new User({
       username,
       email,
       password,
     }).save();
-    res.status(201).send("User created successfully!");
+    res.status(201).send({ message: "User created successfully!" });
   } catch (error) {
-    res.status(500).send("Error creating user");
+    console.error(error);
+    res.status(500).send({ message: "Error creating user" });
   }
 });
 
 // login the user and create a new session token for the users session if the user exists
 //optional to add a refresh token if we want to keep the user logged in for a longer period of time
-router.post("/login", authenticateUser, async (req, res) => {
+router.post("/sessions", async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ $or: [{ username }, { email }] });
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
     if (user && (await user.matchPassword(password))) {
       //generate a token for the user
       const token = jwt.sign({ id: user._id }, SECRET, { expiresIn: "1h" });
@@ -92,8 +94,7 @@ router.get("/dashboard", authenticateUser, authorizeUser, (req, res) => {
   );
 });
 
-//log out the user - remember to delete the session token
-router.get("/signout", signOut, (req, res) => {
+router.post("/signout", signOut, (req, res) => {
   res.json({
     message: "User logged out successfully",
   });
