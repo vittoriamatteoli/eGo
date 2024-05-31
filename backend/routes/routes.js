@@ -28,16 +28,19 @@ router.get("/users", async (req, res) => {
 });
 
 // get a specific user by id and return the data
-router.get("/user/:id", (req, res) => {
+router.get("/user/:id", async (req, res) => {
   const { id } = req.params;
-  res.json({
-    id,
-    username: "username",
-    email: "email",
-    points: 0,
-    energyLevel: 5,
-    role: "user",
-  });
+
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
 });
 
 // post a new user to the db, if they don't already exist
