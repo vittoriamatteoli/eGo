@@ -15,15 +15,16 @@ const SECRET = process.env.SECRET || "toast is the best secret";
 const router = express.Router();
 
 // get all users and return the data
-router.get("/users", (req, res) => {
-  const { username, email, password, accessToken, points, energyLevel } = User;
-  res.json({
-    username: "username",
-    email: "email",
-    points: 0,
-    energyLevel: 5,
-    role: "user",
-  });
+router.get("/users", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({
+      message: "An error occurred while fetching users",
+      error: error.message,
+    });
+  }
 });
 
 // get a specific user by id and return the data
