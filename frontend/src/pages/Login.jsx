@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Loading } from "../reusables/Loading";
 
 const Container = styled.div`
   display: flex;
@@ -189,10 +190,8 @@ export const Login = () => {
                 disabled={loading}
               />
             </FormGroup>
-            <Button type="submit" disabled={loading}>
-              {/* Will create a loading spinner in next step and import from loading.jsx */}
-              {loading ? "Logging in..." : "Log in"}
-            </Button>
+            {/* Conditionally render loading spinner or login button */}
+            {loading ? <Loading /> : <Button type="submit">Log in</Button>}
           </form>
           <BottomText>
             <p>
