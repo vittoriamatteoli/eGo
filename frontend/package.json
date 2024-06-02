@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mui/material": "^5.15.19",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "glob": "^10.4.1",
     "lru-cache": "^10.2.2",
     "react": "^18.3.1",

@@ -7,6 +7,7 @@ import { EnergyCard } from "../components/EnergyCard"
 export const Dashboard = () => {
   return (
     <>
+      <h2>DASHBOARD</h2>
       <Sidebar />
       <PointsCard />
       <ActivityGraph />
