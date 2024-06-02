@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import styled from "styled-components"
+import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
   width: 100vw;
   background-color: #fff;
-`
+`;
 
 const LeftColumn = styled.div`
   flex: 1;
@@ -17,7 +17,7 @@ const LeftColumn = styled.div`
   box-sizing: border-box;
   background-color: #d9d9d9;
   border-radius: 20px;
-`
+`;
 
 const RightColumn = styled.div`
   flex: 1;
@@ -27,17 +27,17 @@ const RightColumn = styled.div`
   flex-direction: column;
   justify-content: center;
   background-color: #ffffff;
-`
+`;
 
 const ImageContainer = styled.div`
   width: 80%;
   text-align: center;
-`
+`;
 
 const StyledImage = styled.img`
   max-width: 100%;
   height: auto;
-`
+`;
 
 const FormContainer = styled.div`
   width: 100%;
@@ -46,11 +46,11 @@ const FormContainer = styled.div`
   h2 {
     text-align: center;
   }
-`
+`;
 
 const FormGroup = styled.div`
   margin-bottom: 15px;
-`
+`;
 
 const Input = styled.input`
   outline: none;
@@ -66,7 +66,7 @@ const Input = styled.input`
     background-color: #fff;
     border: 1px solid black;
   }
-`
+`;
 
 const Button = styled.button`
   width: 100%;
@@ -79,7 +79,7 @@ const Button = styled.button`
   &:hover {
     background-color: #88a183b7;
   }
-`
+`;
 
 const BottomText = styled.div`
   margin-top: 20px;
@@ -98,43 +98,60 @@ const BottomText = styled.div`
       //some effects
     }
   }
-`
+`;
+
+const ErrorMessage = styled.div`
+  margin-bottom: 15px;
+  padding: 10px;
+  color: black;
+  border-radius: 7px;
+  border: 3px solid #c590fb;
+`;
 
 export const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const apikey = import.meta.env.VITE_API_KEY;
   const API = `${apikey}/user`;
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    fetch(API, {
-      method: "POST",
-      body: JSON.stringify({ username, email, password }),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Invalid registration");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setMessage("Registration successful");
-        navigate("/login");
-      })
-      .catch((error) => {
-        console.error(error);
-        setMessage("Failed to register");
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const response = await fetch(API, {
+        method: "POST",
+        body: JSON.stringify({ username, email, password }),
+        headers: { "Content-Type": "application/json" },
       });
 
+      if (!response.ok) {
+        if (response.status === 400) {
+          throw new Error("Bad request. Please check your input.");
+        } else {
+          throw new Error("Something went wrong. Please try again.");
+        }
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setMessage("Registration successful");
+      setUsername("");
+      setEmail("");
+      setPassword("");
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+      setMessage(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
-
-
 
   return (
     <Container>
@@ -145,8 +162,10 @@ export const Register = () => {
       </LeftColumn>
       <RightColumn>
         <FormContainer>
-          <h2>Register</h2>
+          <h2>Sign up</h2>
           <form onSubmit={handleRegister}>
+            {/* displayed on to of form as in figma design */}
+            {message && <ErrorMessage>{message}</ErrorMessage>}
             <FormGroup>
               <Input
                 type="text"
@@ -154,8 +173,9 @@ export const Register = () => {
                 name="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
+                placeholder="Name"
                 required
+                disabled={loading}
               />
             </FormGroup>
             <FormGroup>
@@ -167,6 +187,7 @@ export const Register = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
                 required
+                disabled={loading}
               />
             </FormGroup>
             <FormGroup>
@@ -178,25 +199,21 @@ export const Register = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
                 required
+                disabled={loading}
               />
             </FormGroup>
-            <Button type="submit">Sign up</Button>
-
+            <Button type="submit" disabled={loading}>
+              {/* Will create a loading spinner in next step and import from loading.jsx, instead of displaying it in the button */}
+              {loading ? "Signing up..." : "Sign up"}
+            </Button>
           </form>
           <BottomText>
-            {message && (
-              <div>
-                <p>{message}</p>
-              </div>
-            )}
             <p>
-              Do you already have an account? <Link to="/login"> login</Link>
+              Already have an account? <Link to="/login"> Log in </Link>
             </p>
-            <p>By clicking the button above, you agree to Terms and Privacy</p>
           </BottomText>
         </FormContainer>
       </RightColumn>
     </Container>
-  )
-}
-
+  );
+};
