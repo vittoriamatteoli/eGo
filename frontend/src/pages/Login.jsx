@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { EgoButton } from "../components/Button";
 
 const Container = styled.div`
   display: flex;
@@ -68,18 +69,6 @@ const Input = styled.input`
   }
 `;
 
-const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: #88a183;
-  border: none;
-  border-radius: 20px; //adjust once design is done
-  color: black; //  white or black?
-  cursor: pointer;
-  &:hover {
-    background-color: #88a183b7;
-  }
-`;
 
 const ErrorMessage = styled.div`
   margin-bottom: 15px;
@@ -189,10 +178,11 @@ export const Login = () => {
                 disabled={loading}
               />
             </FormGroup>
-            <Button type="submit" disabled={loading}>
+
+            <EgoButton type="submit" disabled={loading}>
               {/* Will create a loading spinner in next step and import from loading.jsx */}
               {loading ? "Logging in..." : "Log in"}
-            </Button>
+            </EgoButton>
           </form>
           <BottomText>
             <p>

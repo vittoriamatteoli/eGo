@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+import { EgoButton } from "../components/Button"
 
 export const Logout = () => {
   const [message, setMessage] = useState("")
@@ -27,7 +28,7 @@ export const Logout = () => {
   }
   return (
     <div>
-      <button onClick={handleLogout}>Logout</button>
+      <EgoButton onClick={handleLogout}>Logout</EgoButton>
       <p>{message}</p>
     </div>
   )

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
+import { EgoButton } from "../components/Button";
 
 const Container = styled.div`
   display: flex;
@@ -68,19 +69,6 @@ const Input = styled.input`
   }
 `;
 
-const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: #88a183;
-  border: none;
-  border-radius: 20px; //adjust once design is done
-  color: black; //  white or black?
-  cursor: pointer;
-  &:hover {
-    background-color: #88a183b7;
-  }
-`;
-
 const BottomText = styled.div`
   margin-top: 20px;
   font-size: 0.6em;
@@ -120,6 +108,31 @@ export const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    if (!username || !email || !password) {
+      setMessage("Please fill in all fields");
+      return;
+    }
+    if (password.length < 8) {
+      setMessage("Password must be at least 8 characters long");
+      return;
+    } else if (password.length > 30) {
+      setMessage("Password must be at most 30 characters long");
+      return;
+    }
+    if (username.length < 3) {
+      setMessage("Username must be at least 3 characters long");
+      return;
+    }
+    if (username.length > 30) {
+      setMessage("Username must be at most 30 characters long");
+      return;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      setMessage("Email is invalid");
+      return;
+    } else if (email.length > 30) {
+      setMessage("Email must be at most 30 characters long");
+      return;
+    }
     setLoading(true);
     setMessage("");
 
@@ -129,16 +142,13 @@ export const Register = () => {
         body: JSON.stringify({ username, email, password }),
         headers: { "Content-Type": "application/json" },
       });
-
+      const data = await response.json();
       if (!response.ok) {
-        if (response.status === 400) {
-          throw new Error("Bad request. Please check your input.");
-        } else {
-          throw new Error("Something went wrong. Please try again.");
-        }
+        setMessage(data.message);
+        setLoading(false);
+        return;
       }
 
-      const data = await response.json();
       console.log(data);
       setMessage("Registration successful");
       setUsername("");
@@ -202,10 +212,10 @@ export const Register = () => {
                 disabled={loading}
               />
             </FormGroup>
-            <Button type="submit" disabled={loading}>
+            <EgoButton type="submit" disabled={loading}>
               {/* Will create a loading spinner in next step and import from loading.jsx, instead of displaying it in the button */}
               {loading ? "Signing up..." : "Sign up"}
-            </Button>
+            </EgoButton>
           </form>
           <BottomText>
             <p>
