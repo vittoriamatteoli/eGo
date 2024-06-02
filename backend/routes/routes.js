@@ -28,7 +28,7 @@ router.get("/users", async (req, res) => {
 })
 
 // get a specific user by id and return the data
-router.get("/user/:id", async (req, res) => {
+router.get("/users/:id", async (req, res) => {
   const { id } = req.params
 
   try {
@@ -44,7 +44,7 @@ router.get("/user/:id", async (req, res) => {
 })
 
 // post a new user to the db, if they don't already exist
-router.post("/user", async (req, res) => {
+router.post("/users", async (req, res) => {
   const { username, email, password } = req.body
   try {
     // check if the user already exists with the same username or email using the Mongodb $or operator
@@ -79,7 +79,7 @@ router.post("/sessions", async (req, res) => {
       //const refreshToken = jwt.sign({ id: user._id }, REFRESH_SECRET);
       //user.refreshToken = refreshToken;
       //await user.save();
-      res.status(200).json({ accessToken: token })
+      res.status(200).json({ accessToken: token, id: user._id }) //send the user id after login
     } else {
       res.status(401).json({ message: "Invalid username or password" })
     }
@@ -107,7 +107,7 @@ router.post("/signout", signOut, (req, res) => {
 router.patch(
   "/energy",
   authenticateUser,
-  authorizeUser(["user"]),
+  authorizeUser(["user", "admin"]),
   async (req, res) => {
     const { energyLevel } = req.body
 
@@ -122,20 +122,16 @@ router.patch(
       user.energyLevel = energyLevel
       await user.save()
 
-      res
-        .status(200)
-        .json({
-          message: "Energy level updated successfully.",
-          energyLevel: user.energyLevel,
-        })
+      res.status(200).json({
+        message: "Energy level updated successfully.",
+        energyLevel: user.energyLevel,
+      })
     } catch (error) {
       console.error(error)
-      res
-        .status(500)
-        .json({
-          message: "An error occurred while updating the energy level.",
-          error: error.message,
-        })
+      res.status(500).json({
+        message: "An error occurred while updating the energy level.",
+        error: error.message,
+      })
     }
   }
 )
