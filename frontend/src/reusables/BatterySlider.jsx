@@ -6,15 +6,36 @@ import { Button } from "@mui/material"
 const apikey = import.meta.env.VITE_API_KEY
 
 const BatterySliderWrapper = styled.div`
-  width: 195px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
 `
-
+const StyledButton = styled(Button)`
+  border-radius: 24px;
+  border: 1px solid #687943;
+  background: #687943;
+  width: 106.213px;
+  height: 35.172px;
+  flex-shrink: 0;
+  color: white;
+  color: #fff;
+  font-family: "Open Sans Hebrew";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+`
 export const BatterySlider = () => {
   const [fillPercentage, setFillPercentage] = useState(0) //set initial state from the EnergyLevel in the DB
   const { id } = useParams()
   const API = `${apikey}/user/${id}`
   const API_ENERGY = `${apikey}/energy`
   const token = sessionStorage.getItem("accessToken")
+  console.log(token) //good
 
   useEffect(() => {
     const fetchEnergyData = async () => {
@@ -29,7 +50,7 @@ export const BatterySlider = () => {
         console.error("Error fetching energy data:", error)
       }
     }
-    fetchEnergyData()// this work fine 
+    fetchEnergyData()
   }, [API, id])
 
   const handleDrag = (percentage) => {
@@ -44,7 +65,7 @@ export const BatterySlider = () => {
         body: JSON.stringify({ energyLevel: fillPercentage }),
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,// this doesn't
+          Authorization: `Bearer ${token}`,
         },
       })
       if (!response.ok) {
@@ -60,7 +81,7 @@ export const BatterySlider = () => {
   return (
     <BatterySliderWrapper>
       <BatterySVG fillPercentage={fillPercentage} onDrag={handleDrag} />
-      <Button onClick={handleNewEnergy}>Confirm</Button>
+      <StyledButton onClick={handleNewEnergy}>Confirm</StyledButton>
     </BatterySliderWrapper>
   )
 }

@@ -137,10 +137,9 @@ export const Login = () => {
       .then((data) => {
         console.log(data)
         setMessage("Login successful")
-        sessionStorage.setItem("id", data._id)
+        sessionStorage.setItem("id", data.id)
         sessionStorage.setItem("accessToken", data.accessToken)
         const id = sessionStorage.getItem("id")
-        console.log(data)
         navigate(`/users/${id}`)
       })
       .catch((error) => {
