@@ -128,12 +128,14 @@ export const Login = () => {
       }
 
       const data = await response.json();
+      const id = data.id; // get the user id from the response data
       console.log(data);
       setMessage("Login successful");
       sessionStorage.setItem("accessToken", data.accessToken);
       setEmail("");
       setPassword("");
-      navigate("/dashboard");
+
+      navigate(`/dashboard/${id}`);
     } catch (error) {
       console.error(error);
       setMessage(error.message);
