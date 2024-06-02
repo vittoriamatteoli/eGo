@@ -107,7 +107,7 @@ router.post("/signout", signOut, (req, res) => {
 router.patch(
   "/energy",
   authenticateUser,
-  authorizeUser(["user", "admin"]),
+
   async (req, res) => {
     const { energyLevel } = req.body
 
