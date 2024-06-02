@@ -91,6 +91,37 @@ router.post("/sessions", async (req, res) => {
   }
 });
 
+
+// patch request to  update the points
+router.patch("/user/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { points } = req.body;
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { $inc: { points: points } }, // use the $inc operator to increment points
+      { new: true }
+    );
+    if (updatedUser) {
+      res.json({
+        message: "User points updated 🥳",
+        success: true,
+        response: updatedUser,
+      });
+    } else {
+      res.status(404).json({ message: "User not found", error: error.message });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "An error occurred while updating the user",
+      error: error.message,
+    });
+  }
+});
+
+
+
+
 // get all travels for the user in the dashboard, but only if the user is authenticated and authorized
 router.get("/dashboard", authenticateUser, authorizeUser, (req, res) => {
   res.send(
