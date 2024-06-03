@@ -75,11 +75,12 @@ router.post("/sessions", async (req, res) => {
     if (user && (await user.matchPassword(password))) {
       //generate a token for the user
       const token = jwt.sign({ id: user._id }, SECRET, { expiresIn: "1h" })
+      const _id = user - _id
       // optional to generate a refresh token for the user
       //const refreshToken = jwt.sign({ id: user._id }, REFRESH_SECRET);
       //user.refreshToken = refreshToken;
       //await user.save();
-      res.status(200).json({ accessToken: token, _id: user._id }) //send the user id after login
+      res.status(200).json({ accessToken: token, _id: _id }) //send the user id after login
     } else {
       res.status(401).json({ message: "Invalid username or password" })
     }
@@ -104,36 +105,30 @@ router.post("/signout", signOut, (req, res) => {
   })
 })
 //update the energy level or confirm the same
-router.patch(
-  "/energy",
-  authenticateUser,
-
-  async (req, res) => {
+router.patch("/user/:id", authenticateUser, async (req, res) => {
+  try {
+    const { id } = req.params
     const { energyLevel } = req.body
-
-    if (energyLevel === undefined) {
-      return res
-        .status(400)
-        .json({ message: "Invalid request. 'energyLevel' is required." })
-    }
-
-    try {
-      const user = req.user
-      user.energyLevel = energyLevel
-      await user.save()
-
-      res.status(200).json({
-        message: "Energy level updated successfully.",
-        energyLevel: user.energyLevel,
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { $set: { energyLevel: energyLevel } }, // use the $set operator to update energyLevel
+      { new: true }
+    )
+    if (updatedUser) {
+      res.json({
+        message: "User energy level updated ⚡️",
+        success: true,
+        response: updatedUser,
       })
-    } catch (error) {
-      console.error(error)
-      res.status(500).json({
-        message: "An error occurred while updating the energy level.",
-        error: error.message,
-      })
+    } else {
+      res.status(404).json({ message: "User not found", error: error.message })
     }
+  } catch (error) {
+    res.status(500).json({
+      message: "An error occurred while updating the user",
+      error: error.message,
+    })
   }
-)
+})
 
 export default router

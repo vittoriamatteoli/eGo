@@ -43,7 +43,7 @@ app.get("/", (req, res) => {
         "This endpoint posts all the data provided from the new user to the  db.",
       "/sessions":
         "This endpoint authenticate the user and creates a new session token for the users session.",
-      "/dashboard":
+      "/dashboard/:id":
         "This endpoint is a protected route who lets autenticated users visit and see the data in the dashboard.",
       "/user/:id":
         "This endpoint returns the data for a specific user matching the id provided .",

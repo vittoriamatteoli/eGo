@@ -33,18 +33,14 @@ export const BatterySlider = () => {
   const [fillPercentage, setFillPercentage] = useState(0) //set initial state from the EnergyLevel in the DB
   const { id } = useParams()
   const API = `${apikey}/user/${id}`
-  const API_ENERGY = `${apikey}/energy`
+  const API_ENERGY = `${apikey}/user/${id}`
   const token = sessionStorage.getItem("accessToken")
   console.log(token) //good
   console.log(id)
 
   useEffect(() => {
     const fetchEnergyData = () => {
-      fetch(API, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      fetch(API)
         .then((res) => {
           if (!res.ok) {
             throw new Error("Failed to fetch data")
@@ -59,30 +55,34 @@ export const BatterySlider = () => {
         })
     }
     fetchEnergyData()
-  }, [API, token])
+  }, [id])
 
   const handleDrag = (percentage) => {
     setFillPercentage(percentage)
   }
-  const handleNewEnergy = async () => {
-    try {
-      console.log(token)
-      const response = await fetch(API_ENERGY, {
-        method: "PATCH",
-        body: JSON.stringify({ energyLevel: fillPercentage }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+  const handleNewEnergy = () => {
+    console.log(token)
+
+    fetch(API_ENERGY, {
+      method: "PATCH",
+      body: JSON.stringify({ energyLevel: fillPercentage }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to update data")
+        }
+        return response.json()
       })
-      if (!response.ok) {
-        throw new Error("Failed to update data")
-      }
-      const updatedData = await response.json()
-      setFillPercentage(updatedData.energyLevel)
-    } catch (error) {
-      console.error("Error updating energy data:", error)
-    }
+      .then((updatedData) => {
+        setFillPercentage(updatedData.energyLevel)
+      })
+      .catch((error) => {
+        console.error("Error updating energy data:", error)
+      })
   }
 
   return (

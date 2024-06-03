@@ -5,6 +5,8 @@ import { Register } from "../pages/Register.jsx"
 import { Dashboard } from "../pages/Dashboard.jsx"
 import { Logout } from "../pages/Logout.jsx"
 
+import { EnergyCard } from "../components/EnergyCard.jsx"
+
 export const AppRoutes = () => {
   return (
     <>
@@ -13,8 +15,8 @@ export const AppRoutes = () => {
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/user/:id" element={<Dashboard />} />
-          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+          <Route path=":id" element={<EnergyCard />} />
+          <Route path="/dashboard/:id" element={<Dashboard />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>

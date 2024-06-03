@@ -21,11 +21,11 @@ const StyledBatteryCard = styled.div`
     text-align: center;
   }
 `
-export const EnergyCard = () => {
+export const EnergyCard = ({ id }) => {
   return (
     <StyledBatteryCard>
       <h2>How's your energy level right now?</h2>
-      <BatterySlider />
+      <BatterySlider userId={id} />
     </StyledBatteryCard>
   )
 }
