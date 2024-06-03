@@ -2,27 +2,36 @@ import styled from "styled-components";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { EgoButton } from "../components/Button";
+import Globe from "../assets/Globe.svg";
+import GlobalStyle from "../Globalstyles";
 
 const Container = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
   width: 100vw;
   background-color: #fff;
 `;
 
 const LeftColumn = styled.div`
+  grid-column: 1;
+  height: 75%;
   flex: 1;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: top;
   align-items: center;
-  padding: 20px;
+  padding: 10vh 0px 20px 40px;
   box-sizing: border-box;
-  background-color: #d9d9d9;
-  border-radius: 20px;
+  background:var(--ego-gradient);
+
 `;
 
 const RightColumn = styled.div`
+grid-column: 1;
   flex: 1;
-  padding: 20px;
+  padding: 0 20px;
+margin-top:-40px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -31,13 +40,16 @@ const RightColumn = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  width: 80%;
+  width: 100%;
   text-align: center;
 `;
 
+
 const StyledImage = styled.img`
-  max-width: 100%;
+
+max-width: 100%;
   height: auto;
+
 `;
 
 const FormContainer = styled.div`
@@ -57,15 +69,16 @@ const Input = styled.input`
   outline: none;
   border: none;
   width: 100%;
-  padding: 10px;
+  padding: 10px 10px 10px 24px;
   color: black;
   box-sizing: border-box;
-  background-color: #d9d9d9;
-  border-radius: 10px; //adjust once design is done
+  border-radius: 24px;
+  border: 1px solid transparent;
+background:var(--ego-gradient-reversed);
 
   &:focus {
     background-color: #fff;
-    border: 1px solid black;
+    border: 1px solid #687943;
   }
 `;
 
@@ -148,7 +161,7 @@ export const Login = () => {
     <Container>
       <LeftColumn>
         <ImageContainer>
-          <StyledImage src="world.png" alt="World" />
+          <StyledImage src={Globe} alt="globe" />
         </ImageContainer>
       </LeftColumn>
       <RightColumn>
