@@ -28,7 +28,7 @@ router.get("/users", async (req, res) => {
 })
 
 // get a specific user by id and return the data
-router.get("/users/:id", async (req, res) => {
+router.get("/user/:id", async (req, res) => {
   const { id } = req.params
 
   try {
