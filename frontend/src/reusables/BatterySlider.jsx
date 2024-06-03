@@ -36,27 +36,34 @@ export const BatterySlider = () => {
   const API_ENERGY = `${apikey}/energy`
   const token = sessionStorage.getItem("accessToken")
   console.log(token) //good
+  console.log(id)
 
   useEffect(() => {
-    const fetchEnergyData = async () => {
-      try {
-        const res = await fetch(API)
-        if (!res.ok) {
-          throw new Error("Failed to fetch data")
-        }
-        const data = await res.json()
-        setFillPercentage(data.energyLevel)
-      } catch (error) {
-        console.error("Error fetching energy data:", error)
-      }
+    const fetchEnergyData = () => {
+      fetch(API, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Failed to fetch data")
+          }
+          return res.json()
+        })
+        .then((data) => {
+          setFillPercentage(data.energyLevel)
+        })
+        .catch((error) => {
+          console.error("Error fetching energy data:", error)
+        })
     }
     fetchEnergyData()
-  }, [API, id])
+  }, [API, token])
 
   const handleDrag = (percentage) => {
     setFillPercentage(percentage)
   }
-
   const handleNewEnergy = async () => {
     try {
       console.log(token)
