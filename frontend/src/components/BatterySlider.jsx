@@ -11,16 +11,17 @@ export const BatterySlider = () => {
 
   //first we get the energy level from the backend
   const [fillPercentage, setFillPercentage] = useState(0)
-  const { id } = useParams()
+  const { id } = useParams();
 
   useEffect(() => {
     const token = sessionStorage.getItem("accessToken")
-    fetch(`${apikey}/users/${id}`, {
-      method: "POST",
+    fetch(`${apikey}/user/${id}`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+
     })
       .then((res) => {
         if (!res.ok) {
@@ -29,11 +30,12 @@ export const BatterySlider = () => {
         return res.json();
       })
       .then((data) => {
-        console.log(data)
         setFillPercentage(data.energyLevel)
       })
+      .catch((error) => {
+        console.error('There was a problem with the fetch operation: ', error);
+      });
   }, [id])
-
   // then we update energy level with a patch request
   const updateEnergyLevel = (value) => {
     const token = sessionStorage.getItem("accessToken")
@@ -65,7 +67,7 @@ export const BatterySlider = () => {
   }
 
   return (
-    <BatterySliderWrapper>
+    <BatterySliderWrapper id={id}>
       <input
         type="range"
         min="0"

@@ -128,8 +128,8 @@ export const Login = () => {
       }
 
       const data = await response.json();
-      const id = data.id; // get the user id from the response data
       console.log(data);
+      const id = data.id; // get the user id from the response data
       setMessage("Login successful");
       sessionStorage.setItem("accessToken", data.accessToken);
       setEmail("");
