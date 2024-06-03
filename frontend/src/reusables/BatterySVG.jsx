@@ -6,8 +6,8 @@ const BatteryWrapper = styled.div`
   width: 195px;
   height: 89px;
 `
-//passed the functions as props
-export const BatterySVG = ({ fillPercentage, onDrag }) => {
+
+export const BatterySVG = ({ fillPercentage = 0, onDrag }) => {
   const [dragging, setDragging] = useState(false)
 
   const handleMouseDown = (event) => {
@@ -21,7 +21,9 @@ export const BatterySVG = ({ fillPercentage, onDrag }) => {
     if (dragging) {
       const rect = event.target.getBoundingClientRect()
       const offsetX = event.clientX - rect.left
-      const percentage = (offsetX / rect.width) * 100
+      let percentage = (offsetX / rect.width) * 100
+      if (percentage < 0) percentage = 0
+      if (percentage > 100) percentage = 100
       onDrag(percentage)
     }
   }

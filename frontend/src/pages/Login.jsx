@@ -116,36 +116,46 @@ export const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [message, setMessage] = useState("")
+  const [loading, setLoading] = useState(false)
   const apikey = import.meta.env.VITE_API_KEY
   const API = `${apikey}/sessions`
-
   const navigate = useNavigate()
 
   const handleLogin = async (e) => {
     e.preventDefault()
-    fetch(API, {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Invalid login")
+    setLoading(true)
+    setMessage("")
+    try {
+      const response = await fetch(API, {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: { "Content-Type": "application/json" },
+      })
+      if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error("Invalid email or password.")
+        } else if (response.status === 400) {
+          throw new Error("Bad request. Please check your input.")
+        } else {
+          throw new Error("Something went wrong. Please try again.")
         }
-        return res.json()
-      })
-      .then((data) => {
-        const id = data._id
-        console.log(data)
-        setMessage("Login successful")
-        sessionStorage.setItem("accessToken", data.accessToken)
+      }
 
-        navigate(`/dashboard/${id}`)
-      })
-      .catch((error) => {
-        console.error(error)
-        setMessage("Failed to login")
-      })
+      const data = await response.json()
+      console.log(data)
+      const id = data.id // get the user id from the response data
+      setMessage("Login successful")
+      sessionStorage.setItem("accessToken", data.accessToken)
+      setEmail("")
+      setPassword("")
+
+      navigate(`/dashboard/${id}`)
+    } catch (error) {
+      console.error(error)
+      setMessage(error.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

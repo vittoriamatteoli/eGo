@@ -75,12 +75,12 @@ router.post("/sessions", async (req, res) => {
     if (user && (await user.matchPassword(password))) {
       //generate a token for the user
       const token = jwt.sign({ id: user._id }, SECRET, { expiresIn: "1h" })
-      const _id = user._id
+      const id = user._id
       // optional to generate a refresh token for the user
       //const refreshToken = jwt.sign({ id: user._id }, REFRESH_SECRET);
       //user.refreshToken = refreshToken;
       //await user.save();
-      res.status(200).json({ accessToken: token, _id:_id }) //send the user id after login
+      res.status(200).json({ accessToken: token, id: id }) //send the user id after login
     } else {
       res.status(401).json({ message: "Invalid username or password" })
     }

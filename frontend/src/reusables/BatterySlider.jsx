@@ -33,56 +33,57 @@ export const BatterySlider = () => {
   const [fillPercentage, setFillPercentage] = useState(0) //set initial state from the EnergyLevel in the DB
   const { id } = useParams()
   const API = `${apikey}/user/${id}`
-  const API_ENERGY = `${apikey}/user/${id}`
   const token = sessionStorage.getItem("accessToken")
-  console.log(token) //good
-  console.log(id)
 
   useEffect(() => {
-    const fetchEnergyData = () => {
-      fetch(API)
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error("Failed to fetch data")
-          }
-          return res.json()
-        })
-        .then((data) => {
+    const fetchEnergyData = async () => {
+      try {
+        const res = await fetch(API)
+        if (!res.ok) {
+          throw new Error("Failed to fetch data")
+        }
+        const data = await res.json()
+        if (data.energyLevel !== undefined && data.energyLevel !== null) {
           setFillPercentage(data.energyLevel)
-        })
-        .catch((error) => {
-          console.error("Error fetching energy data:", error)
-        })
+        }
+      } catch (error) {
+        console.error("Error fetching energy data:", error)
+      }
     }
+
     fetchEnergyData()
   }, [id])
 
   const handleDrag = (percentage) => {
-    setFillPercentage(percentage)
+    if (percentage >= 0 && percentage <= 100) {
+      setFillPercentage(percentage)
+    }
   }
-  const handleNewEnergy = () => {
-    console.log(token)
 
-    fetch(API_ENERGY, {
-      method: "PATCH",
-      body: JSON.stringify({ energyLevel: fillPercentage }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to update data")
-        }
-        return response.json()
+  const handleNewEnergy = async () => {
+    try {
+      const response = await fetch(API, {
+        method: "PATCH",
+        body: JSON.stringify({ energyLevel: fillPercentage }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .then((updatedData) => {
+      if (!response.ok) {
+        throw new Error("Failed to update data")
+      }
+      const updatedData = await response.json()
+      if (
+        updatedData.energyLevel !== undefined &&
+        updatedData.energyLevel !== null
+      ) {
         setFillPercentage(updatedData.energyLevel)
-      })
-      .catch((error) => {
-        console.error("Error updating energy data:", error)
-      })
+        console.log(updatedData)
+      }
+    } catch (error) {
+      console.error("Error updating energy data:", error)
+    }
   }
 
   return (
