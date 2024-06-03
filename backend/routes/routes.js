@@ -79,7 +79,7 @@ router.post("/sessions", async (req, res) => {
       //const refreshToken = jwt.sign({ id: user._id }, REFRESH_SECRET);
       //user.refreshToken = refreshToken;
       //await user.save();
-      res.status(200).json({ accessToken: token, id: user._id }) //send the user id after login
+      res.status(200).json({ accessToken: token, _id: user._id }) //send the user id after login
     } else {
       res.status(401).json({ message: "Invalid username or password" })
     }

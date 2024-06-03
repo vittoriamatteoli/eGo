@@ -135,15 +135,19 @@ export const Login = () => {
         return res.json()
       })
       .then((data) => {
-        console.log(data)
+        console.log("API Response:", data) // Log the response to see its structure
+
+        if (!data._id) {
+          throw new Error("User ID (_id) is missing in the response")
+        }
+
         setMessage("Login successful")
-        sessionStorage.setItem("id", data.id)
+        sessionStorage.setItem("id", data._id) // Store _id in sessionStorage
         sessionStorage.setItem("accessToken", data.accessToken)
-        const id = sessionStorage.getItem("id")
-        navigate(`/users/${id}`)
+        navigate(`/user/${data._id}`) // Navigate using _id
       })
       .catch((error) => {
-        console.error(error)
+        console.error("Error during login:", error)
         setMessage("Failed to login")
       })
   }

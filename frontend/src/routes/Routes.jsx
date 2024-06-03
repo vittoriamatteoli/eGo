@@ -13,7 +13,7 @@ export const AppRoutes = () => {
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/users/:id" element={<Dashboard />} />
+          <Route path="/user/:id" element={<Dashboard />} />
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           <Route path="/logout" element={<Logout />} />
           <Route path="*" element={<h1>Not Found</h1>} />
