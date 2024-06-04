@@ -4,10 +4,10 @@ import { ActivityGraph } from "../components/ActivityGraph"
 import { DistanceCard } from "../components/DistanceCard"
 import { EnergyCard } from "../components/EnergyCard"
 
-export const Dashboard = () => {
+export const Dashboard = ({ id }) => {
   return (
     <>
-      <Sidebar />
+      <Sidebar userId={id} />
       <PointsCard />
       <ActivityGraph />
       <DistanceCard />
