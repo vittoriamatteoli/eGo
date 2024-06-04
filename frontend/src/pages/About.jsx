@@ -1,7 +1,11 @@
 import { BackArrow } from "../reusables/BackArrow"
 import { Logo } from "../reusables/Logo"
 import styled from "styled-components"
-
+const StyledImg = styled.img`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+`
 const StyledSection = styled.section`
   height: 100vh;
   background: linear-gradient(205deg, #dcded0 14.71%, #cce0a1 87.05%);
@@ -121,6 +125,8 @@ export const About = () => {
           </div>
         </div>
       </section>
+      <p>© 2024 eGo. All rights reserved.</p>
+      <StyledImg className="WorldPic" src="/world.svg" alt="world" />
     </StyledSection>
   )
 }
