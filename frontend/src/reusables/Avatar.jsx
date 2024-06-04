@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 
-export const Avatar = ({ userId }) => {
+export const Avatar = ({ id }) => {
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const apikey = import.meta.env.VITE_API_KEY;
+  const API = `${apikey}/user/${id}`;
 
   useEffect(() => {
     const fetchAvatar = async () => {
       try {
-        const response = await fetch("");
+        const response = await fetch(API);
         if (!response.ok) {
           throw new Error("Failed at fetching avatar from database");
         }
@@ -23,7 +25,7 @@ export const Avatar = ({ userId }) => {
     };
 
     fetchAvatar();
-  }, [userId]);
+  }, [id]);
 
   if (loading) return <p className="avatar-loading-mess">Loading...</p>;
   if (error) return <p className="avatar-error-mess">No image</p>;
