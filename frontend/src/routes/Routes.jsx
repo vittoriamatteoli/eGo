@@ -5,8 +5,6 @@ import { Register } from "../pages/Register.jsx";
 import { Dashboard } from "../pages/Dashboard.jsx";
 import { Logout } from "../pages/Logout.jsx";
 
-
-
 export const AppRoutes = () => {
   return (
     <Router>
@@ -15,7 +13,7 @@ export const AppRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard/:id" element={<Dashboard />} />
-        <Route path="/logout" element={<Logout/>} />
+        <Route path="/logout" element={<Logout />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </Router>

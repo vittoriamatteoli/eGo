@@ -15,7 +15,6 @@ const BatterySliderWrapper = styled.div`
 `
 
 export const BatterySlider = () => {
-
   //first we get the energy level from the backend
   const [fillPercentage, setFillPercentage] = useState(0)
   const { id } = useParams();
@@ -43,7 +42,6 @@ export const BatterySlider = () => {
         console.error('There was a problem with the fetch operation: ', error);
       });
   }, [id])
-
 
   const handleDrag = (percentage) => {
     if (percentage >= 0 && percentage <= 100) {
@@ -84,7 +82,6 @@ export const BatterySlider = () => {
     <>
       <BatterySliderWrapper id={id}>
         <BatterySVG fillPercentage={fillPercentage} onDrag={handleDrag} />
-
         <input
           type="range"
           min="0"

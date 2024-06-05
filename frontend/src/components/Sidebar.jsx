@@ -7,7 +7,6 @@ export const Sidebar = ({id}) => {
     <>
       <Logo />
       <Avatar id={id}/>
-      <p>Username</p>
       <Logout />
     </>
   )

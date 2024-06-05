@@ -85,6 +85,7 @@ export const BatterySVG = ({ fillPercentage = 14, onDrag }) => {
             y2="44.3122"
             gradientUnits="userSpaceOnUse"
           >
+            
             <stop offset="0%" stopColor={fillPercentage === 100 ? "#FDFFF1" : "#CCE0A1"} /> {/* Lilac color at 0% or green if fillPercentage is 100 */}
             <stop offset={`${fillPercentage === 100 ? 100 : Math.max(0, fillPercentage - 5)}%`} stopColor={fillPercentage === 100 ? "#FDFFF1" : "#CCE0A1"} /> {/* Lilac color up to (fillPercentage - 10)% or green if fillPercentage is 100 */}
             <stop offset={`${fillPercentage}%`} stopColor="#FDFFF1" /> {/* Transition to green at fillPercentage */}
