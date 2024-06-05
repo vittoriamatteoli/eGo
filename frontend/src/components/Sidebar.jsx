@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 import {
@@ -42,7 +43,7 @@ const ToolbarContainer = styled(Toolbar)`
   justify-content: space-between;
 `
 
-export const Sidebar = () => {
+export const Sidebar = ({ id }) => {
   const [open, setOpen] = useState(true)
   const [username, setUsername] = useState("")
 
@@ -89,7 +90,7 @@ export const Sidebar = () => {
               <Logo />
             </ListItem>
             <ListItem>
-              <Avatar />
+              <Avatar id={id} />
             </ListItem>
             <ListItem>
               <Typography variant="body1">${username}</Typography>
@@ -105,6 +106,7 @@ export const Sidebar = () => {
           <Menu />
         </IconButton>
       )}
+
     </>
-  )
-}
+  );
+};

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { Loading } from "../reusables/Loading";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -164,7 +165,7 @@ export const Register = () => {
         <FormContainer>
           <h2>Sign up</h2>
           <form onSubmit={handleRegister}>
-            {/* displayed on to of form as in figma design */}
+            {/* displayed on top of form as in figma design */}
             {message && <ErrorMessage>{message}</ErrorMessage>}
             <FormGroup>
               <Input
@@ -202,10 +203,8 @@ export const Register = () => {
                 disabled={loading}
               />
             </FormGroup>
-            <Button type="submit" disabled={loading}>
-              {/* Will create a loading spinner in next step and import from loading.jsx, instead of displaying it in the button */}
-              {loading ? "Signing up..." : "Sign up"}
-            </Button>
+            {/* Conditionally render loading spinner or login button */}
+            {loading ? <Loading /> : <Button type="submit">Sign up</Button>}
           </form>
           <BottomText>
             <p>
