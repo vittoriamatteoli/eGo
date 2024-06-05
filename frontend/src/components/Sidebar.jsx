@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 import {
@@ -47,7 +46,7 @@ export const Sidebar = ({ id }) => {
   const [open, setOpen] = useState(true)
   const [username, setUsername] = useState("")
 
-  const { id } = useParams()
+  // const { id } = useParams()
   const API = `${apikey}/user/${id}`
 
   //fetch username
@@ -93,7 +92,7 @@ export const Sidebar = ({ id }) => {
               <Avatar id={id} />
             </ListItem>
             <ListItem>
-              <Typography variant="body1">${username}</Typography>
+              <Typography variant="body1">{username}</Typography>
             </ListItem>
             <ListItem>
               <Logout />
@@ -106,7 +105,6 @@ export const Sidebar = ({ id }) => {
           <Menu />
         </IconButton>
       )}
-
     </>
-  );
-};
+  )
+}
