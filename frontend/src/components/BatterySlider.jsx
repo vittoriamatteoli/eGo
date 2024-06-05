@@ -1,10 +1,17 @@
 import styled from "styled-components"
 import { useParams } from "react-router"
 import { useEffect, useState } from "react"
+import { EgoButton } from "../reusables/Button"
+import { BatterySVG } from "../components/BatterySVG";
 const apikey = import.meta.env.VITE_API_KEY
 
 const BatterySliderWrapper = styled.div`
-  width: 195px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
 `
 
 export const BatterySlider = () => {
@@ -36,6 +43,13 @@ export const BatterySlider = () => {
         console.error('There was a problem with the fetch operation: ', error);
       });
   }, [id])
+
+
+  const handleDrag = (percentage) => {
+    if (percentage >= 0 && percentage <= 100) {
+      setFillPercentage(percentage)
+    }
+  }
   // then we update energy level with a patch request
   const updateEnergyLevel = (value) => {
     const token = sessionStorage.getItem("accessToken")
@@ -67,15 +81,20 @@ export const BatterySlider = () => {
   }
 
   return (
-    <BatterySliderWrapper id={id}>
-      <input
-        type="range"
-        min="0"
-        max="100"
-        value={fillPercentage}
-        onChange={(e) => updateEnergyLevel(e.target.value)}
-      />
-      <div>Current energy level: {fillPercentage}%</div>
-    </BatterySliderWrapper>
+    <>
+      <BatterySliderWrapper id={id}>
+        <BatterySVG fillPercentage={fillPercentage} onDrag={handleDrag} />
+
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value={fillPercentage}
+          onChange={(e) => updateEnergyLevel(e.target.value)}
+        />
+        <div>Current energy level: {fillPercentage}%</div>
+      </BatterySliderWrapper>
+      <EgoButton onClick={() => updateEnergyLevel(e.target.value)}>Charge</EgoButton>
+    </>
   );
 }

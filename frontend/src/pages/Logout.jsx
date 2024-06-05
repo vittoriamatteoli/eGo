@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
-import { EgoButton } from "../components/Button"
+import { EgoButton } from "../reusables/Button"
 
 export const Logout = () => {
   const [message, setMessage] = useState("")

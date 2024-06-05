@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
-import { EgoButton } from "../components/Button";
+import { EgoButton } from "../reusables/Button"
 import Globe from "../assets/Globe.svg";
 import logo from "../assets/logo.svg";
 
