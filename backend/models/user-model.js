@@ -1,8 +1,26 @@
-import mongoose from "mongoose"
 
-import bcryptjs from "bcryptjs"
+import mongoose from "mongoose";
+
+import bcryptjs from "bcryptjs";
+
 
 const SALT_ROUNDS = 12 // make this configurable so we can adjust the security level if needed
+
+const defaultAvatars = [
+  //An array of default avatar URLs from cloudinary
+  "https://res.cloudinary.com/egocloud/image/upload/v1717352040/ego-tree-avatar01.png",
+
+  "https://res.cloudinary.com/egocloud/image/upload/v1717352124/ego-tree-avatar02.png",
+
+  "https://res.cloudinary.com/egocloud/image/upload/v1717352124/ego-tree-avatar03.png",
+
+  "https://res.cloudinary.com/egocloud/image/upload/v1717352125/ego-tree-avatar04.png",
+];
+
+const getRandomAvatarUrl = () => {
+  const randomIndex = Math.floor(Math.random() * defaultAvatars.length);
+  return defaultAvatars[randomIndex];
+};
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -42,7 +60,14 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 5,
   },
-})
+
+
+  avatarUrl: {
+    type: String,
+    default: getRandomAvatarUrl,
+  },
+});
+
 
 //Suggestion: hashing the pass before we save it at use the matchpassword method to compare the password as the user logs in.
 
@@ -50,17 +75,23 @@ const userSchema = new mongoose.Schema({
 
 //this uses matchPassword method to compare the entered password with the hashed password in the database
 userSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcryptjs.compare(enteredPassword, this.password)
-}
+
+  return await bcryptjs.compare(enteredPassword, this.password);
+};
+
 //This adds a pre-save (pre) hook to hash the password *before* saving it to the database so we don't store the password in plain text
 userSchema.pre("save", async function (next) {
   // we only hash the password if it has been modified (or is new)
   if (!this.isModified("password")) {
-    next()
+
+    next();
+
   }
   // hash the password before saving it to the database with the SALT_ROUNDS we can easoly adjust the security level.
   //high=more secure but slower to hash - (10-12 is supposed to be a good balance)
   this.password = await bcryptjs.hash(this.password, SALT_ROUNDS)
 })
 
-export default mongoose.model("User", userSchema)
+
+export default mongoose.model("User", userSchema);
+

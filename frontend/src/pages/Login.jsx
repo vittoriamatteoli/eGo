@@ -1,12 +1,15 @@
-import styled from "styled-components"
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import styled from "styled-components";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Loading } from "../reusables/Loading";
 
 const Container = styled.div`
   display: flex;
   width: 100vw;
   background-color: #fff;
-`
+
+`;
+
 
 const LeftColumn = styled.div`
   flex: 1;
@@ -17,7 +20,9 @@ const LeftColumn = styled.div`
   box-sizing: border-box;
   background-color: #d9d9d9;
   border-radius: 20px;
-`
+
+`;
+
 
 const RightColumn = styled.div`
   flex: 1;
@@ -27,17 +32,23 @@ const RightColumn = styled.div`
   flex-direction: column;
   justify-content: center;
   background-color: #ffffff;
-`
+
+`;
+
 
 const ImageContainer = styled.div`
   width: 80%;
   text-align: center;
-`
+
+`;
+
 
 const StyledImage = styled.img`
   max-width: 100%;
   height: auto;
-`
+
+`;
+
 
 const FormContainer = styled.div`
   width: 100%;
@@ -46,11 +57,13 @@ const FormContainer = styled.div`
   h2 {
     text-align: center;
   }
-`
+
+`;
 
 const FormGroup = styled.div`
   margin-bottom: 15px;
-`
+`;
+
 
 const Input = styled.input`
   outline: none;
@@ -66,7 +79,9 @@ const Input = styled.input`
     background-color: #fff;
     border: 1px solid black;
   }
-`
+
+`;
+
 
 const Button = styled.button`
   width: 100%;
@@ -79,9 +94,10 @@ const Button = styled.button`
   &:hover {
     background-color: #88a183b7;
   }
+
 `
 
-const ForgotPassword = styled.a`
+/*const ForgotPassword = styled.a`
   display: block;
   margin-top: 10px;
   text-align: right;
@@ -93,6 +109,17 @@ const ForgotPassword = styled.a`
     //some effects
   }
 `
+
+*/
+
+const ErrorMessage = styled.div`
+  margin-bottom: 15px;
+  padding: 10px;
+  color: black;
+  border-radius: 7px;
+  border: 3px solid #c590fb;
+`;
+
 
 const BottomText = styled.div`
   margin-top: 20px;
@@ -111,25 +138,29 @@ const BottomText = styled.div`
       //some effects
     }
   }
-`
+
+`;
 export const Login = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [message, setMessage] = useState("")
-  const [loading, setLoading] = useState(false)
-  const apikey = import.meta.env.VITE_API_KEY
-  const API = `${apikey}/sessions`
-  const navigate = useNavigate()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const apikey = import.meta.env.VITE_API_KEY;
+  const API = `${apikey}/sessions`;
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setMessage("")
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
+
     try {
       const response = await fetch(API, {
         method: "POST",
         body: JSON.stringify({ email, password }),
         headers: { "Content-Type": "application/json" },
+
       })
       if (!response.ok) {
         if (response.status === 401) {
@@ -158,6 +189,7 @@ export const Login = () => {
     }
   }
 
+
   return (
     <Container>
       <LeftColumn>
@@ -169,6 +201,7 @@ export const Login = () => {
         <FormContainer>
           <h2>Login</h2>
           <form onSubmit={handleLogin}>
+            {message && <ErrorMessage>{message}</ErrorMessage>}
             <FormGroup>
               <Input
                 type="email"
@@ -178,6 +211,7 @@ export const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
                 required
+                disabled={loading}
               />
             </FormGroup>
             <FormGroup>
@@ -189,24 +223,21 @@ export const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
                 required
+                disabled={loading}
               />
             </FormGroup>
-            <Button type="submit">Sign In</Button>
-            <ForgotPassword href="#">Forgot password?</ForgotPassword>
+            {/* Conditionally render loading spinner or login button */}
+            {loading ? <Loading /> : <Button type="submit">Log in</Button>}
           </form>
           <BottomText>
-            {message && (
-              <div>
-                <p>{message}</p>
-              </div>
-            )}
             <p>
-              Don't have an account yet? <Link to="/register">Register</Link>
+              Don't have an account yet? <Link to="/register">Sign up</Link>
             </p>
-            <p>By clicking the button above, you agree to Terms and Privacy</p>
           </BottomText>
         </FormContainer>
       </RightColumn>
     </Container>
-  )
-}
+
+  );
+};
+
