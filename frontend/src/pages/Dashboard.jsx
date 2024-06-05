@@ -9,8 +9,8 @@ export const Dashboard = () => {
   const { id } = useParams()
   return (
     <>
+      <h2>DASHBOARD</h2>
       <Sidebar id={id} />
-
       <PointsCard />
       <ActivityGraph />
       <DistanceCard />

@@ -7,7 +7,9 @@ const Container = styled.div`
   display: flex;
   width: 100vw;
   background-color: #fff;
+
 `;
+
 
 const LeftColumn = styled.div`
   flex: 1;
@@ -18,7 +20,9 @@ const LeftColumn = styled.div`
   box-sizing: border-box;
   background-color: #d9d9d9;
   border-radius: 20px;
+
 `;
+
 
 const RightColumn = styled.div`
   flex: 1;
@@ -28,17 +32,23 @@ const RightColumn = styled.div`
   flex-direction: column;
   justify-content: center;
   background-color: #ffffff;
+
 `;
+
 
 const ImageContainer = styled.div`
   width: 80%;
   text-align: center;
+
 `;
+
 
 const StyledImage = styled.img`
   max-width: 100%;
   height: auto;
+
 `;
+
 
 const FormContainer = styled.div`
   width: 100%;
@@ -47,11 +57,13 @@ const FormContainer = styled.div`
   h2 {
     text-align: center;
   }
+
 `;
 
 const FormGroup = styled.div`
   margin-bottom: 15px;
 `;
+
 
 const Input = styled.input`
   outline: none;
@@ -67,7 +79,9 @@ const Input = styled.input`
     background-color: #fff;
     border: 1px solid black;
   }
+
 `;
+
 
 const Button = styled.button`
   width: 100%;
@@ -80,7 +94,23 @@ const Button = styled.button`
   &:hover {
     background-color: #88a183b7;
   }
-`;
+
+`
+
+/*const ForgotPassword = styled.a`
+  display: block;
+  margin-top: 10px;
+  text-align: right;
+  font-size: 0.6em;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  &:hover {
+    //some effects
+  }
+`
+
+*/
 
 const ErrorMessage = styled.div`
   margin-bottom: 15px;
@@ -89,6 +119,7 @@ const ErrorMessage = styled.div`
   border-radius: 7px;
   border: 3px solid #c590fb;
 `;
+
 
 const BottomText = styled.div`
   margin-top: 20px;
@@ -107,6 +138,7 @@ const BottomText = styled.div`
       //some effects
     }
   }
+
 `;
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -122,38 +154,41 @@ export const Login = () => {
     setLoading(true);
     setMessage("");
 
+
     try {
       const response = await fetch(API, {
         method: "POST",
         body: JSON.stringify({ email, password }),
         headers: { "Content-Type": "application/json" },
-      });
 
+      })
       if (!response.ok) {
         if (response.status === 401) {
-          throw new Error("Invalid email or password.");
+          throw new Error("Invalid email or password.")
         } else if (response.status === 400) {
-          throw new Error("Bad request. Please check your input.");
+          throw new Error("Bad request. Please check your input.")
         } else {
-          throw new Error("Something went wrong. Please try again.");
+          throw new Error("Something went wrong. Please try again.")
         }
       }
 
-      const data = await response.json();
-      console.log(data);
-      const id = data.id;
-      setMessage("Login successful");
-      sessionStorage.setItem("accessToken", data.accessToken);
-      setEmail("");
-      setPassword("");
-      navigate(`/dashboard/${id}`);
+      const data = await response.json()
+      console.log(data)
+      const id = data.id // get the user id from the response data
+      setMessage("Login successful")
+      sessionStorage.setItem("accessToken", data.accessToken)
+      setEmail("")
+      setPassword("")
+
+      navigate(`/dashboard/${id}`)
     } catch (error) {
-      console.error(error);
-      setMessage(error.message);
+      console.error(error)
+      setMessage(error.message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
+
 
   return (
     <Container>
@@ -202,5 +237,7 @@ export const Login = () => {
         </FormContainer>
       </RightColumn>
     </Container>
+
   );
 };
+
