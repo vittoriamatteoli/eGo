@@ -35,8 +35,8 @@ export const Avatar = ({ id }) => {
 
   return (
     <>
-    <img src={avatarUrl} alt="User Avatar" className="user-avatar" />;
-    <p>{username}</p>
+      <img src={avatarUrl} alt="User Avatar" className="user-avatar" />;
+      <p>{username}</p>
     </>
-);
+  );
 };
