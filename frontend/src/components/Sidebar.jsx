@@ -1,11 +1,12 @@
-import { Logo } from "../reusables/Logo"
-import { Avatar } from "../reusables/Avatar"
-import { Logout } from "../pages/Logout"
-export const Sidebar = () => {
+import { Logo } from "../reusables/Logo";
+import { Avatar } from "../reusables/Avatar";
+import { Logout } from "../pages/Logout";
+
+export const Sidebar = ({id}) => {
   return (
     <>
       <Logo />
-      <Avatar />
+      <Avatar id={id}/>
       <p>Username</p>
       <Logout />
     </>
