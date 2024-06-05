@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { Landing } from "../pages/Landing.jsx"
 import { Login } from "../pages/Login.jsx"
@@ -6,6 +7,8 @@ import { Dashboard } from "../pages/Dashboard.jsx"
 import { Logout } from "../pages/Logout.jsx"
 import { About } from "../pages/About.jsx"
 
+
+
 export const AppRoutes = () => {
   return (
     <>
@@ -13,13 +16,16 @@ export const AppRoutes = () => {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
+
           <Route path="/about" element={<About />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+   
+          <Route path="/dashboard/:id" element={<Dashboard />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
       </Router>
     </>
+
   )
 }

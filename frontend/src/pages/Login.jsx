@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Loading } from "../reusables/Loading";
 
 const Container = styled.div`
   display: flex;
@@ -140,11 +141,12 @@ export const Login = () => {
 
       const data = await response.json();
       console.log(data);
+      const id = data.id;
       setMessage("Login successful");
       sessionStorage.setItem("accessToken", data.accessToken);
       setEmail("");
       setPassword("");
-      navigate("/dashboard");
+      navigate(`/dashboard/${id}`);
     } catch (error) {
       console.error(error);
       setMessage(error.message);
@@ -189,10 +191,8 @@ export const Login = () => {
                 disabled={loading}
               />
             </FormGroup>
-            <Button type="submit" disabled={loading}>
-              {/* Will create a loading spinner in next step and import from loading.jsx */}
-              {loading ? "Logging in..." : "Log in"}
-            </Button>
+            {/* Conditionally render loading spinner or login button */}
+            {loading ? <Loading /> : <Button type="submit">Log in</Button>}
           </form>
           <BottomText>
             <p>
