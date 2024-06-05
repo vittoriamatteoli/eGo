@@ -82,6 +82,7 @@ export const BatterySlider = () => {
 
   return (
     <>
+
       <BatterySliderWrapper id={id}>
         <BatterySVG fillPercentage={fillPercentage} onDrag={handleDrag} />
 

@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import bcryptjs from 'bcryptjs';
 import { getRandomAvatarUrl } from '../utils/avatarUtils.js';
-
 const SALT_ROUNDS = 12; // make this configurable so we can adjust the security level if needed
 
 const userSchema = new mongoose.Schema({

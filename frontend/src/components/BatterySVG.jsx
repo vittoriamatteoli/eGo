@@ -1,12 +1,10 @@
 import styled from "styled-components";
 import { useState } from "react";
-
 const BatteryWrapper = styled.div`
   position: relative;
   width: 195px;
   height: 89px;
 `;
-
 export const BatterySVG = ({ fillPercentage = 14, onDrag }) => {
   const [dragging, setDragging] = useState(false);
 

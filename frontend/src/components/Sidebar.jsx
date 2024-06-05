@@ -8,6 +8,7 @@ export const Sidebar = ({ id }) => {
       <Logo />
       <Avatar id={id} />
       <Logout />
+      
     </>
   )
 }

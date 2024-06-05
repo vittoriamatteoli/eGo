@@ -7,6 +7,7 @@ export const defaultAvatars = [
   "https://res.cloudinary.com/egocloud/image/upload/v1717352125/ego-tree-avatar04.png",
 ];
 
+
 export const getRandomAvatarUrl = () => {
   const randomIndex = Math.floor(Math.random() * defaultAvatars.length);
   return defaultAvatars[randomIndex];
