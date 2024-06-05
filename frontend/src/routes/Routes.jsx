@@ -15,6 +15,7 @@ export const AppRoutes = () => {
         <Route path="/dashboard/:id" element={<Dashboard />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="*" element={<h1>Not Found</h1>} />
+        
       </Routes>
     </Router>
   );

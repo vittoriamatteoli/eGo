@@ -15,6 +15,7 @@ export const Dashboard = () => {
       <ActivityGraph id={id} />
       <DistanceCard id={id} />
       <EnergyCard id={id} />
+
     </>
   )
 }

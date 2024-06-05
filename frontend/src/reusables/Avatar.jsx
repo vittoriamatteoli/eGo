@@ -26,6 +26,7 @@ export const Avatar = ({ id }) => {
       }
     };
 
+    
     fetchAvatar();
   }, [id]);
 
