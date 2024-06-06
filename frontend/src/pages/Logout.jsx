@@ -21,6 +21,7 @@ import styled from "styled-components"
   }
 `*/
 
+
 export const Logout = () => {
   const [message, setMessage] = useState("")
   const navigate = useNavigate()

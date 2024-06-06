@@ -126,7 +126,6 @@ router.patch("/user/:id", authenticateUser, async (req, res) => {
 });
 
 
-
 // patch request to  update the points
 router.patch("/user/:id", async (req, res) => {
   try {

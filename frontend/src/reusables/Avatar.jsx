@@ -31,5 +31,7 @@ export const Avatar = ({ id }) => {
   if (error) return <p className="avatar-error-mess">No image</p>;
   if (!avatarUrl) return <p className="avatar-error-mess">No image</p>;
 
+
   return <img src={avatarUrl} alt="User Avatar" className="user-avatar" />;
 };
+
