@@ -4,7 +4,7 @@ import { ActivityGraph } from "../components/ActivityGraph"
 import { DistanceCard } from "../components/DistanceCard"
 import { EnergyCard } from "../components/EnergyCard"
 import { TravelCard } from "../components/TravelCard";
-import { useParams } from "react-router"
+import { useParams } from "react-router-dom"
 
 export const Dashboard = () => {
   const { id } = useParams();

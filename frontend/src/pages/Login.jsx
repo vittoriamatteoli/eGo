@@ -102,8 +102,7 @@ const StyledImage = styled.img`
     width: 50vw;
   }
 `;
-  }
-`;
+
 
 const FormContainer = styled.div`
   grid-row: 1;
@@ -140,7 +139,6 @@ const Input = styled.input`
   }
 `;
 
-
 const ErrorMessage = styled.div`
   margin-bottom: 15px;
   padding: 10px;
@@ -176,8 +174,8 @@ const BottomText = styled.div`
     left: 50%;
     align-self: center;
   }
-
 `;
+
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -206,12 +204,9 @@ export const Login = () => {
       if (!response.ok) {
         if (response.status === 401) {
           throw new Error("Invalid email or password.");
-          throw new Error("Invalid email or password.");
         } else if (response.status === 400) {
           throw new Error("Bad request. Please check your input.");
-          throw new Error("Bad request. Please check your input.");
         } else {
-          throw new Error("Something went wrong. Please try again.");
           throw new Error("Something went wrong. Please try again.");
         }
       }
@@ -223,19 +218,15 @@ export const Login = () => {
       sessionStorage.setItem("accessToken", data.accessToken);
       setEmail("");
       setPassword("");
-
       navigate(`/dashboard/${id}`);
     } catch (error) {
       console.error(error);
       setMessage(error.message);
-      console.error(error);
-      setMessage(error.message);
     } finally {
-      setLoading(false);
       setLoading(false);
     }
   };
-  };
+
 
   return (
     <Container>
