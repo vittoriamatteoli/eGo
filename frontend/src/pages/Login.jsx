@@ -1,50 +1,112 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { EgoButton } from "../reusables/Button";
+import Globe from "../assets/Globe.svg";
+import { Logo } from "../reusables/Logo";
+import { Loading } from "../reusables/Loading";
 
 const Container = styled.div`
-  display: flex;
+  overflow: hidden;
+  color: var(--ego-dark);
+  display: grid;
+  grid-template-columns: 1fr;
   width: 100vw;
-  background-color: #fff;
+  height: 100vh;
+  background-color: var(--ego-white);
+  background: var(--ego-gradient-cutoff-mob);
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    background: var(--ego-gradient-cutoff-dt);
+  }
 `;
 
 const LeftColumn = styled.div`
+  height: 55vh;
+  grid-column: 1;
   flex: 1;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: top;
   align-items: center;
-  padding: 20px;
   box-sizing: border-box;
+  @media (min-width: 376px) {
+    height: 10vh;
+    padding: 0vh 0px 0px 0px;
+  }
+  @media (min-width: 768px) {
+    height: 100vh;
+    padding: 10vh 0px 0px 40px;
+  }
   background-color: #d9d9d9;
   border-radius: 20px;
 `;
 
 const RightColumn = styled.div`
+  grid-column: 1;
   flex: 1;
-  padding: 20px;
+  padding: 0 20px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #ffffff;
+
+  background-color: var(--ego-light);
+  @media (min-width: 768px) {
+    grid-column: 2;
+  }
 `;
 
 const ImageContainer = styled.div`
-  width: 80%;
+  width: 100%;
   text-align: center;
 `;
 
-const StyledImage = styled.img`
-  max-width: 100%;
+/*const StyledLogo = styled.img`
+visibility: hidden;
+  max-width: 80px;
   height: auto;
+  padding: 10vh 0px 20px 40px;
+  z-index: 3;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: -40px;
+  margin-left: -20px;
+  @media (min-width: 768px) {
+
+   visibility: visible;
+  }
+`;*/
+
+const StyledImage = styled.img`
+  z-index: 3;
+  height: auto;
+  width: 120%;
+  position: relative;
+  padding: 0px 0px 0px 0px;
+  @media (min-width: 768px) {
+    grid-column: 1;
+    grid-row: 2;
+    z-index: 3;
+    width: 50vw;
+  }
 `;
 
 const FormContainer = styled.div`
+  grid-row: 1;
   width: 100%;
-  max-width: 400px;
+  max-width: 80vw;
   margin: 0 auto;
   h2 {
     text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    grid-row: 2;
+    width: 400px;
   }
 `;
 
@@ -56,55 +118,55 @@ const Input = styled.input`
   outline: none;
   border: none;
   width: 100%;
-  padding: 10px;
-  color: black;
+  padding: 10px 10px 10px 24px;
+  color: var(--ego-dark);
   box-sizing: border-box;
-  background-color: #d9d9d9;
-  border-radius: 10px; //adjust once design is done
+  border-radius: 24px;
+  border: 1px solid transparent;
+  background: var(--ego-gradient-reversed);
 
-  &:focus {
-    background-color: #fff;
-    border: 1px solid black;
-  }
-`;
-
-const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: #88a183;
-  border: none;
-  border-radius: 20px; //adjust once design is done
-  color: black; //  white or black?
-  cursor: pointer;
-  &:hover {
-    background-color: #88a183b7;
+  &:focus,
+  &:active {
+    background-color: var(--ego-lgt-green);
+    border: 1px solid var(--ego-green);
   }
 `;
 
 const ErrorMessage = styled.div`
   margin-bottom: 15px;
   padding: 10px;
-  color: black;
+  color: var(--ego-error);
   border-radius: 7px;
-  border: 3px solid #c590fb;
+  border: 3px solid var(--ego-error);
 `;
 
 const BottomText = styled.div`
-  margin-top: 20px;
+  margin-top: 30px;
   font-size: 0.6em;
-  color: black;
+
+  color: var(--ego-dark);
   p {
     text-align: center;
     margin: 5px 0;
   }
   a {
-    font-weight: bold;
-    color: black;
+    color: var(--ego-dark);
     text-decoration: none;
+    font-weight: bold;
 
     &:hover {
-      //some effects
+      color: var(--ego-purple);
     }
+  }
+
+  @media (min-width: 768px) {
+    grid-row: 3;
+    position: absolute;
+    bottom: 30px;
+    text-align: center;
+    right: 0;
+    left: 50%;
+    align-self: center;
   }
 `;
 export const Login = () => {
@@ -118,6 +180,10 @@ export const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    if (!email || !password) {
+      setMessage("Please fill in all fields");
+      return;
+    }
     setLoading(true);
     setMessage("");
 
@@ -127,7 +193,6 @@ export const Login = () => {
         body: JSON.stringify({ email, password }),
         headers: { "Content-Type": "application/json" },
       });
-
       if (!response.ok) {
         if (response.status === 401) {
           throw new Error("Invalid email or password.");
@@ -140,11 +205,13 @@ export const Login = () => {
 
       const data = await response.json();
       console.log(data);
+      const id = data.id; // get the user id from the response data
       setMessage("Login successful");
       sessionStorage.setItem("accessToken", data.accessToken);
       setEmail("");
       setPassword("");
-      navigate("/dashboard");
+
+      navigate(`/dashboard/${id}`);
     } catch (error) {
       console.error(error);
       setMessage(error.message);
@@ -156,8 +223,9 @@ export const Login = () => {
   return (
     <Container>
       <LeftColumn>
+        <Logo />
         <ImageContainer>
-          <StyledImage src="world.png" alt="World" />
+          <StyledImage src={Globe} alt="globe" />
         </ImageContainer>
       </LeftColumn>
       <RightColumn>
@@ -189,10 +257,10 @@ export const Login = () => {
                 disabled={loading}
               />
             </FormGroup>
-            <Button type="submit" disabled={loading}>
-              {/* Will create a loading spinner in next step and import from loading.jsx */}
-              {loading ? "Logging in..." : "Log in"}
-            </Button>
+
+            <EgoButton type="submit" disabled={loading}>
+              {loading ? <Loading /> : "Log in"}
+            </EgoButton>
           </form>
           <BottomText>
             <p>
