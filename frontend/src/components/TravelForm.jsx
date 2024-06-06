@@ -3,10 +3,10 @@ import { Button, IconButton } from "@mui/material";
 import DriveEtaIcon from "@mui/icons-material/DriveEta";
 import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
-import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
+// import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
 import DirectionsTransitIcon from "@mui/icons-material/DirectionsTransit";
 import Autocomplete from "react-google-autocomplete";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const StyledButton = styled(Button)`
   border-radius: 24px;
@@ -26,6 +26,7 @@ const StyledButton = styled(Button)`
 `;
 
 const TravelModesContainer = styled.div`
+  width: 50%;
   display: flex;
   justify-content: space-around;
   margin-bottom: 10px;
@@ -39,29 +40,49 @@ const TravelModeButton = styled(IconButton)`
   }
 `;
 
+const StyledAutocomplete = styled(Autocomplete)`
+  width: 50%;
+  height: 1.5rem;
+  padding: 10px;
+  border: 2px solid #dcded0;
+  border-radius: 15px;
+  margin-bottom: 10px;
+`;
+
+const TravelPoints = styled.span`
+  font-weight: bold;
+  color: #39aa44;
+`;
+
 export const TravelForm = ({ id }) => {
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
   const [travelMode, setTravelMode] = useState("WALK");
   const [distance, setDistance] = useState("");
-
-  useEffect(() => {
-    if (origin && destination) {
-      getRouteDetails();
-    }
-  }, [origin, destination]);
+  const [autocompleteKey, setAutocompleteKey] = useState(0);
+  const [travelPoints, setTravelPoints] = useState(0); //add calculation in frontend? need to fetch energy data. discuss
 
   const googleTravelModes = [
     { mode: "DRIVE", icon: <DriveEtaIcon /> },
     { mode: "BICYCLE", icon: <DirectionsBikeIcon /> },
     { mode: "WALK", icon: <DirectionsWalkIcon /> },
     { mode: "TRANSIT", icon: <DirectionsTransitIcon /> },
-    { mode: "TWO_WHEELER", icon: <TwoWheelerIcon /> },
+    // { mode: "TWO_WHEELER", icon: <TwoWheelerIcon /> }, note:this mode is in beta in google api
   ];
-  console.log(origin);
-  console.log(destination);
-  console.log(distance);
-  console.log(travelMode);
+
+  const handleConfirm = async () => {
+    if (origin && destination) {
+      await getRouteDetails();
+      setOrigin("");
+      setDestination("");
+      setAutocompleteKey((prevKey) => prevKey + 1); // Increment the key to reset the Autocomplete components/text
+    } else {
+      console.error("Please set both origin and destination.");
+    }
+    console.log(origin);
+    console.log(destination);
+    console.log(travelMode);
+  };
 
   const getRouteDetails = async () => {
     const url = "https://routes.googleapis.com/directions/v2:computeRoutes";
@@ -89,7 +110,7 @@ export const TravelForm = ({ id }) => {
         body: JSON.stringify(bodyData),
       });
 
-      //add more specific error status later
+      //add more specific error status (can be a new task)
       if (!response) {
         if (response.status === 404) {
           throw new Error("Failed at getting the route!");
@@ -107,6 +128,8 @@ export const TravelForm = ({ id }) => {
     }
   };
 
+  console.log(distance);
+
   return (
     <>
       <TravelModesContainer>
@@ -121,48 +144,37 @@ export const TravelForm = ({ id }) => {
         ))}
       </TravelModesContainer>
 
-      <Autocomplete
+      <StyledAutocomplete
+        key={`start-autocomplete-${autocompleteKey}`}
         className="start-google-search-box"
         placeholder="Start"
         apiKey={import.meta.env.VITE_GOOGLE_API_KEY}
-        style={{
-          width: "50%",
-          padding: "10px",
-          border: "2px solid #ccc",
-          borderRadius: "4px",
-          marginBottom: "10px",
-        }}
         onPlaceSelected={(place) => {
           setOrigin(place.formatted_address);
-          console.log(origin);
         }}
         options={{
           types: ["geocode", "establishment"],
         }}
       />
 
-      <Autocomplete
+      <StyledAutocomplete
+        key={`destination-autocomplete-${autocompleteKey}`}
         className="destination-google-search-box"
         placeholder="Destination"
         apiKey={import.meta.env.VITE_GOOGLE_API_KEY}
-        style={{
-          width: "50%",
-          padding: "10px",
-          border: "2px solid #ccc",
-          borderRadius: "4px",
-          marginBottom: "10px",
-        }}
         onPlaceSelected={(place) => {
           setDestination(place.formatted_address);
-          console.log(destination);
         }}
         options={{
           types: ["geocode", "establishment"],
         }}
       />
 
-      <p>You will get 0 points for this trip</p>
-      <StyledButton>Confirm</StyledButton>
+      <p>
+        You will get <TravelPoints>{travelPoints}</TravelPoints> points for this
+        trip
+      </p>
+      <StyledButton onClick={handleConfirm}>Confirm</StyledButton>
     </>
   );
 };
