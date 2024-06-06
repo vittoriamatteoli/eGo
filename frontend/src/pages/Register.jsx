@@ -102,7 +102,7 @@ width: 120%;
 `;
 
 const FormContainer = styled.div`
-grid-row: 1;
+  grid-row: 1;
   width: 100%;
   max-width: 80vw;
   margin: 0 auto;
@@ -111,13 +111,12 @@ grid-row: 1;
   }
   @media (min-width: 768px) {
     grid-row: 2;
-    width:400px;
+    width: 400px;
   }
 `;
 
 const FormGroup = styled.div`
   margin-bottom: 15px;
-
 `;
 
 const Input = styled.input`
@@ -131,17 +130,16 @@ const Input = styled.input`
   border: 1px solid transparent;
   background: var(--ego-gradient-reversed);
 
-  &:focus, &:active {
+  &:focus,
+  &:active {
     background-color: var(--ego-lgt-green);
     border: 1px solid var(--ego-green);
   }
-
 `;
 
 const BottomText = styled.div`
   margin-top: 30px;
   font-size: 0.6em;
-
 
   color: var(--ego-dark);
   p {
@@ -163,8 +161,8 @@ const BottomText = styled.div`
     bottom: 30px;
     text-align: center;
 
-align-self: center;
-
+    align-self: center;
+  }
 `;
 
 const ErrorMessage = styled.div`
@@ -292,7 +290,6 @@ export const Register = () => {
                 disabled={loading}
               />
             </FormGroup>
-
             {loading ? (
               <Loading />
             ) : (

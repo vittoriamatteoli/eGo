@@ -23,6 +23,8 @@ const userSchema = new mongoose.Schema({
     minlength: [6, "Password must be at least 6 characters long"],
     maxlength: [30, "Password must be at most 30 characters long"],
   },
+  //role if we want to differ on paying or non payin users or admin.
+  //we need to have some way of differentiate the users to use autorization in our project
   role:{
     type: String,
     default: "user",
@@ -45,6 +47,12 @@ const userSchema = new mongoose.Schema({
     default: getRandomAvatarUrl,
   },
 });
+
+
+
+//Suggestion: hashing the pass before we save it at use the matchpassword method to compare the password as the user logs in.
+
+//optional addon for security: (we could also save this method in a middleware file and import it here if we want to keep the model file cleaner)
 
 //this uses matchPassword method to compare the entered password with the hashed password in the database
 userSchema.methods.matchPassword = async function(enteredPassword) {

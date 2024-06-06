@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { EgoButton } from "../reusables/Button"
 import Globe from "../assets/Globe-ego.svg";
 import logo from "../assets/globe-logo.svg";
+import { Loading } from "../reusables/Loading";
 
 const Container = styled.div`
   overflow:hidden;
@@ -83,6 +84,7 @@ const StyledLogo = styled.img`
   margin-top: -40px;
   margin-left: -20px;
   }
+
 `;
 
 const StyledImage = styled.img`
@@ -98,6 +100,8 @@ const StyledImage = styled.img`
     grid-row: 2;
     z-index: 2;
     width: 50vw;
+  }
+`;
   }
 `;
 
@@ -130,12 +134,12 @@ const Input = styled.input`
   border-radius: 24px;
   border: 1px solid transparent;
   background: var(--ego-gradient-reversed);
-
   &:focus, &:active {
     background-color: var(--ego-lgt-green);
     border: 1px solid var(--ego-green);
   }
 `;
+
 
 const ErrorMessage = styled.div`
   margin-bottom: 15px;
@@ -148,7 +152,6 @@ const ErrorMessage = styled.div`
 const BottomText = styled.div`
   margin-top: 30px;
   font-size: 0.6em;
-
 
   color: var(--ego-dark);
   p {
@@ -172,6 +175,7 @@ const BottomText = styled.div`
     right: 0;
     left: 50%;
     align-self: center;
+  }
 
 `;
 export const Login = () => {
@@ -202,9 +206,12 @@ export const Login = () => {
       if (!response.ok) {
         if (response.status === 401) {
           throw new Error("Invalid email or password.");
+          throw new Error("Invalid email or password.");
         } else if (response.status === 400) {
           throw new Error("Bad request. Please check your input.");
+          throw new Error("Bad request. Please check your input.");
         } else {
+          throw new Error("Something went wrong. Please try again.");
           throw new Error("Something went wrong. Please try again.");
         }
       }
@@ -221,9 +228,13 @@ export const Login = () => {
     } catch (error) {
       console.error(error);
       setMessage(error.message);
+      console.error(error);
+      setMessage(error.message);
     } finally {
       setLoading(false);
+      setLoading(false);
     }
+  };
   };
 
   return (
@@ -265,8 +276,7 @@ export const Login = () => {
             </FormGroup>
 
             <EgoButton type="submit" disabled={loading}>
-              {/* Will create a loading spinner in next step and import from loading.jsx */}
-              {loading ? "Logging in..." : "Log in"}
+              {loading ? <Loading /> : "Log in"}
             </EgoButton>
           </form>
           <BottomText>
