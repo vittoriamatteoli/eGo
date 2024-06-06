@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { EgoButton } from "../reusables/Button"
+import { EgoButton } from "../reusables/Button";
 import Globe from "../assets/Globe.svg";
-import {Logo} from "../reusables/Logo";
+import { Logo } from "../reusables/Logo";
 import { Loading } from "../reusables/Loading";
-
 
 const Container = styled.div`
   overflow: hidden;
@@ -20,7 +19,8 @@ const Container = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     background: var(--ego-gradient-cutoff-dt);
-  }`;
+  }
+`;
 
 const LeftColumn = styled.div`
   height: 55vh;
@@ -44,7 +44,6 @@ const LeftColumn = styled.div`
   border-radius: 20px;
 `;
 
-
 const RightColumn = styled.div`
   grid-column: 1;
   flex: 1;
@@ -57,8 +56,8 @@ const RightColumn = styled.div`
   background-color: var(--ego-light);
   @media (min-width: 768px) {
     grid-column: 2;
-  }`;
-
+  }
+`;
 
 const ImageContainer = styled.div`
   width: 100%;
@@ -82,7 +81,6 @@ visibility: hidden;
   }
 `;*/
 
-
 const StyledImage = styled.img`
   z-index: 3;
   height: auto;
@@ -94,8 +92,8 @@ const StyledImage = styled.img`
     grid-row: 2;
     z-index: 3;
     width: 50vw;
-  }`;
-
+  }
+`;
 
 const FormContainer = styled.div`
   grid-row: 1;
@@ -109,12 +107,12 @@ const FormContainer = styled.div`
   @media (min-width: 768px) {
     grid-row: 2;
     width: 400px;
-  }`;
+  }
+`;
 
 const FormGroup = styled.div`
   margin-bottom: 15px;
 `;
-
 
 const Input = styled.input`
   outline: none;
@@ -127,26 +125,12 @@ const Input = styled.input`
   border: 1px solid transparent;
   background: var(--ego-gradient-reversed);
 
-
-  &:focus, &:active {
+  &:focus,
+  &:active {
     background-color: var(--ego-lgt-green);
     border: 1px solid var(--ego-green);
-}`
-
-/*const ForgotPassword = styled.a`
-  display: block;
-  margin-top: 10px;
-  text-align: right;
-  font-size: 0.6em;
-  color: black;
-  text-decoration: none;
-  font-weight: bold;
-  &:hover {
-    //some effects
   }
-`
-
-*/
+`;
 
 const ErrorMessage = styled.div`
   margin-bottom: 15px;
@@ -156,11 +140,9 @@ const ErrorMessage = styled.div`
   border: 3px solid var(--ego-error);
 `;
 
-
 const BottomText = styled.div`
   margin-top: 30px;
   font-size: 0.6em;
-
 
   color: var(--ego-dark);
   p {
@@ -185,8 +167,7 @@ const BottomText = styled.div`
     right: 0;
     left: 50%;
     align-self: center;
-
-
+  }
 `;
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -206,21 +187,19 @@ export const Login = () => {
     setLoading(true);
     setMessage("");
 
-
     try {
       const response = await fetch(API, {
         method: "POST",
         body: JSON.stringify({ email, password }),
         headers: { "Content-Type": "application/json" },
-
-      })
+      });
       if (!response.ok) {
         if (response.status === 401) {
-          throw new Error("Invalid email or password.")
+          throw new Error("Invalid email or password.");
         } else if (response.status === 400) {
-          throw new Error("Bad request. Please check your input.")
+          throw new Error("Bad request. Please check your input.");
         } else {
-          throw new Error("Something went wrong. Please try again.")
+          throw new Error("Something went wrong. Please try again.");
         }
       }
 
@@ -233,21 +212,18 @@ export const Login = () => {
       setPassword("");
 
       navigate(`/dashboard/${id}`);
-
-
     } catch (error) {
-      console.error(error)
-      setMessage(error.message)
+      console.error(error);
+      setMessage(error.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
-
+  };
 
   return (
     <Container>
       <LeftColumn>
-        <Logo/>
+        <Logo />
         <ImageContainer>
           <StyledImage src={Globe} alt="globe" />
         </ImageContainer>
@@ -283,10 +259,8 @@ export const Login = () => {
             </FormGroup>
 
             <EgoButton type="submit" disabled={loading}>
-              {/* Will create a loading spinner in next step and import from loading.jsx */}
-              {loading ? "Logging in..." : "Log in"}
+              {loading ? <Loading /> : "Log in"}
             </EgoButton>
-
           </form>
           <BottomText>
             <p>
@@ -296,7 +270,5 @@ export const Login = () => {
         </FormContainer>
       </RightColumn>
     </Container>
-
   );
 };
-
