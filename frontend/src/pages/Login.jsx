@@ -3,7 +3,9 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { EgoButton } from "../reusables/Button"
 import Globe from "../assets/Globe.svg";
-import logo from "../assets/logo.svg";
+import {Logo} from "../reusables/Logo";
+import { Loading } from "../reusables/Loading";
+
 
 const Container = styled.div`
   overflow: hidden;
@@ -18,8 +20,7 @@ const Container = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     background: var(--ego-gradient-cutoff-dt);
-  }
-`;
+  }`;
 
 const LeftColumn = styled.div`
   height: 55vh;
@@ -39,7 +40,10 @@ const LeftColumn = styled.div`
     height: 100vh;
     padding: 10vh 0px 0px 40px;
   }
+  background-color: #d9d9d9;
+  border-radius: 20px;
 `;
+
 
 const RightColumn = styled.div`
   grid-column: 1;
@@ -49,18 +53,19 @@ const RightColumn = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   background-color: var(--ego-light);
   @media (min-width: 768px) {
     grid-column: 2;
-  }
-`;
+  }`;
+
 
 const ImageContainer = styled.div`
   width: 100%;
   text-align: center;
 `;
 
-const StyledLogo = styled.img`
+/*const StyledLogo = styled.img`
 visibility: hidden;
   max-width: 80px;
   height: auto;
@@ -75,7 +80,8 @@ visibility: hidden;
 
    visibility: visible;
   }
-`;
+`;*/
+
 
 const StyledImage = styled.img`
   z-index: 3;
@@ -88,8 +94,8 @@ const StyledImage = styled.img`
     grid-row: 2;
     z-index: 3;
     width: 50vw;
-  }
-`;
+  }`;
+
 
 const FormContainer = styled.div`
   grid-row: 1;
@@ -99,15 +105,16 @@ const FormContainer = styled.div`
   h2 {
     text-align: center;
   }
+
   @media (min-width: 768px) {
     grid-row: 2;
     width: 400px;
-  }
-`;
+  }`;
 
 const FormGroup = styled.div`
   margin-bottom: 15px;
 `;
+
 
 const Input = styled.input`
   outline: none;
@@ -120,11 +127,26 @@ const Input = styled.input`
   border: 1px solid transparent;
   background: var(--ego-gradient-reversed);
 
+
   &:focus, &:active {
     background-color: var(--ego-lgt-green);
     border: 1px solid var(--ego-green);
+}`
+
+/*const ForgotPassword = styled.a`
+  display: block;
+  margin-top: 10px;
+  text-align: right;
+  font-size: 0.6em;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  &:hover {
+    //some effects
   }
-`;
+`
+
+*/
 
 const ErrorMessage = styled.div`
   margin-bottom: 15px;
@@ -133,6 +155,7 @@ const ErrorMessage = styled.div`
   border-radius: 7px;
   border: 3px solid var(--ego-error);
 `;
+
 
 const BottomText = styled.div`
   margin-top: 30px;
@@ -153,6 +176,7 @@ const BottomText = styled.div`
       color: var(--ego-purple);
     }
   }
+
   @media (min-width: 768px) {
     grid-row: 3;
     position: absolute;
@@ -161,6 +185,7 @@ const BottomText = styled.div`
     right: 0;
     left: 50%;
     align-self: center;
+
 
 `;
 export const Login = () => {
@@ -181,20 +206,21 @@ export const Login = () => {
     setLoading(true);
     setMessage("");
 
+
     try {
       const response = await fetch(API, {
         method: "POST",
         body: JSON.stringify({ email, password }),
         headers: { "Content-Type": "application/json" },
-      });
 
+      })
       if (!response.ok) {
         if (response.status === 401) {
-          throw new Error("Invalid email or password.");
+          throw new Error("Invalid email or password.")
         } else if (response.status === 400) {
-          throw new Error("Bad request. Please check your input.");
+          throw new Error("Bad request. Please check your input.")
         } else {
-          throw new Error("Something went wrong. Please try again.");
+          throw new Error("Something went wrong. Please try again.")
         }
       }
 
@@ -207,18 +233,21 @@ export const Login = () => {
       setPassword("");
 
       navigate(`/dashboard/${id}`);
+
+
     } catch (error) {
-      console.error(error);
-      setMessage(error.message);
+      console.error(error)
+      setMessage(error.message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
+
 
   return (
     <Container>
       <LeftColumn>
-        <StyledLogo src={logo} alt="logo" />
+        <Logo/>
         <ImageContainer>
           <StyledImage src={Globe} alt="globe" />
         </ImageContainer>
@@ -257,6 +286,7 @@ export const Login = () => {
               {/* Will create a loading spinner in next step and import from loading.jsx */}
               {loading ? "Logging in..." : "Log in"}
             </EgoButton>
+
           </form>
           <BottomText>
             <p>
@@ -266,5 +296,7 @@ export const Login = () => {
         </FormContainer>
       </RightColumn>
     </Container>
+
   );
 };
+

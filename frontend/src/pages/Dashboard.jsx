@@ -6,6 +6,7 @@ import { EnergyCard } from "../components/EnergyCard"
 import { useParams } from "react-router-dom"
 
 export const Dashboard = () => {
+
   const { id } = useParams();
 
   return (
@@ -15,7 +16,6 @@ export const Dashboard = () => {
       <ActivityGraph id={id} />
       <DistanceCard id={id} />
       <EnergyCard id={id} />
-
     </>
   )
 }
