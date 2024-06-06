@@ -1,38 +1,38 @@
-import styled from "styled-components"
-import { useState } from "react"
+import styled from "styled-components";
+import { useState } from "react";
 
 const BatteryWrapper = styled.div`
   position: relative;
   width: 195px;
   height: 89px;
-`
+`;
 
 export const BatterySVG = ({ fillPercentage = 0, onDrag }) => {
-  const [dragging, setDragging] = useState(false)
+  const [dragging, setDragging] = useState(false);
 
   const handleMouseDown = (event) => {
-    event.preventDefault()
-    setDragging(true)
-    document.addEventListener("mousemove", handleMouseMove)
-    document.addEventListener("mouseup", handleMouseUp)
-  }
+    event.preventDefault();
+    setDragging(true);
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
 
   const handleMouseMove = (event) => {
     if (dragging) {
-      const rect = event.target.getBoundingClientRect()
-      const offsetX = event.clientX - rect.left
-      let percentage = (offsetX / rect.width) * 100
-      if (percentage < 0) percentage = 0
-      if (percentage > 100) percentage = 100
-      onDrag(percentage)
+      const rect = event.target.getBoundingClientRect();
+      const offsetX = event.clientX - rect.left;
+      let percentage = (offsetX / rect.width) * 100;
+      if (percentage < 0) percentage = 0;
+      if (percentage > 100) percentage = 100;
+      onDrag(percentage);
     }
-  }
+  };
 
   const handleMouseUp = () => {
-    setDragging(false)
-    document.removeEventListener("mousemove", handleMouseMove)
-    document.removeEventListener("mouseup", handleMouseUp)
-  }
+    setDragging(false);
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
+  };
 
   return (
     <BatteryWrapper>
@@ -87,11 +87,11 @@ export const BatterySVG = ({ fillPercentage = 0, onDrag }) => {
             gradientUnits="userSpaceOnUse"
           >
             {/* Gradient stops for battery fill */}
-            <stop offset="0%" stopColor="#7B4AAC" />
-            <stop offset={`${fillPercentage}%`} stopColor="#39AA44" />
+            <stop offset="0%" stopColor="#687943" />
+            <stop offset={`${fillPercentage}%`} stopColor="white" />
           </linearGradient>
         </defs>
       </svg>
     </BatteryWrapper>
-  )
-}
+  );
+};

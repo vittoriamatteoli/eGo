@@ -1,5 +1,5 @@
-import { BatterySlider } from "../reusables/BatterySlider"
-import styled from "styled-components"
+import { BatterySlider } from "../reusables/BatterySlider";
+import styled from "styled-components";
 const StyledBatteryCard = styled.div`
   border-radius: 20px;
   background: linear-gradient(180deg, #dcded0 82.22%, #cce0a1 100%);
@@ -20,13 +20,12 @@ const StyledBatteryCard = styled.div`
     padding: 10px;
     text-align: center;
   }
-`
+`;
 export const EnergyCard = ({ id }) => {
   return (
     <StyledBatteryCard>
       <h2>How's your energy level right now?</h2>
-      <BatterySlider userId={id} />
+      <BatterySlider id={id} />
     </StyledBatteryCard>
-  )
-}
-
+  );
+};
