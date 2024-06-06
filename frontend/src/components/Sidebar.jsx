@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Drawer, List, ListItem, Typography } from "@mui/material";
+import { Drawer, List, ListItem, Typography, Button } from "@mui/material";
 import { Logo } from "../reusables/Logo";
 import { Avatar } from "../reusables/Avatar";
 import { Logout } from "../pages/Logout";
@@ -9,9 +9,13 @@ const apikey = import.meta.env.VITE_API_KEY;
 const StyledDrawer = styled(Drawer)`
   width: 260px;
   flex-shrink: 0;
+  @media (max-width: 768px) {
+    display: none; // Hide on mobile devices
+  }
 `;
 
 const SidebarContent = styled.div`
+  position: relative;
   width: 300px;
   padding: 20px;
   background: linear-gradient(180deg, #dcded0 71.72%, #cce0a1 100%);
@@ -20,19 +24,39 @@ const SidebarContent = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 30px;
-
-  Button {
-    position: absolute;
-    bottom: 0;
+  @media (max-width: 768px) {
+    display: none; // Hide on mobile devices
   }
 `;
+
 const StyledList = styled(List)`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 30px;
   justify-content: center;
-  position: relative;
+`;
+
+const StyledListItem = styled(ListItem)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  justify-content: center;
+  color: #000;
+  font-family: "Open Sans Hebrew";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+`;
+
+const CenteredLogoutButton = styled.div`
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 `;
 
 export const Sidebar = ({ id }) => {
@@ -61,23 +85,21 @@ export const Sidebar = ({ id }) => {
   }, [id]);
 
   return (
-    <>
-      <StyledDrawer variant="persistent" anchor="left" open={open}>
-        <SidebarContent>
-          <StyledList>
-            <ListItem>
-              <Logo />
-            </ListItem>
-            <ListItem>
-              <Avatar id={id} />
-            </ListItem>
-            <ListItem>
-              <Typography variant="body1">{username}</Typography>
-            </ListItem>
-          </StyledList>
+    <StyledDrawer variant="persistent" anchor="left" open={true}>
+      <SidebarContent>
+        <StyledList>
+          <Logo />
+          <StyledListItem>
+            <Avatar id={id} />
+            <Typography style={{ textTransform: "capitalize" }} variant="body1">
+              {username}
+            </Typography>
+          </StyledListItem>
+        </StyledList>
+        <CenteredLogoutButton>
           <Logout className="logout" />
-        </SidebarContent>
-      </StyledDrawer>
-    </>
+        </CenteredLogoutButton>
+      </SidebarContent>
+    </StyledDrawer>
   );
 };
