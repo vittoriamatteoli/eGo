@@ -3,6 +3,8 @@ import { PointsCard } from "../components/PointsCard";
 import { ActivityGraph } from "../components/ActivityGraph";
 import { DistanceCard } from "../components/DistanceCard";
 import { EnergyCard } from "../components/EnergyCard";
+import { TravelCard } from "../components/TravelCard";
+
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -18,18 +20,22 @@ const DashboardLayout = styled.div`
   }
 `;
 
+
 export const Dashboard = () => {
   const { id } = useParams();
 
   return (
     <DashboardLayout>
       <Sidebar id={id} />
+
       <div>
         <PointsCard id={id} />
         <ActivityGraph id={id} />
         <DistanceCard id={id} />
         <EnergyCard id={id} />
+          <TravelCard id={id} />
       </div>
     </DashboardLayout>
+
   );
 };
