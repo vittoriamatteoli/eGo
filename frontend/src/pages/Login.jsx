@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { EgoButton } from "../components/Button";
+import { EgoButton } from "../reusables/Button"
 import Globe from "../assets/Globe.svg";
 import {Logo} from "../reusables/Logo";
 import { Loading } from "../reusables/Loading";
@@ -225,8 +225,8 @@ export const Login = () => {
       }
 
       const data = await response.json();
-      const id = data.id; // get the user id from the response data
       console.log(data);
+      const id = data.id; // get the user id from the response data
       setMessage("Login successful");
       sessionStorage.setItem("accessToken", data.accessToken);
       setEmail("");
