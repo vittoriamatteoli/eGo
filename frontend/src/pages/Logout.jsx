@@ -1,9 +1,8 @@
-import { useNavigate } from "react-router-dom"
-import { useState } from "react"
-import { EgoButton } from "../components/Button"
-import { Button } from "@mui/material"
-import styled from "styled-components"
-
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { EgoButton } from "../components/Button";
+import { Button } from "@mui/material";
+import styled from "styled-components";
 
 /*const StyledButton = styled(Button)`
   color: #687943;
@@ -21,37 +20,34 @@ import styled from "styled-components"
   }
 `*/
 
-
 export const Logout = () => {
-  const [message, setMessage] = useState("")
-  const navigate = useNavigate()
-  const apikey = import.meta.env.VITE_API_KEY
-  const API = `${apikey}/signout`
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  const apikey = import.meta.env.VITE_API_KEY;
+  const API = `${apikey}/signout`;
 
   const handleLogout = async () => {
     try {
-      const token = sessionStorage.getItem("accessToken")
+      const token = sessionStorage.getItem("accessToken");
       await fetch(API, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      })
-      sessionStorage.removeItem("accessToken")
-      setMessage("Logout successful")
-      navigate("/")
+      });
+      sessionStorage.removeItem("accessToken");
+      setMessage("Logout successful");
+      navigate("/");
     } catch (error) {
-      console.error(error)
-      setMessage("Failed to logout")
+      console.error(error);
+      setMessage("Failed to logout");
     }
-  }
+  };
   return (
-
     <div>
       <EgoButton onClick={handleLogout}>Logout</EgoButton>
-
-   /* <>
+      {/* <>
       <StyledButton onClick={handleLogout}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -67,9 +63,8 @@ export const Logout = () => {
         </svg>
         Logout
       </StyledButton>
-    */
-
+      </> */}
       <p>{message}</p>
-    </>
-  )
-}
+    </div>
+  );
+};
