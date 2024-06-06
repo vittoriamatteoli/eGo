@@ -1,5 +1,5 @@
 {
-  "name": "project-final-parent",
+  "name": "project-ego-parent",
   "version": "1.0.0",
   "scripts": {
     "postinstall": "npm install --prefix backend"

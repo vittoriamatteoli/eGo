@@ -3,11 +3,13 @@ import { useNavigate, Link } from "react-router-dom";
 import { Loading } from "../reusables/Loading";
 import styled from "styled-components";
 import { EgoButton } from "../reusables/Button"
-import Globe from "../assets/Globe.svg";
-import logo from "../assets/logo.svg";
+import Globe from "../assets/Globe-ego.svg";
+import logo from "../assets/globe-logo.svg";
+
 
 const Container = styled.div`
-color: var(--ego-dark);
+  overflow:hidden;
+  color: var(--ego-dark);
   display: grid;
   grid-template-columns: 1fr;
   width: 100vw;
@@ -22,7 +24,7 @@ color: var(--ego-dark);
 `;
 
 const LeftColumn = styled.div`
-height: 55vh;
+max-height: 45vh;
   grid-column: 1;
   flex: 1;
   display: flex;
@@ -42,6 +44,7 @@ height: 55vh;
 `;
 
 const RightColumn = styled.div`
+max-height: 45vh;
   grid-column: 1;
   flex: 1;
   padding: 0 20px;
@@ -60,36 +63,43 @@ const ImageContainer = styled.div`
   text-align: center;
 `;
 
-const StyledImage = styled.img`
-  z-index: 3;
+const StyledLogo = styled.img`
+  max-width: 40px;
   height: auto;
-  width: 120%;
-  position: relative;
-  padding: 0px 0px 0px 0px;
+  padding: 10vh 0px 20px 40px;
+  z-index: 3;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: -40px;
+  margin-right: 20px;
   @media (min-width: 768px) {
-    grid-column: 1;
-    grid-row: 2;
-    z-index: 3;
-    width: 50vw;
+  max-width: 80px;
+ top: 0;
+  left: 0;
+  margin-top: -40px;
+  margin-left: -20px;
   }
 `;
 
-const StyledLogo = styled.img`
-visibility: hidden;
-max-width: 80px;
-height: auto;
-padding: 10vh 0px 20px 40px;
-z-index:3;
-position:absolute;
-top:0;
-left:0;
-margin-top:-40px;
-margin-left:-20px;
-@media (min-width: 768px) {
-  visibility: visible;
- }
+const StyledImage = styled.img`
+  z-index: 3;
+  height: auto;
+  width: 100%;
+  position: relative;
+  padding: 0px 0px 0px 0px;
+  margin-top: 2vh;
+  margin-left: -60px;
+  @media (min-width: 376px) {
+width: 120%;
+}
+  @media (min-width: 768px) {
+    grid-column: 1;
+    grid-row: 2;
+    z-index: 2;
+    width: 50vw;
+  }
 `;
-
 
 const FormContainer = styled.div`
 grid-row: 1;
@@ -283,9 +293,11 @@ export const Register = () => {
               />
             </FormGroup>
 
-            <EgoButton type="submit" disabled={loading}>   
-               {loading ? <Loading /> : <Button type="submit">Sign up</Button>}
-            </EgoButton>
+            {loading ? (
+              <Loading />
+            ) : (
+              <EgoButton type="submit">Sign up</EgoButton>
+            )}
 
           </form>
         </FormContainer>
