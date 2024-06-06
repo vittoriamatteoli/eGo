@@ -1,8 +1,11 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+import { EgoButton } from "../components/Button"
 import { Button } from "@mui/material"
 import styled from "styled-components"
-const StyledButton = styled(Button)`
+
+
+/*const StyledButton = styled(Button)`
   color: #687943;
   font-family: "Open Sans Hebrew";
   font-size: 16px;
@@ -16,7 +19,8 @@ const StyledButton = styled(Button)`
     outline: none;
     border-radius: 20px;
   }
-`
+`*/
+
 export const Logout = () => {
   const [message, setMessage] = useState("")
   const navigate = useNavigate()
@@ -42,7 +46,11 @@ export const Logout = () => {
     }
   }
   return (
-    <>
+
+    <div>
+      <EgoButton onClick={handleLogout}>Logout</EgoButton>
+
+   /* <>
       <StyledButton onClick={handleLogout}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -58,6 +66,8 @@ export const Logout = () => {
         </svg>
         Logout
       </StyledButton>
+    */
+
       <p>{message}</p>
     </>
   )

@@ -4,12 +4,8 @@ import { Login } from "../pages/Login.jsx"
 import { Register } from "../pages/Register.jsx"
 import { Dashboard } from "../pages/Dashboard.jsx"
 import { Logout } from "../pages/Logout.jsx"
-
-
 import { EnergyCard } from "../components/EnergyCard.jsx"
-
 import { Sidebar } from "../components/Sidebar.jsx"
-
 import { About } from "../pages/About.jsx"
 
 
@@ -37,3 +33,4 @@ export const AppRoutes = () => {
     </>
   )
 }
+

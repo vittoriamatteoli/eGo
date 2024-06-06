@@ -40,6 +40,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Password is required"],
     minlength: [6, "Password must be at least 6 characters long"],
+    maxlength: [30, "Password must be at most 30 characters long"],
   },
   //role if we want to differ on paying or non payin users or admin.
   //we need to have some way of differentiate the users to use autorization in our project

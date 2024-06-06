@@ -29,3 +29,4 @@ export const EnergyCard = ({ id }) => {
     </StyledBatteryCard>
   )
 }
+

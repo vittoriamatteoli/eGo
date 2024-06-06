@@ -30,7 +30,7 @@ const travelSchema = new mongoose.Schema({
     required: [true, "User is required"],
 
   },
-})
+});
 
 export default mongoose.model("Travel", travelSchema)
 
