@@ -20,7 +20,6 @@ const DashboardLayout = styled.div`
   }
 `;
 
-
 export const Dashboard = () => {
   const { id } = useParams();
 
@@ -33,9 +32,8 @@ export const Dashboard = () => {
         <ActivityGraph id={id} />
         <DistanceCard id={id} />
         <EnergyCard id={id} />
-          <TravelCard id={id} />
+        <TravelCard id={id} />
       </div>
     </DashboardLayout>
-
   );
 };
