@@ -7,7 +7,6 @@ import Globe from "../assets/Globe.svg";
 //styles
 const LandingSection = styled.section`
   height: 100vh;
-  /* width: 100vw; */
   background: linear-gradient(205deg, #dcded0 14.71%, #cce0a1 87.05%);
   display: flex;
   flex-direction: column;
@@ -18,7 +17,8 @@ const TopSection = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 40px;
+  padding: 20px 40px;
+  z-index: 3;
 `;
 
 const MiddleSection = styled.div`
@@ -28,7 +28,6 @@ const MiddleSection = styled.div`
   position: relative;
   width: 100%;
   height: 300px;
-  /* overflow: hidden; */
 
   @media all and (min-width: 1024px) {
     justify-content: space-around;
@@ -37,7 +36,7 @@ const MiddleSection = styled.div`
 
 const StyledImage = styled.img`
   z-index: 2;
-  height: 120%;
+  height: 90%;
   position: absolute;
   top: 55%;
   left: 52%;
@@ -59,7 +58,7 @@ const StyledTitle = styled.h1`
   font-family: "Roboto Mono";
   font-size: 240px;
   margin: 0;
-  padding: 20px;
+  /* padding: 20px; */
   z-index: 1;
 
   @media (min-width: 768px) {
@@ -85,17 +84,21 @@ const SmallEgoButton = styled(EgoButton)`
     text-decoration: none;
     font-size: 12px;
     z-index: 3;
+
     @media (min-width: 768px) {
       font-size: 20px;
     }
+
     @media (min-width: 1024px) {
       font-size: 24px;
     }
   }
+
   @media (min-width: 768px) {
     width: 126px;
     height: 50px;
   }
+
   @media (min-width: 1024px) {
     width: 160px;
     height: 65px;
@@ -116,8 +119,6 @@ const BottomSection = styled.div`
 const StyledEllipse = styled.div`
   display: flex;
   justify-content: center;
-  /* width: 100%;
-  height: 100%; */
   width: 354px;
   height: 354px;
   border-radius: 50%;
@@ -130,6 +131,7 @@ const StyledEllipse = styled.div`
     height: 557px;
     bottom: -400px;
   }
+
   @media (min-width: 1024px) {
     width: 624px;
     height: 624px;
@@ -161,10 +163,12 @@ const StyledParagraph = styled.p`
   text-align: center;
   font-size: 20px;
   width: 200px;
+
   @media (min-width: 768px) {
     margin-top: 40px;
     font-size: 28px;
   }
+
   @media (min-width: 1024px) {
     margin-top: 50px;
   }
@@ -177,6 +181,7 @@ const SignUpButton = styled(SmallEgoButton)`
   @media (min-width: 768px) {
     top: -30px;
   }
+
   @media (min-width: 1024px) {
     top: -32px;
   }
@@ -206,10 +211,8 @@ export const Landing = () => {
           <SignUpButton>
             <Link to="/register">Sign up!</Link>
           </SignUpButton>
-
           <StyledParagraph> Reduce carbon emmission.</StyledParagraph>
         </StyledEllipse>
-
         <StyledAbout to="/about">
           <p>About us</p>
         </StyledAbout>
