@@ -21,9 +21,15 @@ const StyledSection = styled.section`
   @media (min-width: 768px) {
     justify-content: flex-end;
   }
+  
+  svg {
+    width: 50px;
+    height: 50px;
+  }
 `;
 
 const PopUpOverlay = styled.div`
+  box-sizing: border-box;
   position: fixed;
   top: 0;
   left: 0;
@@ -41,11 +47,18 @@ const PopUpContent = styled.div`
   align-items: center;
   justify-content: center;
   width: 80%;
-  height: 200px;
+  height: 250px;
   background-color: white;
   padding: 20px;
   border-radius: 8px;
   background: linear-gradient(180deg, #dcded0 82.22%, #cce0a1 100%);
+  h2 {
+    font-size: 15px;
+  }
+  svg {
+    width: 100px;
+    height: 100px;
+  }
 `;
 
 export const PointsCard = ({ id }) => {
@@ -86,7 +99,7 @@ export const PointsCard = ({ id }) => {
       <h2>Dashboard</h2>
       <StyledSection>
         {isMobile && <p>Your Energy Level</p>}
-        <a onClick={togglePopUp}>
+        <a>
           Your Points
           <span>
             <img src="/info.svg" alt="information-icon" />

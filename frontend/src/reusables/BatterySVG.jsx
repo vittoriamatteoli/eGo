@@ -3,11 +3,16 @@ import { useState } from "react";
 
 const BatteryWrapper = styled.div`
   position: relative;
-  width: 195px;
-  height: 89px;
+  width: ${({ width }) => width || "200px"};
+  height: ${({ height }) => height || "200px"};
 `;
 
-export const BatterySVG = ({ fillPercentage = 0, onDrag }) => {
+export const BatterySVG = ({
+  fillPercentage = 0,
+  onDrag,
+  width = "195px",
+  height = "89px",
+}) => {
   const [dragging, setDragging] = useState(false);
 
   const handleMouseDown = (event) => {
@@ -38,8 +43,8 @@ export const BatterySVG = ({ fillPercentage = 0, onDrag }) => {
     <BatteryWrapper>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="195"
-        height="89"
+        width={width}
+        height={height}
         viewBox="0 0 195 89"
         fill="none"
         onMouseDown={handleMouseDown}
@@ -87,8 +92,14 @@ export const BatterySVG = ({ fillPercentage = 0, onDrag }) => {
             gradientUnits="userSpaceOnUse"
           >
             {/* Gradient stops for battery fill */}
-            <stop offset="0%" stopColor="#687943" />
-            <stop offset={`${fillPercentage}%`} stopColor="white" />
+            <stop offset="0%" stopColor="#7B4AAC" />
+            <stop offset={`${fillPercentage}%`} stopColor="#39AA44" />
+            <stop
+              offset={`${fillPercentage + 1}%`}
+              stopColor="#39AA44"
+              stopOpacity="0"
+            />
+            <stop offset="100%" stopOpacity="0" />
           </linearGradient>
         </defs>
       </svg>

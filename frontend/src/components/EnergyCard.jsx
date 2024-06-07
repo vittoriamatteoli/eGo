@@ -2,8 +2,6 @@ import { BatterySlider } from "../reusables/BatterySlider";
 import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
 
-import { PointsCard } from "./PointsCard";
-
 const StyledBatteryCard = styled.div`
   border-radius: 20px;
   background: linear-gradient(180deg, #dcded0 82.22%, #cce0a1 100%);
@@ -28,10 +26,10 @@ const StyledBatteryCard = styled.div`
 `;
 
 export const EnergyCard = ({ id }) => {
-  const isDesktopOrTablet = useMediaQuery({ minWidth: 768 });
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   return (
-    isDesktopOrTablet && (
+    !isMobile && (
       <StyledBatteryCard>
         <h2>How's your energy level right now?</h2>
         <BatterySlider id={id} />

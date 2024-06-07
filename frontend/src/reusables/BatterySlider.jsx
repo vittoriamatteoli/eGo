@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
-import { BatterySVG } from "../reusables/BatterySVG"; // Adjust the import path if necessary
+import { BatterySVG } from "../reusables/BatterySVG";
 import { Button } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
 
@@ -15,15 +15,13 @@ const BatterySliderWrapper = styled.div`
   align-items: center;
   justify-content: center;
   @media (max-width: 767px) {
-    width: 30px;
-    height: 30px;
+    height: 50px;
     div {
-      width: 30px;
-      height: 30px;
-    }
-    svg {
-      width: 30px;
-      height: 30px;
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 `;
@@ -50,8 +48,7 @@ export const BatterySlider = ({ showPopUp }) => {
   const [fillPercentage, setFillPercentage] = useState(0);
   const [message, setMessage] = useState("");
   const [error, setError] = useState(null);
-  const isMobile = useMediaQuery({ maxWidth: 767 }); // Detect if it's a mobile device
-  const isDesktopOrTablet = useMediaQuery({ minWidth: 768 });
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   useEffect(() => {
     const token = sessionStorage.getItem("accessToken");
@@ -116,9 +113,13 @@ export const BatterySlider = ({ showPopUp }) => {
 
   return (
     <BatterySliderWrapper>
-      <BatterySVG fillPercentage={fillPercentage} onDrag={handleDrag} />
+      {showPopUp && <h2>How's your energy level right now?</h2>}
+      {<BatterySVG fillPercentage={fillPercentage} onDrag={handleDrag} />}
       {message && <div>{message}</div>}
       {error && <div>Error: {error}</div>}
+      {showPopUp && (
+        <StyledButton onClick={handleNewEnergy}>Confirm</StyledButton>
+      )}
       {!isMobile && (
         <StyledButton onClick={handleNewEnergy}>Confirm</StyledButton>
       )}
