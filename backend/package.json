@@ -19,6 +19,7 @@
     "express-list-endpoints": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.0",
-    "nodemon": "^3.1.2"
+    "nodemon": "^3.1.2",
+    "react-google-autocomplete": "^2.7.3"
   }
 }
