@@ -1,4 +1,4 @@
-import { IconButton } from "@mui/material";
+import { IconButton } from "@mui/material/IconButton";
 import { EgoButton } from "../reusables/Button";
 import DriveEtaIcon from "@mui/icons-material/DriveEta";
 import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
