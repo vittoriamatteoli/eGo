@@ -140,7 +140,7 @@ export const TravelForm = ({ id }) => {
         key={`start-autocomplete-${autocompleteKey}`}
         className="start-google-search-box"
         placeholder="Start"
-        apiKey={import.meta.env.VITE_GOOGLE_API_KEY}
+        apiKey={GoogleKey}
         onPlaceSelected={(place) => {
           setOrigin(place.formatted_address);
         }}
@@ -153,7 +153,7 @@ export const TravelForm = ({ id }) => {
         key={`destination-autocomplete-${autocompleteKey}`}
         className="destination-google-search-box"
         placeholder="Destination"
-        apiKey={import.meta.env.VITE_GOOGLE_API_KEY}
+        apiKey={GoogleKey}
         onPlaceSelected={(place) => {
           setDestination(place.formatted_address);
         }}
