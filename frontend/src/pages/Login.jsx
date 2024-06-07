@@ -7,120 +7,142 @@ import logo from "../assets/globe-logo.svg";
 import { Loading } from "../reusables/Loading";
 
 const Container = styled.div`
-  overflow:hidden;
+overflow: hidden;
   color: var(--ego-dark);
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto auto;
-  width: 100vw;
-  height: 100vh;
+	grid-template-columns: 1vw  98vw 1vw;
+	grid-template-rows: 50vh 50vh;
   background-color: var(--ego-white);
-  background: var(--ego-gradient-cutoff-mob);
-  @media (min-width: 768px) {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    background: var(--ego-gradient-cutoff-dt);
+  grid-template-areas:
+  "leftColumn leftColumn leftColumn"
+  "rightColumn rightColumn rightColumn";
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 50vw 50vw;
+    grid-template-rows: 10vh 80vh 10vh;
+    grid-template-areas:
+    "leftColumn rightColumn"
+ "leftColumn rightColumn"
+  "leftColumn rightColumn";
+
   }
 `;
 
 const LeftColumn = styled.div`
-  height: 50vh;
-  grid-column: 1;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: top;
-  align-items: center;
-  box-sizing: border-box;
-  @media (min-width: 376px) {
-    height: 10vh;
-    padding: 0vh 0px 0px 0px;
-  }
-  @media (min-width: 768px) {
-    height: 100vh;
-    padding: 10vh 0px 0px 40px;
+  background: var(--ego-gradient-cutoff-mob2);
+grid-area: leftColumn;
+  display: grid;
+  grid-template-columns: 1fr 10fr 1fr;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    ". . logo"
+    "img img img"
+    "img img img";
+
+  @media (min-width: 1200px) {
+background: var(--ego-gradient-cutoff-dt2);
+  grid-template-areas:
+    "logo "
+    "img"
+    ". ";
+grid-column: 1;
+grid-row: 1 /span 4;
   }
 `;
 
 const RightColumn = styled.div`
-  height: 50vh;
-  grid-column: 1;
-  flex: 1;
-  padding: 0px 20px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-top: 1vh;
-  background-color: var(--ego-light);
-  @media (min-width: 768px) {
-    grid-column: 2;
-      height: 100vh;
-        margin-top: 0vh;
+grid-area: rightColumn;
+display:grid;
+grid-template-columns: 1fr 10fr 1fr;
+grid-template-rows: 1fr 2fr 1fr;
+grid-template-areas:
+  "title title title"
+  "form form form"
+  "link link link";
+align-self:center;
+  @media (min-width: 1200px) {
+grid-column: 2;
+grid-row: 2;
+
+grid-template-areas:
+  ". title . "
+  ". form . "
+  ". link . ";
   }
 `;
 
-const ImageContainer = styled.div`
-  width: 100%;
-  text-align: center;
 
-`;
 
 const StyledLogo = styled.img`
-  max-width: 50px;
-  height: auto;
-  padding: 10vh 0px 20px 40px;
-  z-index: 3;
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin-top: -40px;
-  margin-right: 20px;
-  @media (min-width: 768px) {
-  max-width: 80px;
- top: 0;
-  left: 0;
-  margin-top: -40px;
-  margin-left: -20px;
+grid-area: logo;
+grid-column: 3;
+max-width: 15vw;
+height: auto;
+margin:2vh 0 0 -15vw;
+z-index: 3;
+  @media (min-width: 1200px) {
+grid-column:1;
+margin:2vh -10vw 0 2vh;
   }
 
 `;
 
 const StyledImage = styled.img`
-  z-index: 3;
-  height: auto;
-  width: 120%;
-  position: relative;
-  padding: 0px 0px 0px 0px;
-  margin-top: 2vh;
-  margin-left: -60px;
+grid-area: image;
+grid-column: 1/span 4;
+grid:row: 1;
+  z-index: 2;
+  width: 115vw;
+  margin: 0 0 0 -10vw;
+  align-self: center;
+
+
   @media (min-width: 768px) {
-    grid-column: 1;
-    grid-row: 2;
-    z-index: 2;
-    width: 50vw;
+
+  width: 100vw;
+    margin: -5vh 0 0 0;
+  }
+
+
+
+  @media (min-width: 1200px) {
+width: 50vw;
+margin: 5vh 0 0 -2vw;
+grid-row:1/span 2;
   }
 `;
 
 
+
 const FormContainer = styled.div`
-  grid-row: 1;
-  width: 100%;
-  max-width: 80vw;
-  margin: 0 auto;
-  padding-top: 3vh;
-  h2 {
-    text-align: center;
+
+grid-area: form;
+align-self: center;
+justify-self: center;
+width: 60vw;
+  @media (min-width: 1200px) {
+ width:20vw;
   }
-  @media (min-width: 768px) {
-    grid-row: 2;
-    width: 400px;
+`;
+
+const StyledH1 = styled.h1`
+grid-area: title;
+grid-column: 2;
+grid-row: 1;
+text-align: center;
+justify-self: center;
+align-self: center;
+font-size: 2em;
+color: var(--ego-dark);
+  @media (min-width: 1200px) {
+grid-column: 2;
+grid-row: 1;
+
   }
 `;
 
 const FormGroup = styled.div`
-  margin-bottom: 15px;
+  margin-top: 10px;
 `;
 
 const Input = styled.input`
@@ -148,8 +170,11 @@ const ErrorMessage = styled.div`
 `;
 
 const BottomText = styled.div`
-  margin-top: 30px;
-  font-size: 0.6em;
+grid-area: link;
+grid-row: 3;
+grid-column:2;
+font-size: 0.6em;
+align-self: center;
 
   color: var(--ego-dark);
   p {
@@ -165,14 +190,12 @@ const BottomText = styled.div`
       color: var(--ego-purple);
     }
   }
-  @media (min-width: 768px) {
-    grid-row: 3;
-    position: absolute;
-    bottom: 30px;
-    text-align: center;
-    right: 0;
-    left: 50%;
-    align-self: center;
+  @media (min-width: 1200px) {
+    grid-row: 4;
+  position:fixed;
+  bottom: 5vh;
+ align-self: end;
+ justify-self: center;
   }
 `;
 
@@ -233,13 +256,12 @@ export const Login = () => {
     <Container>
       <LeftColumn>
         <StyledLogo src={logo} alt="logo" />
-        <ImageContainer>
           <StyledImage src={Globe} alt="globe" />
-        </ImageContainer>
       </LeftColumn>
       <RightColumn>
+      <StyledH1>Login</StyledH1>
         <FormContainer>
-          <h2>Login</h2>
+
           <form onSubmit={handleLogin}>
             {message && <ErrorMessage>{message}</ErrorMessage>}
             <FormGroup>
@@ -271,12 +293,13 @@ export const Login = () => {
               {loading ? <Loading /> : "Log in"}
             </EgoButton>
           </form>
-          <BottomText>
+
+        </FormContainer>
+        <BottomText>
             <p>
               Don't have an account yet? <Link to="/register">Sign up</Link>
             </p>
           </BottomText>
-        </FormContainer>
       </RightColumn>
     </Container>
   );
