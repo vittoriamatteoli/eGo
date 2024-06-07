@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
     --ego-lgt-green: #CCE0A1;
     --ego-beige: #DCDED0;
     --ego-purple: #C590FB;
-    --ego-error: #794343;
+    --ego-error: #C590FB;
     --ego-light: #fefff9;
     --ego-light-tint:#FDFFF1;
     --ego-dark: #242B17;

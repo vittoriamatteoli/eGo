@@ -2,14 +2,16 @@ import styled from "styled-components";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { EgoButton } from "../reusables/Button"
-import Globe from "../assets/Globe.svg";
-import logo from "../assets/logo.svg";
+import Globe from "../assets/Globe-ego.svg";
+import logo from "../assets/globe-logo.svg";
+import { Loading } from "../reusables/Loading";
 
 const Container = styled.div`
-  overflow: hidden;
+  overflow:hidden;
   color: var(--ego-dark);
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
   width: 100vw;
   height: 100vh;
   background-color: var(--ego-white);
@@ -22,7 +24,7 @@ const Container = styled.div`
 `;
 
 const LeftColumn = styled.div`
-  height: 55vh;
+  height: 50vh;
   grid-column: 1;
   flex: 1;
   display: flex;
@@ -42,39 +44,47 @@ const LeftColumn = styled.div`
 `;
 
 const RightColumn = styled.div`
+  height: 50vh;
   grid-column: 1;
   flex: 1;
-  padding: 0 20px;
+  padding: 0px 20px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 1vh;
   background-color: var(--ego-light);
   @media (min-width: 768px) {
     grid-column: 2;
+      height: 100vh;
+        margin-top: 0vh;
   }
 `;
 
 const ImageContainer = styled.div`
   width: 100%;
   text-align: center;
+
 `;
 
 const StyledLogo = styled.img`
-visibility: hidden;
-  max-width: 80px;
+  max-width: 50px;
   height: auto;
   padding: 10vh 0px 20px 40px;
   z-index: 3;
   position: absolute;
   top: 0;
+  right: 0;
+  margin-top: -40px;
+  margin-right: 20px;
+  @media (min-width: 768px) {
+  max-width: 80px;
+ top: 0;
   left: 0;
   margin-top: -40px;
   margin-left: -20px;
-  @media (min-width: 768px) {
-
-   visibility: visible;
   }
+
 `;
 
 const StyledImage = styled.img`
@@ -83,19 +93,23 @@ const StyledImage = styled.img`
   width: 120%;
   position: relative;
   padding: 0px 0px 0px 0px;
+  margin-top: 2vh;
+  margin-left: -60px;
   @media (min-width: 768px) {
     grid-column: 1;
     grid-row: 2;
-    z-index: 3;
+    z-index: 2;
     width: 50vw;
   }
 `;
+
 
 const FormContainer = styled.div`
   grid-row: 1;
   width: 100%;
   max-width: 80vw;
   margin: 0 auto;
+  padding-top: 3vh;
   h2 {
     text-align: center;
   }
@@ -119,7 +133,6 @@ const Input = styled.input`
   border-radius: 24px;
   border: 1px solid transparent;
   background: var(--ego-gradient-reversed);
-
   &:focus, &:active {
     background-color: var(--ego-lgt-green);
     border: 1px solid var(--ego-green);
@@ -129,7 +142,7 @@ const Input = styled.input`
 const ErrorMessage = styled.div`
   margin-bottom: 15px;
   padding: 10px;
-  color: var(--ego-error);
+  color: var(--ego-dark);
   border-radius: 7px;
   border: 3px solid var(--ego-error);
 `;
@@ -137,7 +150,6 @@ const ErrorMessage = styled.div`
 const BottomText = styled.div`
   margin-top: 30px;
   font-size: 0.6em;
-
 
   color: var(--ego-dark);
   p {
@@ -161,8 +173,9 @@ const BottomText = styled.div`
     right: 0;
     left: 50%;
     align-self: center;
-
+  }
 `;
+
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -206,7 +219,6 @@ export const Login = () => {
       sessionStorage.setItem("accessToken", data.accessToken);
       setEmail("");
       setPassword("");
-
       navigate(`/dashboard/${id}`);
     } catch (error) {
       console.error(error);
@@ -215,6 +227,7 @@ export const Login = () => {
       setLoading(false);
     }
   };
+
 
   return (
     <Container>
@@ -255,8 +268,7 @@ export const Login = () => {
             </FormGroup>
 
             <EgoButton type="submit" disabled={loading}>
-              {/* Will create a loading spinner in next step and import from loading.jsx */}
-              {loading ? "Logging in..." : "Log in"}
+              {loading ? <Loading /> : "Log in"}
             </EgoButton>
           </form>
           <BottomText>

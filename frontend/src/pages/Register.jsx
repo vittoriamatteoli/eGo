@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { Loading } from "../reusables/Loading";
 import styled from "styled-components";
 import { EgoButton } from "../reusables/Button"
-import Globe from "../assets/Globe.svg";
-import logo from "../assets/logo.svg";
+import Globe from "../assets/Globe-ego.svg";
+import logo from "../assets/globe-logo.svg";
+
 
 const Container = styled.div`
-color: var(--ego-dark);
+  overflow:hidden;
+  color: var(--ego-dark);
   display: grid;
   grid-template-columns: 1fr;
   width: 100vw;
@@ -21,7 +24,7 @@ color: var(--ego-dark);
 `;
 
 const LeftColumn = styled.div`
-height: 55vh;
+max-height: 45vh;
   grid-column: 1;
   flex: 1;
   display: flex;
@@ -41,6 +44,7 @@ height: 55vh;
 `;
 
 const RightColumn = styled.div`
+max-height: 45vh;
   grid-column: 1;
   flex: 1;
   padding: 0 20px;
@@ -59,39 +63,46 @@ const ImageContainer = styled.div`
   text-align: center;
 `;
 
+const StyledLogo = styled.img`
+  max-width: 40px;
+  height: auto;
+  padding: 10vh 0px 20px 40px;
+  z-index: 3;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: -40px;
+  margin-right: 20px;
+  @media (min-width: 768px) {
+  max-width: 80px;
+ top: 0;
+  left: 0;
+  margin-top: -40px;
+  margin-left: -20px;
+  }
+`;
+
 const StyledImage = styled.img`
   z-index: 3;
   height: auto;
-  width: 120%;
+  width: 100%;
   position: relative;
   padding: 0px 0px 0px 0px;
+  margin-top: 2vh;
+  margin-left: -60px;
+  @media (min-width: 376px) {
+width: 120%;
+}
   @media (min-width: 768px) {
     grid-column: 1;
     grid-row: 2;
-    z-index: 3;
+    z-index: 2;
     width: 50vw;
   }
 `;
 
-const StyledLogo = styled.img`
-visibility: hidden;
-max-width: 80px;
-height: auto;
-padding: 10vh 0px 20px 40px;
-z-index:3;
-position:absolute;
-top:0;
-left:0;
-margin-top:-40px;
-margin-left:-20px;
-@media (min-width: 768px) {
-  visibility: visible;
- }
-`;
-
-
 const FormContainer = styled.div`
-grid-row: 1;
+  grid-row: 1;
   width: 100%;
   max-width: 80vw;
   margin: 0 auto;
@@ -100,13 +111,12 @@ grid-row: 1;
   }
   @media (min-width: 768px) {
     grid-row: 2;
-    width:400px;
+    width: 400px;
   }
 `;
 
 const FormGroup = styled.div`
   margin-bottom: 15px;
-
 `;
 
 const Input = styled.input`
@@ -120,17 +130,16 @@ const Input = styled.input`
   border: 1px solid transparent;
   background: var(--ego-gradient-reversed);
 
-  &:focus, &:active {
+  &:focus,
+  &:active {
     background-color: var(--ego-lgt-green);
     border: 1px solid var(--ego-green);
   }
-
 `;
 
 const BottomText = styled.div`
   margin-top: 30px;
   font-size: 0.6em;
-
 
   color: var(--ego-dark);
   p {
@@ -152,8 +161,8 @@ const BottomText = styled.div`
     bottom: 30px;
     text-align: center;
 
-align-self: center;
-
+    align-self: center;
+  }
 `;
 
 const ErrorMessage = styled.div`
@@ -243,7 +252,7 @@ export const Register = () => {
         <FormContainer>
           <h2>Sign up</h2>
           <form onSubmit={handleRegister}>
-            {/* displayed on to of form as in figma design */}
+            {/* displayed on top of form as in figma design */}
             {message && <ErrorMessage>{message}</ErrorMessage>}
             <FormGroup>
               <Input
@@ -281,10 +290,12 @@ export const Register = () => {
                 disabled={loading}
               />
             </FormGroup>
-            <EgoButton type="submit" disabled={loading}>
-              {/* Will create a loading spinner in next step and import from loading.jsx, instead of displaying it in the button */}
-              {loading ? "Signing up..." : "Sign up"}
-            </EgoButton>
+            {loading ? (
+              <Loading />
+            ) : (
+              <EgoButton type="submit">Sign up</EgoButton>
+            )}
+
           </form>
         </FormContainer>
         <BottomText>

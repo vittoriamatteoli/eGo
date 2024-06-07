@@ -7,12 +7,10 @@ import { useParams } from "react-router-dom"
 import { TravelForm } from "../components/TravelForm"
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"
-//import  {EgoButton}  from "../reusables/Button"
 import { AdminButton } from "../reusables/AdminButton"
 import styled from "styled-components"
-//import * as jwtDecode from 'jwt-decode';
-import jwtDecode from 'jwt-decode';
 
+import jwtDecode from 'jwt-decode';
 
 export const Dashboard = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -43,13 +41,6 @@ export const Dashboard = () => {
       <EnergyCard id={id} />
       <TravelForm id={id} />
       <AdminButton isAdmin={isAdmin} />
-
-{/*
-      <div><p>hello</p>
-      {isAdmin ? (
-  <EgoButton onClick={() => navigate('/admin')}>Log in to admin</EgoButton>
-) : null}
-</div> */}
     </>
   )
 }

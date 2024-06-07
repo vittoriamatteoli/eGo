@@ -34,12 +34,12 @@ router.get("/user/:id", async (req, res) => {
   try {
     const user = await User.findById(id);
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     res.json(user);
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -129,10 +129,6 @@ router.patch("/user/:id", authenticateUser, async (req, res) => {
   }
 });
 
-
-
-
-
 // patch request to  update the points
 router.patch("/user/:id", async (req, res) => {
   try {
@@ -160,9 +156,6 @@ router.patch("/user/:id", async (req, res) => {
   }
 });
 
-
-
-
 // get all travels for the user in the dashboard, but only if the user is authenticated and authorized
 router.get("/dashboard", authenticateUser, authorizeUser, (req, res) => {
   res.send(
@@ -174,6 +167,32 @@ router.post("/signout", signOut, (req, res) => {
   res.json({
     message: "User logged out successfully",
   });
+});
+//update the energy level or confirm the same
+router.patch("/user/:id", authenticateUser, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { energyLevel } = req.body;
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { $set: { energyLevel: energyLevel } }, // use the $set operator to update energyLevel
+      { new: true }
+    );
+    if (updatedUser) {
+      res.json({
+        message: "User energy level updated ⚡️",
+        success: true,
+        response: updatedUser,
+      });
+    } else {
+      res.status(404).json({ message: "User not found", error: error.message });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "An error occurred while updating the user",
+      error: error.message,
+    });
+  }
 });
 
 export default router;

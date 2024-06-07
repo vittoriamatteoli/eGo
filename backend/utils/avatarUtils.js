@@ -1,4 +1,3 @@
-// Description: Helper functions for generating random avatar URLs
 export const defaultAvatars = [
   //An array of default avatar URLs from cloudinary
   "https://res.cloudinary.com/egocloud/image/upload/v1717352040/ego-tree-avatar01.png",
