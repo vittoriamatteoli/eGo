@@ -30,27 +30,26 @@ const MiddleSection = styled.div`
   height: 300px;
   /* overflow: hidden; */
 
-  @media all and (min-width: 768px) {
+  @media all and (min-width: 1024px) {
     justify-content: space-around;
   }
 `;
 
 const StyledImage = styled.img`
   z-index: 2;
-  width: 65%;
-  max-width: 500px;
+  height: 120%;
   position: absolute;
   top: 55%;
-  left: 55%;
+  left: 52%;
   transform: translate(-50%, -50%);
 
   @media (min-width: 768px) {
-    /* max-width: 450px; */
+    height: 140%;
     top: 65%;
   }
 
   @media (min-width: 1024px) {
-    max-width: 750px;
+    height: 195%;
     top: 65%;
   }
 `;
@@ -162,6 +161,25 @@ const StyledParagraph = styled.p`
   text-align: center;
   font-size: 20px;
   width: 200px;
+  @media (min-width: 768px) {
+    margin-top: 40px;
+    font-size: 28px;
+  }
+  @media (min-width: 1024px) {
+    margin-top: 50px;
+  }
+`;
+
+const SignUpButton = styled(SmallEgoButton)`
+  position: absolute;
+  top: -20px;
+
+  @media (min-width: 768px) {
+    top: -30px;
+  }
+  @media (min-width: 1024px) {
+    top: -32px;
+  }
 `;
 
 //component
@@ -184,14 +202,17 @@ export const Landing = () => {
       </MiddleSection>
 
       <BottomSection>
-        <SmallEgoButton>
-          <Link to="/register">Sign up!</Link>
-        </SmallEgoButton>
         <StyledEllipse>
+          <SignUpButton>
+            <Link to="/register">Sign up!</Link>
+          </SignUpButton>
+
           <StyledParagraph> Reduce carbon emmission.</StyledParagraph>
         </StyledEllipse>
 
-        <StyledAbout to="/about">About us</StyledAbout>
+        <StyledAbout to="/about">
+          <p>About us</p>
+        </StyledAbout>
       </BottomSection>
     </LandingSection>
   );
