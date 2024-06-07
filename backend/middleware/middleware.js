@@ -32,7 +32,7 @@ const authenticateUser = async (req, res, next) => {
         message: "Invalid access token",
       });
     }
-    const user = await User.findOne({ _id: decoded.id });
+    const user = await User.findOne({ _id: decoded.id , role:decoded.role});
     if (!user) {
       return res.status(404).json({
         message: "User not found",
@@ -47,9 +47,9 @@ const authenticateUser = async (req, res, next) => {
 
 // add authorization to the routes that need it, if we want to make an GUI for the admins who can see all users and their data and preform operations on the data - or if we want some kind of superusers (paid access for instance - but then we need to add "roles" to the user model)
 
-const authorizeUser = (roles) => {
+const authorizeUser = (role) => {
   return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
+    if (!role.includes(req.user.role)) {
       return res.status(403).json({ message: "Access forbidden" });
     }
     next();

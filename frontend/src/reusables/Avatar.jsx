@@ -26,7 +26,7 @@ export const Avatar = ({ id }) => {
       }
     };
 
-    
+
     fetchAvatar();
   }, [id]);
 
@@ -36,7 +36,7 @@ export const Avatar = ({ id }) => {
 
   return (
     <>
-      <img src={avatarUrl} alt="User Avatar" className="user-avatar" />;
+      <img src={avatarUrl} alt="User Avatar" className="user-avatar" />
       <p>{username}</p>
     </>
   );

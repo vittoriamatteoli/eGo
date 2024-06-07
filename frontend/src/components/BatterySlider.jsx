@@ -51,11 +51,11 @@ export const BatterySlider = () => {
       });
   }, [id])
 
-
   const handleDrag = (percentage) => {
     const parsedPercent = parseInt(percentage, 10);
     if (parsedPercent >= 0 && parsedPercent <= 100) {
       setFillPercentage(parsedPercent)
+      setMessage(`BatteryEnergy level updated with ${parsedPercent}%`)
     }
   }
 
@@ -125,13 +125,12 @@ export const BatterySlider = () => {
 
       <BatterySliderWrapper id={id}>
         <BatterySVG fillPercentage={fillPercentage} onDrag={handleDrag} />
-
         <input
           type="range"
           min="0"
           max="100"
           value={fillPercentage}
-          onChange={(e) => updateEnergyLevel(e.target.value)}
+          onInput={(e) => updateEnergyLevel(e.target.value)}
         />
         <div>Current energy level: {fillPercentage}%</div>
         {message && <div>{message}</div>}

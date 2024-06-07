@@ -15,6 +15,7 @@ const GlobalStyle = createGlobalStyle`
     --ego-gradient-reversed: linear-gradient(100deg, rgba(204,224,161,1) 0%, rgba(220,222,208,1) 100%);
     --ego-gradient-cutoff-dt: linear-gradient(90deg, rgba(220,222,208,1) 0%, rgba(204,224,161,1) 40%, #fefff9 0%);
     --ego-gradient-cutoff-mob: linear-gradient(180deg, rgba(220,222,208,1) 0%, rgba(204,224,161,1) 40%, #fefff9 0%);
+    --ego-gradient-trans: linear-gradient(100deg, rgba(220,222,208,0.4) 0%, rgba(204,224,161,0.4) 100%);
   }
 
   body {
@@ -35,7 +36,6 @@ const GlobalStyle = createGlobalStyle`
 
 
 `;
-
 
 
 export default GlobalStyle;
