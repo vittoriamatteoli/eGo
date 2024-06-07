@@ -1,9 +1,11 @@
-import styled from "styled-components"
-import { useParams } from "react-router"
-import { BatterySVG } from "../reusables/BatterySVG"
-import { useEffect, useState } from "react"
-import { Button } from "@mui/material"
-const apikey = import.meta.env.VITE_API_KEY
+import styled from "styled-components";
+import { useParams } from "react-router";
+import { useEffect, useState } from "react";
+import { BatterySVG } from "../reusables/BatterySVG"; // Adjust the import path if necessary
+import { Button } from "@mui/material";
+import { useMediaQuery } from "react-responsive";
+
+const apikey = import.meta.env.VITE_API_KEY;
 
 const BatterySliderWrapper = styled.div`
   width: 100%;
@@ -12,7 +14,20 @@ const BatterySliderWrapper = styled.div`
   gap: 30px;
   align-items: center;
   justify-content: center;
-`
+  @media (max-width: 767px) {
+    width: 30px;
+    height: 30px;
+    div {
+      width: 30px;
+      height: 30px;
+    }
+    svg {
+      width: 30px;
+      height: 30px;
+    }
+  }
+`;
+
 const StyledButton = styled(Button)`
   border-radius: 24px;
   border: 1px solid #687943;
@@ -21,46 +36,58 @@ const StyledButton = styled(Button)`
   height: 35.172px;
   flex-shrink: 0;
   color: white;
-  color: #fff;
   font-family: "Open Sans Hebrew";
   font-size: 12px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
   text-transform: capitalize;
-`
-export const BatterySlider = () => {
-  const [fillPercentage, setFillPercentage] = useState(0) //set initial state from the EnergyLevel in the DB
-  const { id } = useParams()
-  const API = `${apikey}/user/${id}`
-  const token = sessionStorage.getItem("accessToken")
+`;
+
+export const BatterySlider = ({ showPopUp }) => {
+  const { id } = useParams();
+  const API = `${apikey}/user/${id}`;
+  const [fillPercentage, setFillPercentage] = useState(0);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(null);
+  const isMobile = useMediaQuery({ maxWidth: 767 }); // Detect if it's a mobile device
+  const isDesktopOrTablet = useMediaQuery({ minWidth: 768 });
 
   useEffect(() => {
+    const token = sessionStorage.getItem("accessToken");
     const fetchEnergyData = async () => {
       try {
-        const res = await fetch(API)
+        const res = await fetch(API, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (!res.ok) {
-          throw new Error("Failed to fetch data")
+          throw new Error("Failed to fetch data");
         }
-        const data = await res.json()
+        const data = await res.json();
         if (data.energyLevel !== undefined && data.energyLevel !== null) {
-          setFillPercentage(data.energyLevel)
+          setFillPercentage(data.energyLevel);
         }
       } catch (error) {
-        console.error("Error fetching energy data:", error)
+        setError(
+          "There was a problem with the fetch operation: " + error.message
+        );
       }
-    }
-
-    fetchEnergyData()
-  }, [id])
+    };
+    fetchEnergyData();
+  }, [id, API]);
 
   const handleDrag = (percentage) => {
     if (percentage >= 0 && percentage <= 100) {
-      setFillPercentage(percentage)
+      setFillPercentage(percentage);
     }
-  }
+  };
 
   const handleNewEnergy = async () => {
+    const token = sessionStorage.getItem("accessToken");
     try {
       const response = await fetch(API, {
         method: "PATCH",
@@ -69,27 +96,32 @@ export const BatterySlider = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      })
+      });
       if (!response.ok) {
-        throw new Error("Failed to update data")
+        throw new Error("Failed to update data");
       }
-      const updatedData = await response.json()
+      const updatedData = await response.json();
       if (
         updatedData.energyLevel !== undefined &&
         updatedData.energyLevel !== null
       ) {
-        setFillPercentage(updatedData.energyLevel)
-        console.log(updatedData)
+        setFillPercentage(updatedData.energyLevel);
+        setMessage(`Energy level updated with ${fillPercentage}%`);
       }
     } catch (error) {
-      console.error("Error updating energy data:", error)
+      console.error("Error updating energy data:", error);
+      setError("Error: " + error.message);
     }
-  }
+  };
 
   return (
     <BatterySliderWrapper>
       <BatterySVG fillPercentage={fillPercentage} onDrag={handleDrag} />
-      <StyledButton onClick={handleNewEnergy}>Confirm</StyledButton>
+      {message && <div>{message}</div>}
+      {error && <div>Error: {error}</div>}
+      {!isMobile && (
+        <StyledButton onClick={handleNewEnergy}>Confirm</StyledButton>
+      )}
     </BatterySliderWrapper>
-  )
-}
+  );
+};

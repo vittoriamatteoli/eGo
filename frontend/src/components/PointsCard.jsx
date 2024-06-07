@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BatterySlider } from "../reusables/BatterySlider";
+import { useMediaQuery } from "react-responsive";
+
 const apikey = import.meta.env.VITE_API_KEY;
 
 const StyledWrapper = styled.div`
@@ -12,16 +14,47 @@ const StyledWrapper = styled.div`
     color: var(--ego-green);
   }
 `;
+
 const StyledSection = styled.section`
   display: flex;
   justify-content: space-between;
+  @media (min-width: 768px) {
+    justify-content: flex-end;
+  }
 `;
+
+const PopUpOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const PopUpContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 200px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #dcded0 82.22%, #cce0a1 100%);
+`;
+
 export const PointsCard = ({ id }) => {
   const [points, setPoints] = useState("");
+  const [showPopUp, setShowPopUp] = useState(false);
 
   const API = `${apikey}/user/${id}`;
 
-  //fetch points
+  // Fetch points
   useEffect(() => {
     const handlePoints = async () => {
       try {
@@ -39,25 +72,44 @@ export const PointsCard = ({ id }) => {
     };
 
     handlePoints();
-  }, [id]);
+  }, [API]);
+
+  const togglePopUp = () => {
+    setShowPopUp(!showPopUp);
+  };
+
+  // Media query for mobile devices
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   return (
     <StyledWrapper>
       <h2>Dashboard</h2>
       <StyledSection>
-        <p>Your Energy Level</p>
-        <a>
+        {isMobile && <p>Your Energy Level</p>}
+        <a onClick={togglePopUp}>
           Your Points
           <span>
-            <img src="/info.svg" alt="informations-icon" />
+            <img src="/info.svg" alt="information-icon" />
           </span>
         </a>
       </StyledSection>
       <hr />
       <StyledSection>
-        <BatterySlider />
+        {isMobile && (
+          <a onClick={togglePopUp}>
+            <BatterySlider id={id} />
+          </a>
+        )}
         <h3>{points}</h3>
       </StyledSection>
+
+      {showPopUp && (
+        <PopUpOverlay onClick={togglePopUp}>
+          <PopUpContent>
+            <BatterySlider id={id} showPopUp={showPopUp} />
+          </PopUpContent>
+        </PopUpOverlay>
+      )}
     </StyledWrapper>
   );
 };
