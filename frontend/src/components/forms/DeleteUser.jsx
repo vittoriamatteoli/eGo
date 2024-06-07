@@ -66,7 +66,6 @@ const StyledH1 = styled.h1`
   font-weight: bold;
 `;
 
-
 export const DeleteUser = ({ getUsers }) => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const API = apiKey + "/admin";
@@ -96,14 +95,14 @@ export const DeleteUser = ({ getUsers }) => {
   return (
     <FormContainer>
       <FormGroup>
-    <form onSubmit={Delete}>
-      <StyledH1>Delete user</StyledH1>
-      <StyledLabel>ID</StyledLabel>
-      <Input type="text" name="id" />
-      <EgoButton type="submit">Delete user</EgoButton>
-      {message && <ErrorMessage>{message}</ErrorMessage>}
-    </form>
-    </FormGroup>
-      </FormContainer>
+        <form onSubmit={Delete}>
+          <StyledH1>Delete user</StyledH1>
+          <StyledLabel>ID</StyledLabel>
+          <Input type="text" name="id" />
+          <EgoButton type="submit">Delete user</EgoButton>
+          {message && <ErrorMessage>{message}</ErrorMessage>}
+        </form>
+      </FormGroup>
+    </FormContainer>
   );
 };

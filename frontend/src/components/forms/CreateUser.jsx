@@ -138,30 +138,30 @@ export const CreateUser = ({ getUsers }) => {
 
   return (
     <FormContainer>
-    <form onSubmit={handleSubmit}>
-    <FormGroup>
-      <StyledH1>Create user</StyledH1>
+      <form onSubmit={handleSubmit}>
+        <FormGroup>
+          <StyledH1>Create user</StyledH1>
 
-      <StyledLabel>Name</StyledLabel>
-      <Input type="text" name="name" onChange={e => setName(e.target.value.trim())} />
-      {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
-      <StyledLabel>Email</StyledLabel>
-      <Input type="text" name="email" onChange={e => setEmail(e.target.value.trim())} />
-      {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
-      <StyledLabel>Role</StyledLabel>
-      <StyledSelect name="role" value={role} onChange={e => setRole(e.target.value)}>
-        <option value="user" disabled>User</option>
-        <option value="VIP">Editor</option>
-        <option value="admin">Admin</option>
-      </StyledSelect>
-      {errors.role && <ErrorMessage>{errors.role}</ErrorMessage>}
-      <StyledLabel>Password</StyledLabel>
-      <Input type="password" name="password" onChange={e => setPassword(e.target.value.trim())} />
-      {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
-      </FormGroup>
-      <EgoButton type="submit">Create user</EgoButton>
-      {message && <ErrorMessage>{message}</ErrorMessage>}
-    </form>
+          <StyledLabel>Name</StyledLabel>
+          <Input type="text" name="name" onChange={e => setName(e.target.value.trim())} />
+          {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
+          <StyledLabel>Email</StyledLabel>
+          <Input type="text" name="email" onChange={e => setEmail(e.target.value.trim())} />
+          {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+          <StyledLabel>Role</StyledLabel>
+          <StyledSelect name="role" value={role} onChange={e => setRole(e.target.value)}>
+            <option value="user" disabled>User</option>
+            <option value="VIP">Editor</option>
+            <option value="admin">Admin</option>
+          </StyledSelect>
+          {errors.role && <ErrorMessage>{errors.role}</ErrorMessage>}
+          <StyledLabel>Password</StyledLabel>
+          <Input type="password" name="password" onChange={e => setPassword(e.target.value.trim())} />
+          {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+        </FormGroup>
+        <EgoButton type="submit">Create user</EgoButton>
+        {message && <ErrorMessage>{message}</ErrorMessage>}
+      </form>
     </FormContainer>
   );
 }
