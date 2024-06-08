@@ -22,15 +22,14 @@ overflow: hidden;
     grid-template-rows: 10vh 80vh 10vh;
     grid-template-areas:
     "leftColumn rightColumn"
- "leftColumn rightColumn"
-  "leftColumn rightColumn";
-
+    "leftColumn rightColumn"
+    "leftColumn rightColumn";
   }
 `;
 
 const LeftColumn = styled.div`
-  background: var(--ego-gradient-cutoff-mob2);
-grid-area: leftColumn;
+  background: var(--ego-gradient-cutoff-mob);
+  grid-area: leftColumn;
   display: grid;
   grid-template-columns: 1fr 10fr 1fr;
   grid-template-rows: auto auto auto;
@@ -39,14 +38,14 @@ grid-area: leftColumn;
     "img img img"
     "img img img";
 
-  @media (min-width: 1200px) {
-background: var(--ego-gradient-cutoff-dt2);
-  grid-template-areas:
-    "logo "
-    "img"
-    ". ";
-grid-column: 1;
-grid-row: 1 /span 4;
+    @media (min-width: 1200px) {
+    background: var(--ego-gradient-cutoff-dt);
+    grid-template-areas:
+      "logo "
+      "img"
+      ". ";
+    grid-column: 1;
+    grid-row: 1 /span 4;
   }
 `;
 
@@ -61,8 +60,8 @@ grid-template-areas:
   "link link link";
 align-self:center;
   @media (min-width: 1200px) {
-grid-column: 2;
-grid-row: 2;
+  grid-column: 2;
+  grid-row: 2;
 
 grid-template-areas:
   ". title . "
@@ -81,8 +80,8 @@ height: auto;
 margin:2vh 0 0 -15vw;
 z-index: 3;
   @media (min-width: 1200px) {
-grid-column:1;
-margin:2vh -10vw 0 2vh;
+  grid-column:1;
+  margin:2vh -10vw 0 2vh;
   }
 
 `;
@@ -91,31 +90,24 @@ const StyledImage = styled.img`
 grid-area: image;
 grid-column: 1/span 4;
 grid:row: 1;
-  z-index: 2;
-  width: 115vw;
-  margin: 0 0 0 -10vw;
-  align-self: center;
-
-
+z-index: 2;
+ width: 115vw;
+margin: 0 0 0 -10vw;
+align-self: center;
   @media (min-width: 768px) {
-
   width: 100vw;
-    margin: -5vh 0 0 0;
+  margin: -5vh 0 0 0;
   }
-
-
-
   @media (min-width: 1200px) {
-width: 50vw;
-margin: 5vh 0 0 -2vw;
-grid-row:1/span 2;
+  width: 50vw;
+  margin: 5vh 0 0 -2vw;
+  grid-row:1/span 2;
   }
 `;
 
 
 
 const FormContainer = styled.div`
-
 grid-area: form;
 align-self: center;
 justify-self: center;
@@ -137,7 +129,6 @@ color: var(--ego-dark);
   @media (min-width: 1200px) {
 grid-column: 2;
 grid-row: 1;
-
   }
 `;
 
@@ -175,8 +166,7 @@ grid-row: 3;
 grid-column:2;
 font-size: 0.6em;
 align-self: center;
-
-  color: var(--ego-dark);
+color: var(--ego-dark);
   p {
     text-align: center;
     margin: 5px 0;
@@ -256,10 +246,10 @@ export const Login = () => {
     <Container>
       <LeftColumn>
         <StyledLogo src={logo} alt="logo" />
-          <StyledImage src={Globe} alt="globe" />
+        <StyledImage src={Globe} alt="globe" />
       </LeftColumn>
       <RightColumn>
-      <StyledH1>Login</StyledH1>
+        <StyledH1>Login</StyledH1>
         <FormContainer>
 
           <form onSubmit={handleLogin}>
@@ -296,10 +286,10 @@ export const Login = () => {
 
         </FormContainer>
         <BottomText>
-            <p>
-              Don't have an account yet? <Link to="/register">Sign up</Link>
-            </p>
-          </BottomText>
+          <p>
+            Don't have an account yet? <Link to="/register">Sign up</Link>
+          </p>
+        </BottomText>
       </RightColumn>
     </Container>
   );

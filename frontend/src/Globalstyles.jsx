@@ -13,12 +13,11 @@ const GlobalStyle = createGlobalStyle`
     --ego-dark: #242B17;
     --ego-gradient: linear-gradient(100deg, rgba(220,222,208,1) 0%, rgba(204,224,161,1) 100%);
     --ego-gradient-reversed: linear-gradient(100deg, rgba(204,224,161,1) 0%, rgba(220,222,208,1) 100%);
-    --ego-gradient-cutoff-dt: linear-gradient(90deg, rgba(220,222,208,1) 0%, rgba(204,224,161,1) 40%, #fefff9 0%);
-    --ego-gradient-cutoff-mob: linear-gradient(180deg, rgba(220,222,208,1) 0%, rgba(204,224,161,1) 40%, #fefff9 0%);
+   --ego-gradient-cutoff-dt: linear-gradient(90deg, rgba(220,222,208,1) 0%, rgba(204,224,161,1) 80%, #fefff9 20%);
+    --ego-gradient-cutoff-mob: linear-gradient(180deg, rgba(220,222,208,1) 0%, rgba(204,224,161,1) 90%, #fefff9 10%);
     --ego-gradient-trans: linear-gradient(100deg, rgba(220,222,208,0.4) 0%, rgba(204,224,161,0.4) 100%);
 
-       --ego-gradient-cutoff-dt2: linear-gradient(90deg, rgba(220,222,208,1) 0%, rgba(204,224,161,1) 80%, #fefff9 20%);
-    --ego-gradient-cutoff-mob2: linear-gradient(180deg, rgba(220,222,208,1) 0%, rgba(204,224,161,1) 90%, #fefff9 10%);
+
   }
 
 

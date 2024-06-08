@@ -8,7 +8,6 @@ width:100px;
 margin: 0 auto;
 `;
 
-
 export const Logout = () => {
   const [message, setMessage] = useState("")
   const navigate = useNavigate()
