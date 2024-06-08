@@ -74,16 +74,18 @@ router.post("/sessions", async (req, res) => {
     const user = await User.findOne({ email });
     if (user && (await user.matchPassword(password))) {
       //generate a token for the user
-
-      const token = jwt.sign({ id: user._id }, SECRET, { expiresIn: "1h" });
+      const token = jwt.sign({ id: user._id, role:user.role }, SECRET, { expiresIn: "1h" });
       const id = user._id;
+
+      const role = user.role;
 
       // optional to generate a refresh token for the user
       //const refreshToken = jwt.sign({ id: user._id }, REFRESH_SECRET);
       //user.refreshToken = refreshToken;
       //await user.save();
 
-      res.status(200).json({ accessToken: token, id: id });
+      res.status(200).json({ accessToken: token , id:id, role:role});
+
     } else {
       res.status(401).json({ message: "Invalid username or password" });
     }
@@ -93,6 +95,17 @@ router.post("/sessions", async (req, res) => {
       error: error.message,
     });
   }
+
+});
+
+//route to verify if token is valid with middleware isLoggedIn
+router.get("/verify", authenticateUser, (req, res) => {
+  res.json({ message: "You are logged in" });
+});
+
+router.get("/role", authenticateUser, (req, res) => {
+  res.json({ role: req.user.role });
+
 });
 
 // patch request to update the energy level
@@ -185,6 +198,7 @@ router.patch("/user/:id", authenticateUser, async (req, res) => {
       message: "An error occurred while updating the user",
       error: error.message,
     });
+
   }
 });
 
@@ -237,5 +251,6 @@ router.post("/travel", authenticateUser, async (req, res) => {
     res.status(500).send({ message: "Error uploading travel" });
   }
 });
+
 
 export default router;

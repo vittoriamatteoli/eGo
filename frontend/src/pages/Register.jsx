@@ -2,111 +2,138 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Loading } from "../reusables/Loading";
 import styled from "styled-components";
-import { EgoButton } from "../reusables/Button";
-import Globe from "../assets/Globe.svg";
-import logo from "../assets/logo.svg";
+import { EgoButton } from "../reusables/Button"
+import Globe from "../assets/Globe-ego.svg";
+import logo from "../assets/globe-logo.svg";
 
 
 const Container = styled.div`
+  overflow: hidden;
   color: var(--ego-dark);
   display: grid;
-  grid-template-columns: 1fr;
-  width: 100vw;
-  height: 100vh;
+	grid-template-columns: 1vw  98vw 1vw;
+	grid-template-rows: 50vh 50vh;
   background-color: var(--ego-white);
-  background: var(--ego-gradient-cutoff-mob);
-  @media (min-width: 768px) {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    background: var(--ego-gradient-cutoff-dt);
+  grid-template-areas:
+    "leftColumn leftColumn leftColumn"
+    "rightColumn rightColumn rightColumn";
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 50vw 50vw;
+    grid-template-rows: 10vh 80vh 10vh;
+    grid-template-areas:
+      "leftColumn rightColumn"
+      "leftColumn rightColumn"
+      "leftColumn rightColumn";
+
   }
 `;
 
 const LeftColumn = styled.div`
-  height: 55vh;
-  grid-column: 1;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: top;
-  align-items: center;
-  box-sizing: border-box;
-  @media (min-width: 376px) {
-    height: 10vh;
-    padding: 0vh 0px 0px 0px;
-  }
-  @media (min-width: 768px) {
-    height: 100vh;
-    padding: 10vh 0px 0px 40px;
+  background: var(--ego-gradient-cutoff-mob);
+  grid-area: leftColumn;
+  display: grid;
+  grid-template-columns: 1fr 10fr 1fr;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    ". . logo"
+    "img img img"
+    "img img img";
+
+  @media (min-width: 1200px) {
+    background: var(--ego-gradient-cutoff-dt);
+    grid-template-areas:
+      "logo "
+      "img"
+      ". ";
+    grid-column: 1;
+    grid-row: 1 /span 4;
   }
 `;
 
 const RightColumn = styled.div`
-  grid-column: 1;
-  flex: 1;
-  padding: 0 20px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: var(--ego-light);
-  @media (min-width: 768px) {
+  grid-area: rightColumn;
+  display:grid;
+  grid-template-columns: 1fr 10fr 1fr;
+  grid-template-rows: 1fr 2fr 1fr;
+  grid-template-areas:
+    "title title title"
+    "form form form"
+    "link link link";
+  align-self:center;
+  @media (min-width: 1200px) {
     grid-column: 2;
+    grid-row: 2;
+    grid-template-areas:
+      ". title . "
+      ". form . "
+      ". link . ";
   }
 `;
 
-const ImageContainer = styled.div`
-  width: 100%;
-  text-align: center;
+
+
+const StyledLogo = styled.img`
+  grid-area: logo;
+  grid-column: 3;
+  max-width: 15vw;
+  height: auto;
+  margin:2vh 0 0 -15vw;
+  z-index: 3;
+  @media (min-width: 1200px) {
+    grid-column:1;
+    margin:2vh -10vw 0 2vh;
+  }
+
 `;
 
 const StyledImage = styled.img`
-  z-index: 3;
-  height: auto;
-  width: 120%;
-  position: relative;
-  padding: 0px 0px 0px 0px;
+  grid-area: image;
+  grid-column: 1/span 4;
+  grid:row: 1;
+  z-index: 2;
+  width: 100vw;
+  margin: 0 0 0 0vw;
+  align-self: center;
   @media (min-width: 768px) {
-    grid-column: 1;
-    grid-row: 2;
-    z-index: 3;
-    width: 50vw;
+    width: 100vw;
+    margin: -5vh 0 0 0;
   }
-`;
 
-const StyledLogo = styled.img`
-  visibility: hidden;
-  max-width: 80px;
-  height: auto;
-  padding: 10vh 0px 20px 40px;
-  z-index: 3;
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin-top: -40px;
-  margin-left: -20px;
-  @media (min-width: 768px) {
-    visibility: visible;
+  @media (min-width: 1200px) {
+    width: 50vw;
+    margin: 5vh 0 0 -2vw;
+    grid-row:1/span 2;
   }
 `;
 
 const FormContainer = styled.div`
-  grid-row: 1;
-  width: 100%;
-  max-width: 80vw;
-  margin: 0 auto;
-  h2 {
-    text-align: center;
+  grid-area: form;
+  align-self: center;
+  justify-self: center;
+  width: 60vw;
+  @media (min-width: 1200px) {
+    width:20vw;
   }
-  @media (min-width: 768px) {
-    grid-row: 2;
-    width: 400px;
+`;
+
+const StyledH1 = styled.h1`
+  grid-area: title;
+  grid-column: 2;
+  grid-row: 1;
+  text-align: center;
+  justify-self: center;
+  align-self: center;
+  font-size: 2em;
+  color: var(--ego-dark);
+  @media (min-width: 1200px) {
+    grid-column: 2;
+    grid-row: 1;
   }
 `;
 
 const FormGroup = styled.div`
-  margin-bottom: 15px;
+  margin-top: 10px;
 `;
 
 const Input = styled.input`
@@ -119,18 +146,26 @@ const Input = styled.input`
   border-radius: 24px;
   border: 1px solid transparent;
   background: var(--ego-gradient-reversed);
-
-  &:focus,
-  &:active {
+  &:focus, &:active {
     background-color: var(--ego-lgt-green);
     border: 1px solid var(--ego-green);
   }
 `;
 
-const BottomText = styled.div`
-  margin-top: 30px;
-  font-size: 0.6em;
+const ErrorMessage = styled.div`
+  margin-bottom: 15px;
+  padding: 10px;
+  color: var(--ego-dark);
+  border-radius: 7px;
+  border: 3px solid var(--ego-error);
+`;
 
+const BottomText = styled.div`
+  grid-area: link;
+  grid-row: 3;
+  grid-column:2;
+  font-size: 0.6em;
+  align-self: center;
   color: var(--ego-dark);
   p {
     text-align: center;
@@ -140,27 +175,23 @@ const BottomText = styled.div`
     color: var(--ego-dark);
     text-decoration: none;
     font-weight: bold;
-
     &:hover {
       color: var(--ego-purple);
     }
   }
-  @media (min-width: 768px) {
-    grid-row: 3;
-    position: absolute;
-    bottom: 30px;
-    text-align: center;
-
-    align-self: center;
+    @media (min-width: 1200px) {
+      grid-row: 4;
+      position:fixed;
+      bottom: 5vh;
+      align-self: end;
+      justify-self: center;
   }
 `;
 
-const ErrorMessage = styled.div`
-  margin-bottom: 15px;
-  padding: 10px;
-  color: var(--ego-error);
-  border-radius: 7px;
-  border: 3px solid var(--ego-error);
+const ButtonAndSpinnerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const Register = () => {
@@ -234,15 +265,13 @@ export const Register = () => {
     <Container>
       <LeftColumn>
         <StyledLogo src={logo} alt="logo" />
-        <ImageContainer>
-          <StyledImage src={Globe} alt="globe" />
-        </ImageContainer>
+        <StyledImage src={Globe} alt="globe" />
       </LeftColumn>
       <RightColumn>
+        <StyledH1>Sign up</StyledH1>
         <FormContainer>
-          <h2>Sign up</h2>
+
           <form onSubmit={handleRegister}>
-            {/* displayed on top of form as in figma design */}
             {message && <ErrorMessage>{message}</ErrorMessage>}
             <FormGroup>
               <Input
@@ -280,10 +309,12 @@ export const Register = () => {
                 disabled={loading}
               />
             </FormGroup>
-
-            <EgoButton type="submit" disabled={loading}>
-              {loading ? <Loading /> : "Sign up"}
-            </EgoButton>
+            <ButtonAndSpinnerContainer>
+              <EgoButton type="submit" disabled={loading}>
+                {loading ? "Loading..." : "Sign up"}
+              </EgoButton>
+              {loading && <Loading />}
+            </ButtonAndSpinnerContainer>
           </form>
         </FormContainer>
         <BottomText>
