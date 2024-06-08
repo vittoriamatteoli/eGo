@@ -12,6 +12,7 @@ export const AppRoutes = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} fallbackComponent={<Dashboard />} />

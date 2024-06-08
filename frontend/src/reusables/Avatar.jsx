@@ -17,7 +17,7 @@ export const Avatar = ({ id }) => {
         }
         const data = await response.json();
         setAvatarUrl(data.avatarUrl);
-        setUsername(data.username);
+
       } catch (error) {
         console.error("Failed at fetching avatar", error);
         setError(true);
@@ -37,7 +37,7 @@ export const Avatar = ({ id }) => {
   return (
     <>
       <img src={avatarUrl} alt="User Avatar" className="user-avatar" />
-      <p>{username}</p>
+     
     </>
   );
 };
