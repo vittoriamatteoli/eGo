@@ -76,12 +76,16 @@ router.post("/sessions", async (req, res) => {
       //generate a token for the user
       const token = jwt.sign({ id: user._id, role:user.role }, SECRET, { expiresIn: "1h" });
       const id = user._id;
+
       const role = user.role;
+
       // optional to generate a refresh token for the user
       //const refreshToken = jwt.sign({ id: user._id }, REFRESH_SECRET);
       //user.refreshToken = refreshToken;
       //await user.save();
+
       res.status(200).json({ accessToken: token , id:id, role:role});
+
     } else {
       res.status(401).json({ message: "Invalid username or password" });
     }
@@ -91,6 +95,7 @@ router.post("/sessions", async (req, res) => {
       error: error.message,
     });
   }
+
 });
 
 //route to verify if token is valid with middleware isLoggedIn
@@ -100,6 +105,7 @@ router.get("/verify", authenticateUser, (req, res) => {
 
 router.get("/role", authenticateUser, (req, res) => {
   res.json({ role: req.user.role });
+
 });
 
 // patch request to update the energy level
@@ -192,7 +198,59 @@ router.patch("/user/:id", authenticateUser, async (req, res) => {
       message: "An error occurred while updating the user",
       error: error.message,
     });
+
   }
 });
+
+//we could add a route to get all travels for the admin.
+
+//get all travels of a  specified user
+router.get("/user/:id/travels", authenticateUser, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const travels = await Travel.find({ user: id });
+
+    res.status(200).json(travels);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Error retrieving user travels" });
+  }
+});
+
+//get one single travel for specified id
+router.get("/travel/:id", authenticateUser, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const travel = await Travel.findById(id);
+    res.status(200).json(travel);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Error retrieving travel" });
+  }
+});
+
+//upload travel details into travel model
+router.post("/travel", authenticateUser, async (req, res) => {
+  const { distance, mode, origin, destination } = req.body;
+  const user = req.user;
+
+  try {
+    const newTravel = await new Travel({
+      distance,
+      mode,
+      origin,
+      destination,
+      user: user._id,
+    }).save();
+
+    res
+      .status(201)
+      .send({ message: "Travel uploaded successfully!", travel: newTravel });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Error uploading travel" });
+  }
+});
+
 
 export default router;
