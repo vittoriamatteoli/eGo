@@ -61,7 +61,7 @@ export const TravelForm = ({ id }) => {
   const [distance, setDistance] = useState(0);
   const [modeBonus, setModeBonus] = useState(5);
   const [autocompleteKey, setAutocompleteKey] = useState(0);
-  const [travelPoints, setTravelPoints] = useState(0); //add calculation in frontend? need to fetch energy data. discuss
+  const [travelPoints, setTravelPoints] = useState(0); //dummy calculation
 
   const apikey = import.meta.env.VITE_API_KEY;
   const API = `${apikey}/travel`;
@@ -126,7 +126,7 @@ export const TravelForm = ({ id }) => {
         body: JSON.stringify(bodyData),
       });
 
-      //add more specific error status (can be a new task)
+      //add more specific error status
       if (!response) {
         if (response.status === 404) {
           throw new Error("Failed at getting the route!");
@@ -144,7 +144,7 @@ export const TravelForm = ({ id }) => {
     }
   };
 
-  //calculation sample just for trying out
+  //dummy points calculation
   const calculationDraft = async (travelMode) => {
     switch (travelMode) {
       case "DRIVE":
@@ -241,6 +241,9 @@ export const TravelForm = ({ id }) => {
         }}
       />
 
+      <p>
+        Distance: <TravelPoints>{distance}</TravelPoints> m
+      </p>
       <p>
         You will get <TravelPoints>{travelPoints}</TravelPoints> points for this
         trip
