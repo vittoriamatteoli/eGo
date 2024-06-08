@@ -20,16 +20,13 @@ export const BatterySVG = ({
     setDragging(true);
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
+    document.addEventListener("touchmove", handleTouchMove);
+    document.addEventListener("touchend", handleTouchEnd);
   };
 
   const handleMouseMove = (event) => {
     if (dragging) {
-      const rect = event.target.getBoundingClientRect();
-      const offsetX = event.clientX - rect.left;
-      let percentage = (offsetX / rect.width) * 100;
-      if (percentage < 0) percentage = 0;
-      if (percentage > 100) percentage = 100;
-      onDrag(percentage);
+      handleDrag(event.clientX, event.target);
     }
   };
 
@@ -37,6 +34,37 @@ export const BatterySVG = ({
     setDragging(false);
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
+    document.removeEventListener("touchmove", handleTouchMove);
+    document.removeEventListener("touchend", handleTouchEnd);
+  };
+
+  const handleTouchStart = (event) => {
+    event.preventDefault();
+    setDragging(true);
+    document.addEventListener("touchmove", handleTouchMove);
+    document.addEventListener("touchend", handleTouchEnd);
+  };
+
+  const handleTouchMove = (event) => {
+    if (dragging) {
+      const touch = event.touches[0];
+      handleDrag(touch.clientX, event.target);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setDragging(false);
+    document.removeEventListener("touchmove", handleTouchMove);
+    document.removeEventListener("touchend", handleTouchEnd);
+  };
+
+  const handleDrag = (clientX, target) => {
+    const rect = target.getBoundingClientRect();
+    const offsetX = clientX - rect.left;
+    let percentage = (offsetX / rect.width) * 100;
+    if (percentage < 0) percentage = 0;
+    if (percentage > 100) percentage = 100;
+    onDrag(percentage);
   };
 
   return (
@@ -48,9 +76,12 @@ export const BatterySVG = ({
         viewBox="0 0 195 89"
         fill="none"
         onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
         onMouseMove={handleMouseMove}
+        onTouchMove={handleTouchMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
+        onTouchEnd={handleTouchEnd}
       >
         {/* Outer rectangle for battery outline */}
         <rect
