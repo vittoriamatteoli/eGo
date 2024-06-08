@@ -1,6 +1,8 @@
 import { BackArrow } from "../reusables/BackArrow"
 import { Logo } from "../reusables/Logo"
+import { BackArrowWithHistory } from "../reusables/BackArrowWithHistory"
 import styled from "styled-components"
+
 const StyledImg = styled.img`
   position: absolute;
   bottom: 0;
@@ -89,8 +91,8 @@ export const About = () => {
   return (
     <StyledSection>
       <div>
+      <BackArrowWithHistory />
         <div className="title">
-          <BackArrow className="arrow" />
           About
           <Logo />
         </div>
