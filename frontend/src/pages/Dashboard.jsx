@@ -1,11 +1,11 @@
 import { Sidebar } from "../components/Sidebar";
 import { PointsCard } from "../components/PointsCard";
 import { ActivityGraph } from "../components/ActivityGraph";
-import { DistanceCard } from "../components/DistanceCard";
+//import { DistanceCard } from "../components/DistanceCard";
 import { EnergyCard } from "../components/EnergyCard";
 import { TravelCard } from "../components/TravelCard";
 import { useParams } from "react-router-dom"
-import { TravelForm } from "../components/TravelForm"
+//import { TravelForm } from "../components/TravelForm"
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"
 import { AdminButton } from "../reusables/AdminButton"
@@ -47,18 +47,17 @@ export const Dashboard = () => {
 
   const { id } = useParams();
   return (
-    
-       <DashboardLayout>
+
+    <DashboardLayout>
       <Sidebar id={id} />
 
       <div>
         <PointsCard id={id} />
         <ActivityGraph id={id} />
-        <DistanceCard id={id} />
+       {/* <DistanceCard id={id} /> */}
         <EnergyCard id={id} />
-          <TravelCard id={id} />
-          <TravelCard id={id} />
-          <AdminButton isAdmin={isAdmin} />
+        <TravelCard id={id} />
+        <AdminButton isAdmin={isAdmin} />
       </div>
     </DashboardLayout>
 
