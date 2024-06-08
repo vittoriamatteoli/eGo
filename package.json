@@ -6,7 +6,8 @@
   },
   "dependencies": {
     "react-google-autocomplete": "^2.7.3",
-    "react-responsive": "^10.0.0"
+    "react-responsive": "^10.0.0",
+    "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^2.1.4"
