@@ -7,6 +7,7 @@ import Globe from "../assets/Globe-ego.svg";
 
 //styles
 const LandingSection = styled.section`
+overflow: hidden;
   height: 100vh;
   background: linear-gradient(205deg, #dcded0 14.71%, #cce0a1 87.05%);
   display: flex;
