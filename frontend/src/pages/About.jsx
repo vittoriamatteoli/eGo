@@ -1,166 +1,229 @@
-import { BackArrow } from "../reusables/BackArrow"
-import { Logo } from "../reusables/Logo"
-import styled from "styled-components"
+import { BackArrow } from "../reusables/BackArrow";
+import { Logo } from "../reusables/Logo";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+
 const StyledImg = styled.img`
   position: absolute;
   bottom: 0;
   right: 0;
-`
+  width: 70%;
+  height: auto;
+  z-index: 0;
+
+  @media (min-width: 768px) {
+    max-width: 350px;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 450px;
+  }
+`;
+
 const StyledSection = styled.section`
-  height: 100vh;
-  width: 100vw;
   background: linear-gradient(205deg, #dcded0 14.71%, #cce0a1 87.05%);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  height: 100vh;
+  /* position: relative; */
+`;
+
+const SectionWrapper = styled.div`
+  padding: 30px;
   display: flex;
   flex-direction: column;
+  @media all and (min-width: 768px) {
+    padding: 30px 118px;
+  }
+`;
+const StyledIntro = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  padding-bottom: 30px;
+`;
+
+const StyledTop = styled.h1`
+  display: flex;
+  flex-direction: column;
+  padding: 60px 0;
+  margin: 0;
+`;
+
+const StyledTitle = styled.div`
+  font-size: 12px;
+  font-weight: 700;
+  padding-right: 20px;
+  letter-spacing: 0.36px;
+
+  @media (min-width: 768px) {
+    font-size: 32px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 40px;
+  }
+`;
+
+const StyledText = styled.p`
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  margin: 0;
+
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 20px;
+  }
+`;
+
+const TeamCard = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const SingleCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px 40px 20px 0;
+
+  @media (min-width: 768px) {
+    padding: 30px 70px 30px 0;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 40px 90px 40px 0;
+  }
+`;
+
+const StyledName = styled.h2`
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+
+  @media (min-width: 768px) {
+    font-size: 20px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 24px;
+  }
+`;
+
+const SocialLinks = styled.div`
+  display: flex;
   align-items: center;
   justify-content: center;
-  div {
-    max-width: 260px;
+  z-index: 1;
+`;
+
+const SocialImg = styled.img`
+  width: 13px;
+  height: 13px;
+  z-index: 2;
+
+  @media all and (min-width: 768px) {
+    width: 26px;
+    height: 26px;
+    padding: 5px;
+  }
+`;
+
+const CopyrightText = styled.p`
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: 0.24px;
+
+  @media (min-width: 768px) {
+    font-size: 15px;
   }
 
-  h3 {
-    color: #000;
-    font-family: "Open Sans Hebrew";
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    letter-spacing: 0.36px;
+  @media (min-width: 1024px) {
+    font-size: 20px;
   }
-  .title {
-    display: flex;
-    flex-direction: column;
-    gap: 35px;
-    color: #000;
-    font-family: "Open Sans Hebrew";
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    letter-spacing: 0.36px;
-    text-align: left;
-  }
-  p {
-    color: #000;
-    font-family: "Open Sans Hebrew";
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    letter-spacing: 0.3px;
-    /* max-width: 200px; */
-    text-align: left;
-  }
+`;
 
-  .teamCard {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-  }
-  .singleCard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: left;
-    h5 {
-      padding: 0;
-      margin: 0;
-    }
-    img {
-      margin-bottom: 15px;
-    }
-  }
-  .socialLinks {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    a {
-      padding: 2px;
-      text-align: center;
-    }
-  }
-`
-
+//component
 export const About = () => {
   return (
     <StyledSection>
-      <div>
-        <div className="title">
-          <BackArrow className="arrow" />
-          About
-          <Logo />
-        </div>
-        <p>
-          eGo is a user-friendly platform that encourages and incentivizes
-          sustainable travel. Whether you walk, cycle, use public
-          transportation, or carpool, eGo tracks your eco-friendly journeys and
-          rewards you with points. These points can be redeemed for a variety of
-          rewards, fostering a community of conscious travelers dedicated to
-          preserving our planet.
-        </p>
-      </div>
-      <div>
-        <h3>Meet our Team</h3>
-        <section className="teamCard">
-          <div className="singleCard">
+      <SectionWrapper>
+        <Link to="/">
+          <BackArrow />
+        </Link>
+        <StyledTop>
+          <StyledIntro>
+            <StyledTitle>About</StyledTitle>
+            <Logo />
+          </StyledIntro>
+          <StyledText>
+            eGo is a user-friendly platform that encourages and incentivizes
+            sustainable travel. Whether you walk, cycle, use public
+            transportation, or carpool, eGo tracks your eco-friendly journeys
+            and rewards you with points. These points can be redeemed for a
+            variety of rewards, fostering a community of conscious travelers
+            dedicated to preserving our planet.
+          </StyledText>
+        </StyledTop>
+        <StyledTitle>Meet our Team</StyledTitle>
+        <TeamCard>
+          <SingleCard>
             <img src="/Eliane-tree.svg" alt="tree" />
-            <h5>Eliane</h5>
-            <div className="socialLinks">
+            <StyledName>Eliane</StyledName>
+            <SocialLinks>
               <a href="https://github.com/El1an3">
-                <img src="/github-icon.svg" alt="github-icon" />
+                <SocialImg src="/github-icon.svg" alt="github-icon" />
               </a>
               <a href="https://www.linkedin.com/in/eliane-b-weber">
-                <img src="/linkedin-icon.svg" alt="linkedin-icon" />
+                <SocialImg src="/linkedin-icon.svg" alt="linkedin-icon" />
               </a>
-            </div>
-          </div>
+            </SocialLinks>
+          </SingleCard>
 
-          <div className="singleCard">
+          <SingleCard>
             <img src="/Kathinka-tree.svg" alt="tree" />
-            <h5>Kathinka</h5>
-            <div className="socialLinks">
+            <StyledName>Kathinka</StyledName>
+            <SocialLinks>
               <a href="https://github.com/kathinka">
-                <img src="/github-icon.svg" alt="github-icon" />
+                <SocialImg src="/github-icon.svg" alt="github-icon" />
               </a>
               <a href="https://www.linkedin.com/in/kathinkamartinsen/">
-                <img src="/linkedin-icon.svg" alt="linkedin-icon" />
+                <SocialImg src="/linkedin-icon.svg" alt="linkedin-icon" />
               </a>
-            </div>
-          </div>
+            </SocialLinks>
+          </SingleCard>
 
-          <div className="singleCard">
+          <SingleCard>
             <img src="/Vittoria-tree.svg" alt="tree" />
-            <h5>Vittoria</h5>
-            <div className="socialLinks">
+            <StyledName>Vittoria</StyledName>
+            <SocialLinks>
               <a href="https://github.com/vittoriamatteoli">
-                <img src="/github-icon.svg" alt="github-icon" />
+                <SocialImg src="/github-icon.svg" alt="github-icon" />
               </a>
               <a href="https://www.linkedin.com/in/vittoria-matteoli/">
-                <img src="/linkedin-icon.svg" alt="linkedin-icon" />
+                <SocialImg src="/linkedin-icon.svg" alt="linkedin-icon" />
               </a>
-            </div>
-          </div>
+            </SocialLinks>
+          </SingleCard>
 
-          <div className="singleCard">
+          <SingleCard>
             <img src="/Yifan-tree.svg" alt="tree" />
-            <h5>Yifan</h5>
-            <div className="socialLinks">
+            <StyledName>Yifan</StyledName>
+            <SocialLinks>
               <a href="https://github.com/Yifan-858">
-                <img src="/github-icon.svg" alt="github-icon" />
+                <SocialImg src="/github-icon.svg" alt="github-icon" />
               </a>
               <a href="https://www.linkedin.com/in/yifan-wang-dev/">
-                <img src="/linkedin-icon.svg" alt="linkedin-icon" />
+                <SocialImg src="/linkedin-icon.svg" alt="linkedin-icon" />
               </a>
-            </div>
-          </div>
-        </section>
-        <p>© 2024 eGo. All rights reserved.</p>
-      </div>
+            </SocialLinks>
+          </SingleCard>
+        </TeamCard>
+        <CopyrightText>© 2024 eGo. All rights reserved.</CopyrightText>
+      </SectionWrapper>
       <StyledImg className="WorldPic" src="/world.svg" alt="world" />
     </StyledSection>
-  )
-}
+  );
+};
