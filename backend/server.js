@@ -1,9 +1,10 @@
-import express from "express"
-import cors from "cors"
-import mongoose from "mongoose"
-import dotenv from "dotenv"
-import router from "./routes/routes"
-import expressListEndpoints from "express-list-endpoints"
+import express from "express";
+import cors from "cors";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import router from "./routes/routes";
+import adminRouter from "./routes/adminRoutes";
+import expressListEndpoints from "express-list-endpoints";
 
 dotenv.config()
 
@@ -19,7 +20,8 @@ app.use(cors())
 app.use(express.json())
 
 // import the routes
-app.use("/", router)
+app.use("/", router);
+app.use("/admin", adminRouter);
 
 app.get("/test-db", async (req, res) => {
   try {

@@ -21,7 +21,7 @@ const StyledSection = styled.section`
   @media (min-width: 768px) {
     justify-content: flex-end;
   }
-  
+
   svg {
     width: 50px;
     height: 50px;
