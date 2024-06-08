@@ -19,8 +19,8 @@ const StyledEgoButton = styled.button`
   }
 `;
 
-export const EgoButton = ({ children, onClick, className }) => (
-  <StyledEgoButton onClick={onClick} className={className}>
+export const EgoButton = ({ children, onClick, className, disabled }) => (
+  <StyledEgoButton onClick={onClick} className={className} disabled={disabled}>
     {children}
   </StyledEgoButton>
 );

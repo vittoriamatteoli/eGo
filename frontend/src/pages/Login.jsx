@@ -189,6 +189,12 @@ color: var(--ego-dark);
   }
 `;
 
+const ButtonAndSpinnerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -279,9 +285,12 @@ export const Login = () => {
               />
             </FormGroup>
 
-            <EgoButton type="submit" disabled={loading}>
-              {loading ? <Loading /> : "Log in"}
-            </EgoButton>
+            <ButtonAndSpinnerContainer>
+              <EgoButton type="submit" disabled={loading}>
+                {loading ? "Loading..." : "Sign up"}
+              </EgoButton>
+              {loading && <Loading />}
+            </ButtonAndSpinnerContainer>
           </form>
 
         </FormContainer>

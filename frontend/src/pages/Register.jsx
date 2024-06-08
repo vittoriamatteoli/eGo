@@ -188,6 +188,12 @@ const BottomText = styled.div`
   }
 `;
 
+const ButtonAndSpinnerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -303,9 +309,12 @@ export const Register = () => {
                 disabled={loading}
               />
             </FormGroup>
-            <EgoButton type="submit" disabled={loading}>
-              {loading ? <Loading /> : "Sign up"}
-            </EgoButton>
+            <ButtonAndSpinnerContainer>
+              <EgoButton type="submit" disabled={loading}>
+                {loading ? "Loading..." : "Sign up"}
+              </EgoButton>
+              {loading && <Loading />}
+            </ButtonAndSpinnerContainer>
           </form>
         </FormContainer>
         <BottomText>

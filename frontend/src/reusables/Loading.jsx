@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Loading = styled.div`
+  margin-top: 10px;
   border: 4px solid rgba(204, 224, 161, 0.4);
   width: 30px;
   height: 30px;
