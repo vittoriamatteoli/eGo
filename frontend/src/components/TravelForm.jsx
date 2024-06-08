@@ -126,7 +126,7 @@ export const TravelForm = ({ id }) => {
         body: JSON.stringify(bodyData),
       });
 
-      //add more specific error status
+      //add more specific error status, check into google api doc
       if (!response) {
         if (response.status === 404) {
           throw new Error("Failed at getting the route!");
