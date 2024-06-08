@@ -266,7 +266,6 @@ export const Register = () => {
         <FormContainer>
 
           <form onSubmit={handleRegister}>
-            {/* displayed on top of form as in figma design */}
             {message && <ErrorMessage>{message}</ErrorMessage>}
             <FormGroup>
               <Input
@@ -304,12 +303,9 @@ export const Register = () => {
                 disabled={loading}
               />
             </FormGroup>
-            {loading ? (
-              <Loading />
-            ) : (
-              <EgoButton type="submit">Sign up</EgoButton>
-            )}
-
+            <EgoButton type="submit" disabled={loading}>
+              {loading ? <Loading /> : "Sign up"}
+            </EgoButton>
           </form>
         </FormContainer>
         <BottomText>
