@@ -1,7 +1,9 @@
-import { BackArrow } from "../reusables/BackArrow";
-import { Logo } from "../reusables/Logo";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+
+import { BackArrow } from "../reusables/BackArrow"
+import { Logo } from "../reusables/Logo"
+import { BackArrowWithHistory } from "../reusables/BackArrowWithHistory"
+import styled from "styled-components"
+
 
 const StyledImg = styled.img`
   position: absolute;
@@ -149,10 +151,9 @@ const CopyrightText = styled.p`
 export const About = () => {
   return (
     <StyledSection>
+
       <SectionWrapper>
-        <Link to="/">
-          <BackArrow />
-        </Link>
+    <BackArrowWithHistory />
         <StyledTop>
           <StyledIntro>
             <StyledTitle>About</StyledTitle>
