@@ -1,5 +1,7 @@
-import { BatterySlider } from "../reusables/BatterySlider"
-import styled from "styled-components"
+import { BatterySlider } from "../reusables/BatterySlider";
+import styled from "styled-components";
+import { useMediaQuery } from "react-responsive";
+
 const StyledBatteryCard = styled.div`
   border-radius: 20px;
   background: linear-gradient(180deg, #dcded0 82.22%, #cce0a1 100%);
@@ -10,6 +12,7 @@ const StyledBatteryCard = styled.div`
   align-items: center;
   justify-content: center;
   gap: 10px;
+
   h2 {
     color: #000;
     font-family: "Open Sans Hebrew";
@@ -20,13 +23,17 @@ const StyledBatteryCard = styled.div`
     padding: 10px;
     text-align: center;
   }
-`
-export const EnergyCard = ({ id }) => {
-  return (
-    <StyledBatteryCard>
-      <h2>How's your energy level right now?</h2>
-      <BatterySlider userId={id} />
-    </StyledBatteryCard>
-  )
-}
+`;
 
+export const EnergyCard = ({ id }) => {
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+
+  return (
+    !isMobile && (
+      <StyledBatteryCard>
+        <h2>How's your energy level right now?</h2>
+        <BatterySlider id={id} />
+      </StyledBatteryCard>
+    )
+  );
+};

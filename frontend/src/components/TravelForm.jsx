@@ -8,13 +8,30 @@ import DirectionsTransitIcon from "@mui/icons-material/DirectionsTransit";
 import Autocomplete from "react-google-autocomplete";
 import { useState } from "react";
 import styled from "styled-components";
-const GoogleKey = import.meta.env.VITE_GOOGLE_API_KEY;
+import { Button, IconButton } from "@mui/material";
+import DriveEtaIcon from "@mui/icons-material/DriveEta";
+import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
+import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
+// import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
+import DirectionsTransitIcon from "@mui/icons-material/DirectionsTransit";
+import Autocomplete from "react-google-autocomplete";
+import { useState } from "react";
 
-
-
-const TravelBtn = styled(EgoButton)`
-width:100px;
-margin: 0 auto;
+const StyledButton = styled(Button)`
+  border-radius: 24px;
+  border: 1px solid #687943;
+  background: #687943;
+  width: 106.213px;
+  height: 35.172px;
+  flex-shrink: 0;
+  color: white;
+  color: #fff;
+  font-family: "Open Sans Hebrew";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
 `;
 
 const TravelModesContainer = styled.div`
@@ -91,7 +108,7 @@ export const TravelForm = ({ id }) => {
 
     const headers = {
       "Content-Type": "application/json",
-      "X-Goog-Api-Key": GoogleKey,
+      "X-Goog-Api-Key": import.meta.env.VITE_GOOGLE_API_KEY,
       "X-Goog-FieldMask": "routes.duration,routes.distanceMeters",
     };
 
@@ -121,10 +138,10 @@ export const TravelForm = ({ id }) => {
   };
 
   console.log(distance);
+
   return (
     <>
-
-<TravelModesContainer>
+      <TravelModesContainer>
         {googleTravelModes.map((mode) => (
           <TravelModeButton
             key={mode.mode}
@@ -140,7 +157,7 @@ export const TravelForm = ({ id }) => {
         key={`start-autocomplete-${autocompleteKey}`}
         className="start-google-search-box"
         placeholder="Start"
-        apiKey={GoogleKey}
+        apiKey={import.meta.env.VITE_GOOGLE_API_KEY}
         onPlaceSelected={(place) => {
           setOrigin(place.formatted_address);
         }}
@@ -153,7 +170,7 @@ export const TravelForm = ({ id }) => {
         key={`destination-autocomplete-${autocompleteKey}`}
         className="destination-google-search-box"
         placeholder="Destination"
-        apiKey={GoogleKey}
+        apiKey={import.meta.env.VITE_GOOGLE_API_KEY}
         onPlaceSelected={(place) => {
           setDestination(place.formatted_address);
         }}
@@ -166,9 +183,7 @@ export const TravelForm = ({ id }) => {
         You will get <TravelPoints>{travelPoints}</TravelPoints> points for this
         trip
       </p>
-
-      <TravelBtn onClick={handleConfirm}>Confirm</TravelBtn>
-
+      <StyledButton onClick={handleConfirm}>Confirm</StyledButton>
     </>
   );
 };

@@ -1,51 +1,87 @@
-import styled from "styled-components"
-import { useState } from "react"
+import styled from "styled-components";
+import { useState } from "react";
 
 const BatteryWrapper = styled.div`
   position: relative;
-  width: 195px;
-  height: 89px;
-`
+  width: ${({ width }) => width || "200px"};
+  height: ${({ height }) => height || "200px"};
+`;
 
-export const BatterySVG = ({ fillPercentage = 0, onDrag }) => {
-  const [dragging, setDragging] = useState(false)
+export const BatterySVG = ({
+  fillPercentage = 0,
+  onDrag,
+  width = "195px",
+  height = "89px",
+}) => {
+  const [dragging, setDragging] = useState(false);
 
   const handleMouseDown = (event) => {
-    event.preventDefault()
-    setDragging(true)
-    document.addEventListener("mousemove", handleMouseMove)
-    document.addEventListener("mouseup", handleMouseUp)
-  }
+    event.preventDefault();
+    setDragging(true);
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+    document.addEventListener("touchmove", handleTouchMove);
+    document.addEventListener("touchend", handleTouchEnd);
+  };
 
   const handleMouseMove = (event) => {
     if (dragging) {
-      const rect = event.target.getBoundingClientRect()
-      const offsetX = event.clientX - rect.left
-      let percentage = (offsetX / rect.width) * 100
-      if (percentage < 0) percentage = 0
-      if (percentage > 100) percentage = 100
-      onDrag(percentage)
+      handleDrag(event.clientX, event.target);
     }
-  }
+  };
 
   const handleMouseUp = () => {
-    setDragging(false)
-    document.removeEventListener("mousemove", handleMouseMove)
-    document.removeEventListener("mouseup", handleMouseUp)
-  }
+    setDragging(false);
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
+    document.removeEventListener("touchmove", handleTouchMove);
+    document.removeEventListener("touchend", handleTouchEnd);
+  };
+
+  const handleTouchStart = (event) => {
+    event.preventDefault();
+    setDragging(true);
+    document.addEventListener("touchmove", handleTouchMove);
+    document.addEventListener("touchend", handleTouchEnd);
+  };
+
+  const handleTouchMove = (event) => {
+    if (dragging) {
+      const touch = event.touches[0];
+      handleDrag(touch.clientX, event.target);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setDragging(false);
+    document.removeEventListener("touchmove", handleTouchMove);
+    document.removeEventListener("touchend", handleTouchEnd);
+  };
+
+  const handleDrag = (clientX, target) => {
+    const rect = target.getBoundingClientRect();
+    const offsetX = clientX - rect.left;
+    let percentage = (offsetX / rect.width) * 100;
+    if (percentage < 0) percentage = 0;
+    if (percentage > 100) percentage = 100;
+    onDrag(percentage);
+  };
 
   return (
     <BatteryWrapper>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="195"
-        height="89"
+        width={width}
+        height={height}
         viewBox="0 0 195 89"
         fill="none"
         onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
         onMouseMove={handleMouseMove}
+        onTouchMove={handleTouchMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
+        onTouchEnd={handleTouchEnd}
       >
         {/* Outer rectangle for battery outline */}
         <rect
@@ -89,9 +125,15 @@ export const BatterySVG = ({ fillPercentage = 0, onDrag }) => {
             {/* Gradient stops for battery fill */}
             <stop offset="0%" stopColor="#7B4AAC" />
             <stop offset={`${fillPercentage}%`} stopColor="#39AA44" />
+            <stop
+              offset={`${fillPercentage + 1}%`}
+              stopColor="#39AA44"
+              stopOpacity="0"
+            />
+            <stop offset="100%" stopOpacity="0" />
           </linearGradient>
         </defs>
       </svg>
     </BatteryWrapper>
-  )
-}
+  );
+};
