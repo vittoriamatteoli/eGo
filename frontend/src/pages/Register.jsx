@@ -92,8 +92,8 @@ const StyledImage = styled.img`
   grid-column: 1/span 4;
   grid:row: 1;
   z-index: 2;
-  width: 115vw;
-  margin: 0 0 0 -10vw;
+  width: 100vw;
+  margin: 0 0 0 0vw;
   align-self: center;
   @media (min-width: 768px) {
     width: 100vw;
