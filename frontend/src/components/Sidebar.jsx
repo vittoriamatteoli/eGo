@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Drawer, List, ListItem, Typography, Button } from "@mui/material";
+import { Drawer, List, ListItem, Typography } from "@mui/material";
 import { Logo } from "../reusables/Logo";
 import { Avatar } from "../reusables/Avatar";
 import { Logout } from "../pages/Logout";
