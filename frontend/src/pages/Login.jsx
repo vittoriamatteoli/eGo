@@ -91,8 +91,8 @@ grid-area: image;
 grid-column: 1/span 4;
 grid:row: 1;
 z-index: 2;
- width: 115vw;
-margin: 0 0 0 -10vw;
+ width: 100vw;
+margin: 0 0 0 0vw;
 align-self: center;
   @media (min-width: 768px) {
   width: 100vw;
@@ -189,6 +189,12 @@ color: var(--ego-dark);
   }
 `;
 
+const ButtonAndSpinnerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -279,9 +285,12 @@ export const Login = () => {
               />
             </FormGroup>
 
-            <EgoButton type="submit" disabled={loading}>
-              {loading ? <Loading /> : "Log in"}
-            </EgoButton>
+            <ButtonAndSpinnerContainer>
+              <EgoButton type="submit" disabled={loading}>
+                {loading ? "Loading..." : "Sign up"}
+              </EgoButton>
+              {loading && <Loading />}
+            </ButtonAndSpinnerContainer>
           </form>
 
         </FormContainer>

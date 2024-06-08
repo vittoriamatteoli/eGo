@@ -92,8 +92,8 @@ const StyledImage = styled.img`
   grid-column: 1/span 4;
   grid:row: 1;
   z-index: 2;
-  width: 115vw;
-  margin: 0 0 0 -10vw;
+  width: 100vw;
+  margin: 0 0 0 0vw;
   align-self: center;
   @media (min-width: 768px) {
     width: 100vw;
@@ -186,6 +186,12 @@ const BottomText = styled.div`
       align-self: end;
       justify-self: center;
   }
+`;
+
+const ButtonAndSpinnerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const Register = () => {
@@ -303,9 +309,12 @@ export const Register = () => {
                 disabled={loading}
               />
             </FormGroup>
-            <EgoButton type="submit" disabled={loading}>
-              {loading ? <Loading /> : "Sign up"}
-            </EgoButton>
+            <ButtonAndSpinnerContainer>
+              <EgoButton type="submit" disabled={loading}>
+                {loading ? "Loading..." : "Sign up"}
+              </EgoButton>
+              {loading && <Loading />}
+            </ButtonAndSpinnerContainer>
           </form>
         </FormContainer>
         <BottomText>
