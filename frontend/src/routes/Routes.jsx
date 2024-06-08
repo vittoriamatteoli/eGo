@@ -5,6 +5,7 @@ import { Register } from "../pages/Register.jsx";
 import { Dashboard } from "../pages/Dashboard.jsx";
 import { Logout } from "../pages/Logout.jsx";
 import { Admin } from "../pages/Admin.jsx";
+import { About } from "../pages/About.jsx";
 import { ProtectedRoute } from "../components/ProtectedRoutes.jsx";
 
 export const AppRoutes = () => {
