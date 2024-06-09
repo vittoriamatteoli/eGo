@@ -1,28 +1,58 @@
 import styled from "styled-components";
-import { Button, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import DriveEtaIcon from "@mui/icons-material/DriveEta";
 import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 // import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
 import DirectionsTransitIcon from "@mui/icons-material/DirectionsTransit";
 import Autocomplete from "react-google-autocomplete";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import buttonTree from "../assets/button-effect-tree.svg";
 
-const StyledButton = styled(Button)`
-  border-radius: 24px;
-  border: 1px solid #687943;
-  background: #687943;
-  width: 106.213px;
-  height: 35.172px;
+const TravelConfirmContainer = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+const StyledButton = styled.button`
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  border-radius: 30px;
+  border: ${({ isClicked }) =>
+    isClicked ? "1px solid #C590FB" : "1px solid #687943"};
+  background: ${({ isClicked }) => (isClicked ? "#CCE0A1" : "#687943")};
+  width: 165px;
+  height: 55px;
   flex-shrink: 0;
   color: white;
   color: #fff;
   font-family: "Open Sans Hebrew";
-  font-size: 12px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
   text-transform: capitalize;
+  transition: background 0.5s ease-in-out;
+`;
+
+const SvgIcon = styled.img`
+  position: absolute;
+  z-index: 1;
+  width: 55px;
+  height: 55px;
+  transition-duration: 0.4s;
+  transition-timing-function: ease-in-out;
+
+  transform: ${({ isClicked }) =>
+    isClicked ? "translate(-200%, -180%)" : "translate(-200%, 0%)"};
+
+  ${StyledButton}:hover + & {
+    transform: ${({ isClicked }) =>
+      isClicked ? "translate(-200%, -180%)" : "translate(-200%, -55%)"};
+    transition-duration: 0.4s;
+    transition-timing-function: ease-in-out;
+  }
 `;
 
 const TravelModesContainer = styled.div`
@@ -49,6 +79,11 @@ const StyledAutocomplete = styled(Autocomplete)`
   margin-bottom: 10px;
 `;
 
+const StyledParagraph = styled.p`
+  margin-top: 0px;
+  margin-bottom: 40px;
+`;
+
 const TravelPoints = styled.span`
   font-weight: bold;
   color: #39aa44;
@@ -60,6 +95,7 @@ export const TravelForm = ({ id }) => {
   const [travelMode, setTravelMode] = useState("WALK");
   const [distance, setDistance] = useState("");
   const [autocompleteKey, setAutocompleteKey] = useState(0);
+  const [isClicked, setIsClicked] = useState(false);
   const [travelPoints, setTravelPoints] = useState(0); //add calculation in frontend? need to fetch energy data. discuss
 
   const googleTravelModes = [
@@ -71,6 +107,9 @@ export const TravelForm = ({ id }) => {
   ];
 
   const handleConfirm = async () => {
+    setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 400);
+
     if (origin && destination) {
       await getRouteDetails();
       setOrigin("");
@@ -170,11 +209,17 @@ export const TravelForm = ({ id }) => {
         }}
       />
 
-      <p>
+      <StyledParagraph>
         You will get <TravelPoints>{travelPoints}</TravelPoints> points for this
         trip
-      </p>
-      <StyledButton onClick={handleConfirm}>Confirm</StyledButton>
+      </StyledParagraph>
+
+      <TravelConfirmContainer className="travel-form-button">
+        <StyledButton onClick={handleConfirm} isClicked={isClicked}>
+          Confirm
+        </StyledButton>
+        <SvgIcon src={buttonTree} alt="Button Tree" isClicked={isClicked} />
+      </TravelConfirmContainer>
     </>
   );
 };
