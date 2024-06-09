@@ -106,10 +106,13 @@ export const TravelForm = ({ id }) => {
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
   const [travelMode, setTravelMode] = useState("WALK");
-  const [distance, setDistance] = useState("");
+  const [distance, setDistance] = useState(0);
+  const [modeBonus, setModeBonus] = useState(5);
   const [autocompleteKey, setAutocompleteKey] = useState(0);
+  const [travelPoints, setTravelPoints] = useState(0); //dummy calculation
   const [isClicked, setIsClicked] = useState(false);
-  const [travelPoints, setTravelPoints] = useState(0); //add calculation in frontend? need to fetch energy data. discuss
+  const apikey = import.meta.env.VITE_API_KEY;
+  const API = `${apikey}/travel`;
 
   const googleTravelModes = [
     { mode: "DRIVE", icon: <DriveEtaIcon /> },
@@ -119,14 +122,24 @@ export const TravelForm = ({ id }) => {
     // { mode: "TWO_WHEELER", icon: <TwoWheelerIcon /> }, note:this mode is in beta in google api
   ];
 
+  useEffect(() => {
+    if (origin && destination) {
+      getRouteDetails();
+      calculationDraft(travelMode);
+    }
+  }, [origin, destination, travelMode, distance]);
+
   const handleConfirm = async () => {
     setIsClicked(true);
     setTimeout(() => setIsClicked(false), 400);
 
+    await postTravelData();
     if (origin && destination) {
-      await getRouteDetails();
       setOrigin("");
       setDestination("");
+      setDistance(0);
+      setTravelPoints(0);
+      setTravelMode("WALK");
       setAutocompleteKey((prevKey) => prevKey + 1); // Increment the key to reset the Autocomplete components/text
     } else {
       console.error("Please set both origin and destination.");
@@ -134,6 +147,8 @@ export const TravelForm = ({ id }) => {
     console.log(origin);
     console.log(destination);
     console.log(travelMode);
+    console.log(`distance: ${distance}`);
+    console.log(`Sample pointes: ${travelPoints}`);
   };
 
   const getRouteDetails = async () => {
@@ -162,12 +177,12 @@ export const TravelForm = ({ id }) => {
         body: JSON.stringify(bodyData),
       });
 
-      //add more specific error status (can be a new task)
+      //add more specific error status, check into google api doc
       if (!response) {
         if (response.status === 404) {
           throw new Error("Failed at getting the route!");
         } else {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+          throw new Error(`Error! Status: ${response.status}`);
         }
       }
 
@@ -180,7 +195,62 @@ export const TravelForm = ({ id }) => {
     }
   };
 
-  console.log(distance);
+  //dummy points calculation
+  const calculationDraft = async (travelMode) => {
+    switch (travelMode) {
+      case "DRIVE":
+        setModeBonus(1);
+        break;
+      case "BICYCLE":
+        setModeBonus(4);
+        break;
+      case "WALK":
+        setModeBonus(5);
+        break;
+      case "TRANSIT":
+        setModeBonus(2);
+        break;
+      default:
+        setModeNumber(5);
+        break;
+    }
+    const newTravelPoint = distance * modeBonus;
+    setTravelPoints(newTravelPoint);
+  };
+
+  const postTravelData = async () => {
+    const token = sessionStorage.getItem("accessToken");
+    const travelData = {
+      distance: distance,
+      mode: travelMode,
+      origin: origin,
+      destination: destination,
+    };
+
+    if (!["DRIVE", "BICYCLE", "WALK", "TRANSIT"].includes(travelMode)) {
+      console.error("Invalid travel mode:", travelMode);
+    }
+
+    try {
+      const response = await fetch(API, {
+        method: "POST",
+        body: JSON.stringify(travelData),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to storing travel data:${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Travel data stored successfully:", data);
+    } catch (error) {
+      console.error("Failed at storing travel data:");
+    }
+  };
 
   return (
     <>
@@ -222,6 +292,9 @@ export const TravelForm = ({ id }) => {
         }}
       />
 
+      <p>
+        Distance: <TravelPoints>{distance}</TravelPoints> m
+      </p>
       <StyledParagraph>
         You will get <TravelPoints>{travelPoints}</TravelPoints> points for this
         trip
