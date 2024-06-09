@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { IconButton } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import DriveEtaIcon from "@mui/icons-material/DriveEta";
 import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
@@ -14,26 +14,30 @@ const TravelConfirmContainer = styled.div`
   display: inline-block;
 `;
 
-const StyledButton = styled.button`
+const StyledTravelButton = styled(Button)`
   cursor: pointer;
+  outline: none;
+  text-transform: none;
   position: relative;
   z-index: 2;
   border-radius: 30px;
-  border: ${({ isClicked }) =>
-    isClicked ? "1px solid #C590FB" : "1px solid #687943"};
-  background: ${({ isClicked }) => (isClicked ? "#CCE0A1" : "#687943")};
+  border: 2px solid #687943;
+  filter: drop-shadow(0px 4px 6px #00000040);
+  background: ${({ isClicked }) => (isClicked ? "#2D3915" : "#687943")};
   width: 165px;
   height: 55px;
-  flex-shrink: 0;
-  color: white;
   color: #fff;
-  font-family: "Open Sans Hebrew";
-  font-size: 20px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
   font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  text-transform: capitalize;
-  transition: background 0.5s ease-in-out;
+  font-weight: 600;
+  transition: all 0.5s ease-in-out;
+
+  &:hover {
+    filter: drop-shadow(0px 4px 6px #00000080);
+    background: #cce0a1;
+    color: #2d3915;
+  }
 `;
 
 const SvgIcon = styled.img`
@@ -47,7 +51,7 @@ const SvgIcon = styled.img`
   transform: ${({ isClicked }) =>
     isClicked ? "translate(-200%, -180%)" : "translate(-200%, 0%)"};
 
-  ${StyledButton}:hover + & {
+  ${StyledTravelButton}:hover + & {
     transform: ${({ isClicked }) =>
       isClicked ? "translate(-200%, -180%)" : "translate(-200%, -55%)"};
     transition-duration: 0.4s;
@@ -81,7 +85,7 @@ const StyledAutocomplete = styled(Autocomplete)`
 
 const StyledParagraph = styled.p`
   margin-top: 0px;
-  margin-bottom: 40px;
+  margin-bottom: 15%;
 `;
 
 const TravelPoints = styled.span`
@@ -215,9 +219,9 @@ export const TravelForm = ({ id }) => {
       </StyledParagraph>
 
       <TravelConfirmContainer className="travel-form-button">
-        <StyledButton onClick={handleConfirm} isClicked={isClicked}>
+        <StyledTravelButton onClick={handleConfirm} isClicked={isClicked}>
           Confirm
-        </StyledButton>
+        </StyledTravelButton>
         <SvgIcon src={buttonTree} alt="Button Tree" isClicked={isClicked} />
       </TravelConfirmContainer>
     </>
