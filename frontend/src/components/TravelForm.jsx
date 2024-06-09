@@ -81,7 +81,15 @@ const StyledAutocomplete = styled(Autocomplete)`
   border: 2px solid #dcded0;
   border-radius: 15px;
   margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 15px;
+
+  @media (min-width: 768px) {
+    font-size: 18px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 22px;
+  }
 `;
 
 const StyledParagraph = styled.p`
