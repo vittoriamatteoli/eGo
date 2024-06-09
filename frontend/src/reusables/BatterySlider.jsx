@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { useParams } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { BatterySVG } from "../reusables/BatterySVG";
 import { Button } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
+import { DashboardContext } from '../components/DashboardContext';
 
 const apikey = import.meta.env.VITE_API_KEY;
 
@@ -43,14 +44,16 @@ const StyledButton = styled(Button)`
 `;
 
 export const BatterySlider = ({ showPopUp }) => {
+  const { fillPercentage, setFillPercentage } = useContext(DashboardContext);
   const { id } = useParams();
   const API = `${apikey}/user/${id}`;
-  const [fillPercentage, setFillPercentage] = useState(0);
   const [message, setMessage] = useState("");
   const [error, setError] = useState(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const dashboardContextValue = useContext(DashboardContext);
 
   useEffect(() => {
+   // console.log(dashboardContextValue);
     const token = sessionStorage.getItem("accessToken");
     const fetchEnergyData = async () => {
       try {
@@ -66,6 +69,7 @@ export const BatterySlider = ({ showPopUp }) => {
         }
         const data = await res.json();
         if (data.energyLevel !== undefined && data.energyLevel !== null) {
+          setMessage(`Energy level is currently at ${Math.round(data.energyLevel)}%, drag the battery to adjust it.`);
           setFillPercentage(data.energyLevel);
         }
       } catch (error) {
@@ -79,7 +83,9 @@ export const BatterySlider = ({ showPopUp }) => {
 
   const handleDrag = (percentage) => {
     if (percentage >= 0 && percentage <= 100) {
-      setFillPercentage(percentage);
+      setFillPercentage((Math.round(percentage)));
+      console.log("fillPercentage", fillPercentage);
+      setMessage(`Energy level updated with ${fillPercentage}%`);
     }
   };
 
@@ -103,7 +109,7 @@ export const BatterySlider = ({ showPopUp }) => {
         updatedData.energyLevel !== null
       ) {
         setFillPercentage(updatedData.energyLevel);
-        setMessage(`Energy level updated with ${fillPercentage}%`);
+
       }
     } catch (error) {
       console.error("Error updating energy data:", error);

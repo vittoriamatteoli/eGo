@@ -287,7 +287,7 @@ export const Login = () => {
 
             <ButtonAndSpinnerContainer>
               <EgoButton type="submit" disabled={loading}>
-                {loading ? "Loading..." : "Sign up"}
+                {loading ? "Loading..." : "Sign in"}
               </EgoButton>
               {loading && <Loading />}
             </ButtonAndSpinnerContainer>

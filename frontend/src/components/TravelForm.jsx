@@ -6,7 +6,11 @@ import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 // import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
 import DirectionsTransitIcon from "@mui/icons-material/DirectionsTransit";
 import Autocomplete from "react-google-autocomplete";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { DashboardContext } from './DashboardContext';
+import jwt_decode from "jwt-decode";
+
+
 
 const StyledButton = styled(Button)`
   border-radius: 24px;
@@ -57,10 +61,8 @@ const TravelPoints = styled.span`
 export const TravelForm = ({ id }) => {
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
-  const [travelMode, setTravelMode] = useState("WALK");
-  const [distance, setDistance] = useState("");
   const [autocompleteKey, setAutocompleteKey] = useState(0);
-  const [travelPoints, setTravelPoints] = useState(0); //add calculation in frontend? need to fetch energy data. discuss
+  const { travelMode, setTravelMode, distance, setDistance, travelDistance, setTravelDistance, travelPoints, setTravelPoints, fillPercentage } = useContext(DashboardContext);
 
   const googleTravelModes = [
     { mode: "DRIVE", icon: <DriveEtaIcon /> },
@@ -69,20 +71,6 @@ export const TravelForm = ({ id }) => {
     { mode: "TRANSIT", icon: <DirectionsTransitIcon /> },
     // { mode: "TWO_WHEELER", icon: <TwoWheelerIcon /> }, note:this mode is in beta in google api
   ];
-
-  const handleConfirm = async () => {
-    if (origin && destination) {
-      await getRouteDetails();
-      setOrigin("");
-      setDestination("");
-      setAutocompleteKey((prevKey) => prevKey + 1); // Increment the key to reset the Autocomplete components/text
-    } else {
-      console.error("Please set both origin and destination.");
-    }
-    console.log(origin);
-    console.log(destination);
-    console.log(travelMode);
-  };
 
   const getRouteDetails = async () => {
     const url = "https://routes.googleapis.com/directions/v2:computeRoutes";
@@ -120,15 +108,103 @@ export const TravelForm = ({ id }) => {
       }
 
       const data = await response.json();
-      const travelDistance = data.routes[0].distanceMeters;
 
-      setDistance(travelDistance);
+      console.log('Route details:', data);
+
+      if (data) {
+        console.log('First route in  meters:', data.routes[0].distanceMeters);
+        setDistance(data.routes[0].distanceMeters);
+        setTravelDistance(data.routes[0].distanceMeters);
+        console.log('Travel distance:', travelDistance);
+
+      }
+
     } catch (error) {
       console.error("Error fetching route details:", error.message);
     }
   };
 
-  console.log(distance);
+
+  //function to calculate the points for the travel
+  const calculateTravelPoints = async (fillPercentage, distance, mode) => {
+    const CalculateAPI = `${import.meta.env.VITE_API_KEY}/calculate`;
+    const accessToken = sessionStorage.getItem("accessToken");
+    const response = await fetch(CalculateAPI, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
+      body: JSON.stringify({
+        fillPercentage,
+        distance,
+        mode: travelMode
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const { points } = await response.json();
+    return points;
+
+  };
+
+  useEffect(() => {
+
+    if (origin && destination) {
+      const calculateAndSetPoints = async () => {
+        await getRouteDetails();
+        const travelPoints = await calculateTravelPoints(fillPercentage, distance, travelMode);
+        setTravelPoints(travelPoints);
+      };
+      calculateAndSetPoints();
+    }
+  }, [origin, destination, fillPercentage, distance, travelMode]);
+
+  //pass the travel data and points to the travel db, and then add points to both pointsdb and user points
+  const handleConfirm = async () => {
+    if (origin && destination && travelPoints) {
+      await uploadTravel(distance, travelMode, origin, destination, travelPoints, id);
+      setOrigin("");
+      setDestination("");
+      setTravelPoints(0); // Reset the travelPoints state
+      setAutocompleteKey((prevKey) => prevKey + 1); // Increment the key to reset the Autocomplete components/text
+    } else {
+      console.error("Please set both origin and destination.");
+    }
+  };
+
+
+
+  //function for uploading data to the travel db
+  const uploadTravel = async (distance, mode, origin, destination, travelPoints, user) => {
+
+    //console.log(`LOGG LOGG: distance: ${distance}, mode: ${mode}, origin: ${origin}, destination: ${destination}, travelPoints: ${travelPoints}, user: ${user}`);
+    const API = `${import.meta.env.VITE_API_KEY}/travel`;
+    const accessToken = sessionStorage.getItem("accessToken");
+    const decodedToken = jwt_decode(accessToken);
+    const response = await fetch(API, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
+      body: JSON.stringify({
+        distance,
+        mode,
+        origin,
+        destination,
+        travelPoints,
+        user,
+      }),
+    });
+    const { travel } = await response.json();
+    console.log('Response from server travel:', travel);
+    return travel;
+  };
+
+
 
   return (
     <>

@@ -5,11 +5,11 @@ import { ActivityGraph } from "../components/ActivityGraph";
 import { EnergyCard } from "../components/EnergyCard";
 import { TravelCard } from "../components/TravelCard";
 import { useParams } from "react-router-dom"
-//import { TravelForm } from "../components/TravelForm"
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"
 import { AdminButton } from "../reusables/AdminButton"
 import styled from "styled-components"
+import { DashboardProvider } from '../components/DashboardContext';
 
 import jwtDecode from 'jwt-decode';
 
@@ -49,17 +49,16 @@ export const Dashboard = () => {
   return (
 
     <DashboardLayout>
-      <Sidebar id={id} />
-
-      <div>
+      <DashboardProvider value={id}>
+        <Sidebar id={id} />
         <PointsCard id={id} />
         <ActivityGraph id={id} />
-       {/* <DistanceCard id={id} /> */}
+        {/* <DistanceCard id={id} /> */}
         <EnergyCard id={id} />
         <TravelCard id={id} />
         <AdminButton isAdmin={isAdmin} />
-      </div>
-    </DashboardLayout>
+      </DashboardProvider>
+    </DashboardLayout >
 
   );
 };
