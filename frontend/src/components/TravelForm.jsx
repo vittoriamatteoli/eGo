@@ -77,10 +77,11 @@ const TravelModeButton = styled(IconButton)`
 const StyledAutocomplete = styled(Autocomplete)`
   width: 50%;
   height: 1.5rem;
-  padding: 10px;
+  padding: 15px 10px 15px 20px;
   border: 2px solid #dcded0;
   border-radius: 15px;
   margin-bottom: 10px;
+  font-size: 18px;
 `;
 
 const StyledParagraph = styled.p`
