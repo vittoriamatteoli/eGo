@@ -1,14 +1,31 @@
-# Final Project
+<h1 align="center">Welcome to eGo 👋</h1>
+<p>
+  <a href="https://project-final-1-4w43.onrender.com" target="_blank">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  </a>
+</p>
 
-Replace this readme with your own information about your project.
+> eGo is a mobile app that rewards eco-friendly travel choices. Integrated with the Google Routing API, it suggests low-emission routes for walking, cycling, public transport, and carpooling. Users earn &#34;Green Points&#34; for sustainable travel, redeemable for rewards.
+> Developed with React, MongoDB, and styled-components, eGo tracks carbon footprint reduction and helps users set sustainability goals.
 
-Start by briefly describing the assignment in a sentence or two. Keep it short and to the point.
+### ✨ [Demo](https://ego-app.netlify.app/)
 
-## The problem
+## Install
 
-Describe how you approached to problem, and what tools and techniques you used to solve it. How did you plan? What technologies did you use? If you had more time, what would be next?
+```sh
+npm install
+```
 
-## View it live
+## Usage
 
-[Netlify link](https://ego-app.netlify.app/)
-[Render link](link:https://project-final-1-4w43.onrender.com)
+```sh
+npm run dev
+```
+
+## Author
+
+👤 **Yifan - Kathinka - Eliane - Vittoria**
+
+## Show your support
+
+Give a ⭐️ if this project helped you!

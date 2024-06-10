@@ -4,14 +4,15 @@ import { ActivityGraph } from "../components/ActivityGraph";
 //import { DistanceCard } from "../components/DistanceCard";
 import { EnergyCard } from "../components/EnergyCard";
 import { TravelCard } from "../components/TravelCard";
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
+//import { TravelForm } from "../components/TravelForm"
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"
-import { AdminButton } from "../reusables/AdminButton"
-import styled from "styled-components"
+import { useNavigate } from "react-router-dom";
+import { AdminButton } from "../reusables/AdminButton";
+import styled from "styled-components";
 import { DashboardProvider } from '../components/DashboardContext';
 
-import jwtDecode from 'jwt-decode';
+import jwtDecode from "jwt-decode";
 
 const DashboardLayout = styled.div`
   box-sizing: border-box;
@@ -25,40 +26,39 @@ const DashboardLayout = styled.div`
   }
 `;
 
-
 export const Dashboard = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = sessionStorage.getItem('accessToken');
-    console.log('Stored token:', token);
+    const token = sessionStorage.getItem("accessToken");
+    console.log("Stored token:", token);
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        console.log('Decoded token:', decodedToken);
-        console.log('Role:', decodedToken.role);
-        setIsAdmin(decodedToken.role === 'admin');
+        console.log("Decoded token:", decodedToken);
+        console.log("Role:", decodedToken.role);
+        setIsAdmin(decodedToken.role === "admin");
       } catch (e) {
-        console.error('Invalid token', e);
+        console.error("Invalid token", e);
       }
     }
   }, []);
 
   const { id } = useParams();
   return (
-
     <DashboardLayout>
       <DashboardProvider value={id}>
         <Sidebar id={id} />
+        <div>
         <PointsCard id={id} />
         <ActivityGraph id={id} />
         {/* <DistanceCard id={id} /> */}
         <EnergyCard id={id} />
         <TravelCard id={id} />
         <AdminButton isAdmin={isAdmin} />
+        </div>
       </DashboardProvider>
     </DashboardLayout >
-
   );
 };

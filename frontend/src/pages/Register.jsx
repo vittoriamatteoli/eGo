@@ -2,17 +2,16 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Loading } from "../reusables/Loading";
 import styled from "styled-components";
-import { EgoButton } from "../reusables/Button"
+import { EgoButton } from "../reusables/Button";
 import Globe from "../assets/Globe-ego.svg";
-import logo from "../assets/globe-logo.svg";
-
+import { Logo } from "../reusables/Logo";
 
 const Container = styled.div`
   overflow: hidden;
   color: var(--ego-dark);
   display: grid;
-	grid-template-columns: 1vw  98vw 1vw;
-	grid-template-rows: 50vh 50vh;
+  grid-template-columns: 1vw 98vw 1vw;
+  grid-template-rows: 50vh 50vh;
   background-color: var(--ego-white);
   grid-template-areas:
     "leftColumn leftColumn leftColumn"
@@ -25,7 +24,6 @@ const Container = styled.div`
       "leftColumn rightColumn"
       "leftColumn rightColumn"
       "leftColumn rightColumn";
-
   }
 `;
 
@@ -47,20 +45,20 @@ const LeftColumn = styled.div`
       "img"
       ". ";
     grid-column: 1;
-    grid-row: 1 /span 4;
+    grid-row: 1 / span 4;
   }
 `;
 
 const RightColumn = styled.div`
   grid-area: rightColumn;
-  display:grid;
+  display: grid;
   grid-template-columns: 1fr 10fr 1fr;
   grid-template-rows: 1fr 2fr 1fr;
   grid-template-areas:
     "title title title"
     "form form form"
     "link link link";
-  align-self:center;
+  align-self: center;
   @media (min-width: 1200px) {
     grid-column: 2;
     grid-row: 2;
@@ -71,26 +69,23 @@ const RightColumn = styled.div`
   }
 `;
 
-
-
-const StyledLogo = styled.img`
+const StyledLogoLink = styled(Link)`
   grid-area: logo;
   grid-column: 3;
   max-width: 15vw;
   height: auto;
-  margin:2vh 0 0 -15vw;
+  margin: 2vh 0 0 -15vw;
   z-index: 3;
   @media (min-width: 1200px) {
-    grid-column:1;
-    margin:2vh -10vw 0 2vh;
+    grid-column: 1;
+    margin: 2vh -10vw 0 2vh;
   }
-
 `;
 
 const StyledImage = styled.img`
   grid-area: image;
-  grid-column: 1/span 4;
-  grid:row: 1;
+  grid-column: 1 / span 4;
+  grid: row 1;
   z-index: 2;
   width: 100vw;
   margin: 0 0 0 0vw;
@@ -103,7 +98,7 @@ const StyledImage = styled.img`
   @media (min-width: 1200px) {
     width: 50vw;
     margin: 5vh 0 0 -2vw;
-    grid-row:1/span 2;
+    grid-row: 1 / span 2;
   }
 `;
 
@@ -113,7 +108,7 @@ const FormContainer = styled.div`
   justify-self: center;
   width: 60vw;
   @media (min-width: 1200px) {
-    width:20vw;
+    width: 20vw;
   }
 `;
 
@@ -146,7 +141,8 @@ const Input = styled.input`
   border-radius: 24px;
   border: 1px solid transparent;
   background: var(--ego-gradient-reversed);
-  &:focus, &:active {
+  &:focus,
+  &:active {
     background-color: var(--ego-lgt-green);
     border: 1px solid var(--ego-green);
   }
@@ -163,7 +159,7 @@ const ErrorMessage = styled.div`
 const BottomText = styled.div`
   grid-area: link;
   grid-row: 3;
-  grid-column:2;
+  grid-column: 2;
   font-size: 0.6em;
   align-self: center;
   color: var(--ego-dark);
@@ -179,12 +175,12 @@ const BottomText = styled.div`
       color: var(--ego-purple);
     }
   }
-    @media (min-width: 1200px) {
-      grid-row: 4;
-      position:fixed;
-      bottom: 5vh;
-      align-self: end;
-      justify-self: center;
+  @media (min-width: 1200px) {
+    grid-row: 4;
+    position: fixed;
+    bottom: 5vh;
+    align-self: end;
+    justify-self: center;
   }
 `;
 
@@ -264,13 +260,14 @@ export const Register = () => {
   return (
     <Container>
       <LeftColumn>
-        <StyledLogo src={logo} alt="logo" />
+        <StyledLogoLink to="/">
+          <Logo alt="logo" />
+        </StyledLogoLink>
         <StyledImage src={Globe} alt="globe" />
       </LeftColumn>
       <RightColumn>
         <StyledH1>Sign up</StyledH1>
         <FormContainer>
-
           <form onSubmit={handleRegister}>
             {message && <ErrorMessage>{message}</ErrorMessage>}
             <FormGroup>

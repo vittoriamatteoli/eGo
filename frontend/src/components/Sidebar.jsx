@@ -4,6 +4,7 @@ import { Drawer, List, ListItem, Typography } from "@mui/material";
 import { Logo } from "../reusables/Logo";
 import { Avatar } from "../reusables/Avatar";
 import { Logout } from "../pages/Logout";
+import { Link } from "react-router-dom";
 
 import { useContext } from 'react';
 import { DashboardContext } from './DashboardContext';
@@ -91,7 +92,9 @@ export const Sidebar = ({ id }) => {
     <StyledDrawer variant="persistent" anchor="left" open={true}>
       <SidebarContent>
         <StyledList>
-          <Logo />
+          <Link to="/">
+            <Logo />
+          </Link>
           <StyledListItem>
             <Avatar id={id} />
             <Typography style={{ textTransform: "capitalize" }} variant="body1">
