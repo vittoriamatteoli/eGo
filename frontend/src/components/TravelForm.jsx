@@ -62,7 +62,7 @@ export const TravelForm = ({ id }) => {
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
   const [autocompleteKey, setAutocompleteKey] = useState(0);
-  const { travelMode, setTravelMode, distance, setDistance, travelDistance, setTravelDistance, travelPoints, setTravelPoints, fillPercentage } = useContext(DashboardContext);
+  const { travelMode, setTravelMode, distance, setDistance, travelDistance, setTravelDistance, travelPoints, setTravelPoints, fillPercentage, points, setPoints } = useContext(DashboardContext);
 
   const googleTravelModes = [
     { mode: "DRIVE", icon: <DriveEtaIcon /> },
@@ -169,6 +169,7 @@ export const TravelForm = ({ id }) => {
       setOrigin("");
       setDestination("");
       setTravelPoints(0); // Reset the travelPoints state
+      setDistance(0); // Reset the distance state
       setAutocompleteKey((prevKey) => prevKey + 1); // Increment the key to reset the Autocomplete components/text
     } else {
       console.error("Please set both origin and destination.");
@@ -254,6 +255,7 @@ export const TravelForm = ({ id }) => {
         Distance: <TravelPoints>{distance}</TravelPoints> m
       </p>
       <StyledButton onClick={handleConfirm}>Confirm</StyledButton>
+
     </>
   );
 };

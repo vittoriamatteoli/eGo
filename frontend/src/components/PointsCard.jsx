@@ -101,7 +101,11 @@ export const PointsCard = ({ id }) => {
       }
     };
 
-    handlePoints();
+     // Call handlePoints immediately and then every 5 seconds
+  handlePoints();
+  const intervalId = setInterval(handlePoints, 5000);
+  // Clean up the interval on unmount
+  return () => clearInterval(intervalId);
   }, [API]);
 
   const togglePopUp = () => {

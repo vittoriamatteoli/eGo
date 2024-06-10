@@ -5,6 +5,7 @@ import { DeleteUser } from '../components/forms/DeleteUser';
 import { CreateUser } from '../components/forms/CreateUser';
 import { UpdateUserRole } from '../components/forms/UpdateUserRole';
 import styled from 'styled-components';
+import { BackArrowWithHistory } from '../reusables/BackArrowWithHistory';
 
 
 const StyledDiv = styled.div`
@@ -91,11 +92,12 @@ export const Admin = () => {
 
       <StyledH1>Admin page</StyledH1>
 
-
+      <BackArrowWithHistory />
       <UpdateUser getUsers={getUsers} />
       <UpdateUserRole getUsers={getUsers} />
       <DeleteUser getUsers={getUsers} />
       <CreateUser getUsers={getUsers} />
+
       <Logout />
 
 
