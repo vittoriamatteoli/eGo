@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
+import { updatePoints } from "../utils/updatePoints";
 import { calculatePoints } from "../utils/calculatePoints";
+
 const travelSchema = new mongoose.Schema({
   distance: {
     type: Number,
@@ -28,10 +30,25 @@ const travelSchema = new mongoose.Schema({
     ref: "User",
     required: [true, "User is required"],
   },
-  travelPoints: {
+  travelPoints:{
     type: Number,
-    default: calculatePoints,
-  },
+    required: [true, "Travel points are required"],
+
+}
+});
+
+// Update user's points after saving a travel
+travelSchema.post('save', function(doc, next) {
+  const userId = doc.user;
+  const travelId = doc._id;
+  const travelPoints = doc.travelPoints;
+  console.log('calculated points by travelschema:', travelPoints);
+  console.log('userId by travelschema:', userId);
+  console.log('travelId by travelschema:', travelId);
+
+  updatePoints(userId, travelId, travelPoints)
+    .then(() => next())
+    .catch(err => next(err));
 });
 
 export default mongoose.model("Travel", travelSchema);

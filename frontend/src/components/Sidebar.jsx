@@ -5,6 +5,10 @@ import { Logo } from "../reusables/Logo";
 import { Avatar } from "../reusables/Avatar";
 import { Logout } from "../pages/Logout";
 import { Link } from "react-router-dom";
+
+import { useContext } from 'react';
+import { DashboardContext } from './DashboardContext';
+
 const apikey = import.meta.env.VITE_API_KEY;
 
 const StyledDrawer = styled(Drawer)`
@@ -61,8 +65,7 @@ const CenteredLogoutButton = styled.div`
 `;
 
 export const Sidebar = ({ id }) => {
-  const [username, setUsername] = useState("");
-
+  const { username, setUsername } = useContext(DashboardContext);
   const API = `${apikey}/user/${id}`;
 
   //fetch username
