@@ -41,6 +41,29 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#dcded0",endCo
         "wdth" 100;
     }
 
+    .h1{
+      color: var(--ego-dark);
+      font-size: 2.5rem;
+      font-weight: 700;
+      font-style: normal;
+      font-variation-settings:
+        "wdth" 100;
+    }
+
+    .error{
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    padding: 10px;
+    color: var(--ego-dark);
+    border-radius: 7px;
+    border: 3px solid var(--ego-error);
+    }
+
+    .h4{
+    font-weight: 400;
+    font-size: 1rem;
+    }
   }
 
 

@@ -149,11 +149,7 @@ const Input = styled.input`
 `;
 
 const ErrorMessage = styled.div`
-  margin-bottom: 15px;
-  padding: 10px;
-  color: var(--ego-dark);
-  border-radius: 7px;
-  border: 3px solid var(--ego-error);
+
 `;
 
 const BottomText = styled.div`
@@ -266,10 +262,10 @@ export const Register = () => {
         <StyledImage src={Globe} alt="globe" />
       </LeftColumn>
       <RightColumn>
-        <StyledH1>Sign up</StyledH1>
+        <StyledH1 className="h1">Sign up</StyledH1>
         <FormContainer>
           <form onSubmit={handleRegister}>
-            {message && <ErrorMessage>{message}</ErrorMessage>}
+            {message && <ErrorMessage className="error">{message}</ErrorMessage>}
             <FormGroup>
               <Input
                 type="text"
@@ -315,7 +311,7 @@ export const Register = () => {
           </form>
         </FormContainer>
         <BottomText>
-          <p>
+          <p className="h4">
             Already have an account? <Link to="/login"> Log in </Link>
           </p>
         </BottomText>

@@ -119,8 +119,6 @@ const StyledH1 = styled.h1`
   text-align: center;
   justify-self: center;
   align-self: center;
-  font-size: 2em;
-  color: var(--ego-dark);
   @media (min-width: 1200px) {
     grid-column: 2;
     grid-row: 1;
@@ -149,11 +147,7 @@ const Input = styled.input`
 `;
 
 const ErrorMessage = styled.div`
-  margin-bottom: 15px;
-  padding: 10px;
-  color: var(--ego-dark);
-  border-radius: 7px;
-  border: 3px solid var(--ego-error);
+
 `;
 
 const BottomText = styled.div`
@@ -253,10 +247,10 @@ export const Login = () => {
         <StyledImage src={Globe} alt="globe" />
       </LeftColumn>
       <RightColumn>
-        <StyledH1>Login</StyledH1>
+        <StyledH1 className="h1">Login</StyledH1>
         <FormContainer>
           <form onSubmit={handleLogin}>
-            {message && <ErrorMessage>{message}</ErrorMessage>}
+            {message && <ErrorMessage className="error">{message}</ErrorMessage>}
             <FormGroup>
               <Input
                 type="email"
@@ -291,7 +285,7 @@ export const Login = () => {
           </form>
         </FormContainer>
         <BottomText>
-          <p>
+          <p className="h4">
             Don't have an account yet? <Link to="/register">Sign up</Link>
           </p>
         </BottomText>

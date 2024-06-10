@@ -98,12 +98,12 @@ export const TravelForm = ({ id }) => {
         body: JSON.stringify(bodyData),
       });
 
-      //add more specific error status, check into google api doc
+      //add more specific error status (can be a new task)
       if (!response) {
         if (response.status === 404) {
           throw new Error("Failed at getting the route!");
         } else {
-          throw new Error(`Error! Status: ${response.status}`);
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
       }
 
@@ -247,11 +247,11 @@ export const TravelForm = ({ id }) => {
       />
 
       <p>
-        Distance: <TravelPoints>{distance}</TravelPoints> m
-      </p>
-      <p>
         You will get <TravelPoints>{travelPoints}</TravelPoints> points for this
         trip
+      </p>
+      <p>
+        Distance: <TravelPoints>{distance}</TravelPoints> m
       </p>
       <StyledButton onClick={handleConfirm}>Confirm</StyledButton>
     </>
