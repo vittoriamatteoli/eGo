@@ -9,9 +9,10 @@ const StyledBatteryCard = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 340px;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 30px;
 
   h2 {
     color: #000;
@@ -20,7 +21,7 @@ const StyledBatteryCard = styled.div`
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-    padding: 10px;
+    /* padding: 10px; */
     text-align: center;
   }
 `;

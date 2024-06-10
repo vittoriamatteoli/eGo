@@ -10,18 +10,25 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdminButton } from "../reusables/AdminButton";
 import styled from "styled-components";
-
 import jwtDecode from "jwt-decode";
 
 const DashboardLayout = styled.div`
-  box-sizing: border-box;
-  padding: 20px 12px;
-  display: grid;
-  grid-template-columns: auto auto auto; /* Sidebar and main content */
-  width: 100%;
+  grid-template-columns: auto; /* Single column layout on mobile */
+  width: 100vw;
+  .dashboardContainer {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+  }
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr; /* Single column layout on mobile */
+  @media (min-width: 769px) {
+    width: auto;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto auto auto; /* Sidebar and main content */
   }
 `;
 
@@ -49,7 +56,7 @@ export const Dashboard = () => {
     <DashboardLayout>
       <Sidebar id={id} />
 
-      <div>
+      <div className="dashboardContainer">
         <PointsCard id={id} />
         <ActivityGraph id={id} />
         {/* <DistanceCard id={id} /> */}

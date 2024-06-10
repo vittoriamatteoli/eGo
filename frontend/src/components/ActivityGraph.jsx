@@ -6,18 +6,20 @@ const apikey = import.meta.env.VITE_API_KEY;
 const StyledContainer = styled.div`
   border-radius: 20px;
   background: linear-gradient(180deg, #dcded0 82.22%, #cce0a1 100%);
-  /* padding: 40px 0; */
   display: flex;
+  padding: 40px 0;
   flex-direction: column;
   width: 100%;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  height: 340px;
   canvas {
     width: 100%;
-    height: 200px;
+    height: 340px;
     padding: 0;
     margin: 0;
+    cursor: pointer;
   }
 `;
 
