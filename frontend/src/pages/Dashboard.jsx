@@ -11,8 +11,9 @@ import { useNavigate } from "react-router-dom";
 import { AdminButton } from "../reusables/AdminButton";
 import styled from "styled-components";
 import { DashboardProvider } from '../components/DashboardContext';
-
 import jwtDecode from "jwt-decode";
+import { MobileHeader } from "../components/MobileHeader";
+import { useMediaQuery } from "react-responsive";
 
 const DashboardLayout = styled.div`
   box-sizing: border-box;
@@ -44,6 +45,8 @@ export const Dashboard = () => {
       }
     }
   }, []);
+  // Media query for mobile devices
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   const { id } = useParams();
   return (
@@ -51,6 +54,7 @@ export const Dashboard = () => {
       <DashboardProvider value={id}>
         <Sidebar id={id} />
         <div>
+        {isMobile && <MobileHeader id={id} />}
         <PointsCard id={id} />
         <ActivityGraph id={id} />
         {/* <DistanceCard id={id} /> */}
