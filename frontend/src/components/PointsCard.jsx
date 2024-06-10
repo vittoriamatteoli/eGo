@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BatterySlider } from "../reusables/BatterySlider";
 import { useMediaQuery } from "react-responsive";
+// import { Logo } from "../reusables/Logo";
+import { Link } from "react-router-dom";
+import logo from "../../src/assets/globe-logo.svg";
 
 const apikey = import.meta.env.VITE_API_KEY;
 
@@ -61,6 +64,18 @@ const PopUpContent = styled.div`
   }
 `;
 
+const StyledHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: visible;
+  visibility: visible;
+`;
+
+const StyledLogo = styled.img`
+  width: 70px;
+`;
+
 export const PointsCard = ({ id }) => {
   const [points, setPoints] = useState("");
   const [showPopUp, setShowPopUp] = useState(false);
@@ -96,7 +111,15 @@ export const PointsCard = ({ id }) => {
 
   return (
     <StyledWrapper>
-      <h2>Dashboard</h2>
+      <StyledHeader>
+        <h2>Dashboard</h2>
+        {isMobile && (
+          //only works with imported svg, imported {Logo} would only show on Safari, but not on Chrome or Firefox
+          <Link to="/">
+            <StyledLogo src={logo} alt="logo" />
+          </Link>
+        )}
+      </StyledHeader>
       <StyledSection>
         {isMobile && <p>Your Energy Level</p>}
         <a>
@@ -115,7 +138,6 @@ export const PointsCard = ({ id }) => {
         )}
         <h3>{points}</h3>
       </StyledSection>
-
       {showPopUp && (
         <PopUpOverlay onClick={togglePopUp}>
           <PopUpContent>
