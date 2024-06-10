@@ -138,9 +138,11 @@ const Input = styled.input`
   padding: 10px 10px 10px 24px;
   color: var(--ego-dark);
   box-sizing: border-box;
-  border-radius: 24px;
+  border-radius: 20px;
   border: 1px solid transparent;
   background: var(--ego-gradient-reversed);
+  font-size: 1.3rem;
+  font-weight: 400;
   &:focus,
   &:active {
     background-color: var(--ego-lgt-green);
@@ -184,6 +186,10 @@ const ButtonAndSpinnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const FrontBtn = styled(EgoButton)`
+width: 100%;
 `;
 
 export const Register = () => {
@@ -303,16 +309,16 @@ export const Register = () => {
               />
             </FormGroup>
             <ButtonAndSpinnerContainer>
-              <EgoButton type="submit" disabled={loading}>
+              <FrontBtn type="submit" disabled={loading}>
                 {loading ? "Loading..." : "Sign up"}
-              </EgoButton>
+              </FrontBtn>
               {loading && <Loading />}
             </ButtonAndSpinnerContainer>
           </form>
         </FormContainer>
         <BottomText>
           <p className="h4">
-            Already have an account? <Link to="/login"> Log in </Link>
+            Already have an account? <Link className="a" to="/login"> Log in </Link>
           </p>
         </BottomText>
       </RightColumn>

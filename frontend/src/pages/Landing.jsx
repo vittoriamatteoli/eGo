@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { EgoButton } from "../reusables/Button";
 import { Logo } from "../reusables/Logo";
 import Globe from "../assets/Globe-ego.svg";
+
 
 //styles
 const LandingSection = styled.section`
@@ -195,9 +197,11 @@ export const Landing = () => {
         <Link to="/about">
           <Logo />
         </Link>
-        <SmallEgoButton>
-          <Link to="/login">Log in</Link>
+        <Link to="/login">
+        <SmallEgoButton >
+          Log in
         </SmallEgoButton>
+        </Link>
       </TopSection>
 
       <MiddleSection>
@@ -208,9 +212,11 @@ export const Landing = () => {
 
       <BottomSection>
         <StyledEllipse>
+        <Link to="/register">
           <SignUpButton>
-            <Link to="/register">Sign up!</Link>
+            Sign up!
           </SignUpButton>
+          </Link>
           <StyledParagraph> Reduce carbon emmission.</StyledParagraph>
         </StyledEllipse>
         <StyledAbout to="/about">
