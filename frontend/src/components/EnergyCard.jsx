@@ -32,7 +32,6 @@ const StyledHeading = styled.h2`
 
   @media (min-width: 1024px) {
     font-size: 22px; /* Use an even larger font size for extra large screens */
-
   }
 `;
 
