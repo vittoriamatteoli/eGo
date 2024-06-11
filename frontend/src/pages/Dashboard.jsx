@@ -1,11 +1,9 @@
 import { Sidebar } from "../components/Sidebar";
 import { PointsCard } from "../components/PointsCard";
 import { ActivityGraph } from "../components/ActivityGraph";
-//import { DistanceCard } from "../components/DistanceCard";
 import { EnergyCard } from "../components/EnergyCard";
 import { TravelCard } from "../components/TravelCard";
 import { useParams } from "react-router-dom";
-//import { TravelForm } from "../components/TravelForm"
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdminButton } from "../reusables/AdminButton";
@@ -15,28 +13,40 @@ import { MobileHeader } from "../components/MobileHeader";
 import { useMediaQuery } from "react-responsive";
 import { DashboardProvider } from "../components/DashboardContext";
 const DashboardLayout = styled.div`
-  grid-template-columns: auto; /* Single column layout on mobile */
+  display: grid;
+  grid-template-columns: auto;
   width: 100vw;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+
+  justify-items: center;
   .dashboardContainer {
+    width: 80%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 35px;
   }
 
-  @media (min-width: 769px) {
-    width: auto;
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: auto auto auto; /* Sidebar and main content */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    grid-template-columns: 1fr 5fr; /* Sidebar and main content */
+    .cardContainer {
+      display: flex;
+      gap: 20px;
+    }
+  }
+  @media (min-width: 1024px) {
+    grid-template-columns: 1fr 4fr; /* Sidebar and main content */
+    .cardContainer {
+      display: flex;
+      gap: 30px;
+    }
   }
 `;
 
 export const Dashboard = () => {
   const [isAdmin, setIsAdmin] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const token = sessionStorage.getItem("accessToken");
@@ -65,9 +75,10 @@ export const Dashboard = () => {
           {isMobile && <MobileHeader id={id} />}
           <PointsCard id={id} />
           <ActivityGraph id={id} />
-          {/* <DistanceCard id={id} /> */}
-          <EnergyCard id={id} />
-          <TravelCard id={id} />
+          <div className="cardContainer">
+            <EnergyCard id={id} />
+            <TravelCard id={id} />
+          </div>
           <AdminButton isAdmin={isAdmin} />
         </div>
       </DashboardProvider>

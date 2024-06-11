@@ -22,6 +22,7 @@ const StyledTravelCard = styled.div`
     padding: 10px;
     text-align: center;
   }
+  
 `;
 
 export const TravelCard = ({ id }) => {
