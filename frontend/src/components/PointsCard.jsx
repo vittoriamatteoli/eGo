@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BatterySlider } from "../reusables/BatterySlider";
 import { useMediaQuery } from "react-responsive";
+import { useContext } from "react";
+import { DashboardContext } from "./DashboardContext";
 
 const apikey = import.meta.env.VITE_API_KEY;
 
@@ -29,6 +31,7 @@ const StyledSection = styled.section`
 `;
 
 const PopUpOverlay = styled.div`
+  z-index: 20;
   box-sizing: border-box;
   position: fixed;
   top: 0;
@@ -42,6 +45,7 @@ const PopUpOverlay = styled.div`
 `;
 
 const PopUpContent = styled.div`
+  z-index: 20;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -61,8 +65,16 @@ const PopUpContent = styled.div`
   }
 `;
 
+const StyledHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: visible;
+  visibility: visible;
+`;
+
 export const PointsCard = ({ id }) => {
-  const [points, setPoints] = useState("");
+  const { points, setPoints } = useContext(DashboardContext);
   const [showPopUp, setShowPopUp] = useState(false);
 
   const API = `${apikey}/user/${id}`;
@@ -84,7 +96,11 @@ export const PointsCard = ({ id }) => {
       }
     };
 
+    // Call handlePoints immediately and then every 5 seconds
     handlePoints();
+    const intervalId = setInterval(handlePoints, 5000);
+    // Clean up the interval on unmount
+    return () => clearInterval(intervalId);
   }, [API]);
 
   const togglePopUp = () => {
@@ -96,7 +112,9 @@ export const PointsCard = ({ id }) => {
 
   return (
     <StyledWrapper>
-      <h2>Dashboard</h2>
+      <StyledHeader>
+        <h2>Dashboard</h2>
+      </StyledHeader>
       <StyledSection>
         {isMobile && <p>Your Energy Level</p>}
         <a>
@@ -115,7 +133,6 @@ export const PointsCard = ({ id }) => {
         )}
         <h3>{points}</h3>
       </StyledSection>
-
       {showPopUp && (
         <PopUpOverlay onClick={togglePopUp}>
           <PopUpContent>

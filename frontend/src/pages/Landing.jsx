@@ -4,10 +4,9 @@ import { EgoButton } from "../reusables/Button";
 import { Logo } from "../reusables/Logo";
 import Globe from "../assets/Globe-ego.svg";
 
-
 //styles
 const LandingSection = styled.section`
-overflow: hidden;
+  overflow: hidden;
   height: 100vh;
   background: linear-gradient(205deg, #dcded0 14.71%, #cce0a1 87.05%);
   display: flex;
@@ -60,7 +59,6 @@ const StyledTitle = styled.h1`
   font-family: "Roboto Mono";
   font-size: 240px;
   margin: 0;
-  /* padding: 20px; */
   z-index: 1;
 
   @media (min-width: 768px) {

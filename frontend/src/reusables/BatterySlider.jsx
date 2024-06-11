@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { useParams } from "react-router";
+import { useEffect, useState, useContext } from "react";
 import { BatterySVG } from "../reusables/BatterySVG";
-import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
+import { useMediaQuery } from "react-responsive";
+import { DashboardContext } from "../components/DashboardContext";
 const apikey = import.meta.env.VITE_API_KEY;
 
 const BatterySliderWrapper = styled.div`
@@ -30,20 +32,20 @@ const StyledButton = styled(Button)`
   font-family: "Open Sans", sans-serif;
   font-size: 18px;
   font-style: normal;
-  font-weight: 600;
-  transition: all 0.5s ease-in-out;
-
-  &:hover {
-    filter: drop-shadow(0px 4px 6px #00000080);
-    background: #cce0a1;
-    color: #2d3915;
-  }
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
 `;
-export const BatterySlider = () => {
-  const [fillPercentage, setFillPercentage] = useState(0); //set initial state from the EnergyLevel in the DB
+
+export const BatterySlider = ({ showPopUp }) => {
+  const { fillPercentage, setFillPercentage } = useContext(DashboardContext);
   const { id } = useParams();
   const API = `${apikey}/user/${id}`;
-  const token = sessionStorage.getItem("accessToken");
+  // const [fillPercentage, setFillPercentage] = useState(0);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(null);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const dashboardContextValue = useContext(DashboardContext);
 
   useEffect(() => {
     const fetchEnergyData = async () => {

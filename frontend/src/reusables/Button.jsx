@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Ripple from "./Ripple";
 
 const StyledEgoButton = styled.button`
   font-family: "Open Sans", sans-serif;
@@ -26,5 +27,6 @@ const StyledEgoButton = styled.button`
 export const EgoButton = ({ children, onClick, className, disabled }) => (
   <StyledEgoButton onClick={onClick} className={className} disabled={disabled}>
     {children}
+    <Ripple color="#FDFFF1" />
   </StyledEgoButton>
 );
