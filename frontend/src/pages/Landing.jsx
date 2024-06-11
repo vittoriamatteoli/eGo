@@ -73,8 +73,8 @@ const StyledTitle = styled.h1`
 `;
 
 const SmallEgoButton = styled(EgoButton)`
-  width: 76px;
-  height: 30px;
+ / width: 76px;
+  //height: 30px;
   border-radius: 36px;
   a {
     display: flex;
@@ -84,26 +84,26 @@ const SmallEgoButton = styled(EgoButton)`
     height: 100%;
     color: inherit;
     text-decoration: none;
-    font-size: 12px;
+   // font-size: 12px;
     z-index: 3;
 
     @media (min-width: 768px) {
-      font-size: 20px;
+      //font-size: 20px;
     }
 
     @media (min-width: 1024px) {
-      font-size: 24px;
+      //font-size: 24px;
     }
   }
 
   @media (min-width: 768px) {
-    width: 126px;
-    height: 50px;
+   // width: 126px;
+    //height: 50px;
   }
 
   @media (min-width: 1024px) {
-    width: 160px;
-    height: 65px;
+    //width: 160px;
+    //height: 65px;
   }
 `;
 
@@ -178,7 +178,7 @@ const StyledParagraph = styled.p`
 
 const SignUpButton = styled(SmallEgoButton)`
   position: absolute;
-  top: -20px;
+  top: -30px;
 
   @media (min-width: 768px) {
     top: -30px;
@@ -197,11 +197,12 @@ export const Landing = () => {
         <Link to="/about">
           <Logo />
         </Link>
-        <Link to="/login">
         <SmallEgoButton >
+        <Link to="/login">
           Log in
+          </Link>
         </SmallEgoButton>
-        </Link>
+
       </TopSection>
 
       <MiddleSection>
@@ -212,11 +213,13 @@ export const Landing = () => {
 
       <BottomSection>
         <StyledEllipse>
-        <Link to="/register">
+
           <SignUpButton>
+          <Link to="/register">
             Sign up!
+            </Link>
           </SignUpButton>
-          </Link>
+
           <StyledParagraph> Reduce carbon emmission.</StyledParagraph>
         </StyledEllipse>
         <StyledAbout to="/about">

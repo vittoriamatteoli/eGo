@@ -69,7 +69,7 @@ export const BatterySlider = ({ showPopUp }) => {
         }
         const data = await res.json();
         if (data.energyLevel !== undefined && data.energyLevel !== null) {
-          setMessage(`Energy level is currently at ${Math.round(data.energyLevel)}%, drag the battery to adjust it.`);
+          //setMessage(`Energy level is currently at ${Math.round(data.energyLevel)}%, drag the battery to adjust it.`);
           setFillPercentage(data.energyLevel);
         }
       } catch (error) {
@@ -85,7 +85,7 @@ export const BatterySlider = ({ showPopUp }) => {
     if (percentage >= 0 && percentage <= 100) {
       setFillPercentage((Math.round(percentage)));
       console.log("fillPercentage", fillPercentage);
-      setMessage(`Energy level updated with ${fillPercentage}%`);
+     // setMessage(`Energy level updated with ${fillPercentage}%`);
     }
   };
 
