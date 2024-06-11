@@ -8,7 +8,7 @@ const StyledEgoButton = styled.button`
   margin-top: 10px;
   background-color: var(--ego-green);
   color: var(--ego-white);
-  border: none;
+  border: 1px solid var(--ego-green);
   border-radius: 24px;
   cursor: pointer;
   font-size: 1.3rem;
@@ -19,7 +19,7 @@ const StyledEgoButton = styled.button`
   &:active {
     background-color: #cce0a1;
     box-shadow: 1px 1px 2px rgba(104, 121, 67, 0.55);
-    color: #687943;
+    color: var(--ego-dark);
 
 
   }

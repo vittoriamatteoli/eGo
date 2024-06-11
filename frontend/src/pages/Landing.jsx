@@ -194,68 +194,65 @@ const Center = styled.div`
 position: relative;
 
 z-index:3;
-padding: 1vh 30vw 0vh 30vw;
-    @media (min-width:320px) and (min-height:568px){
-padding: 29vh 30vw 40vh 30vw;
-    }
+padding: 0vh 30vw 10vh 30vw;
 
-    @media (min-width:344px) and (min-height:882px){
-padding: 29vh 30vw 0vh 30vw;
-    }
+@media (min-width:344px){
+padding: 27vh 30vw 0vh 30vw;
+}
 
-  @media (min-width: 360px) {
-padding: 3vh 30vw 0vh 30vw;
-    }
-
-    @media (min-width:360px) and (min-height:740px){
-padding: 15vh 30vw 0vh 30vw;
-    }
- @media (min-width: 375px) {
+@media (min-width:360px){
 padding: 5vh 30vw 0vh 30vw;
-    }
- @media (min-width: 375px) and (min-height:812px) {
-padding: 20vh 30vw 0vh 30vw;
-    }
-@media (min-width: 390px) {
-padding: 25vh 30vw 0vh 30vw;}
+}
+@media (min-width:360px) and (min-height:740px){
+padding:15vh 30vw 0vh 30vw;
+}
+@media (min-width:375px){
+padding: 5vh 30vw 0vh 30vw;
+}
+@media (min-width:375px) and (min-height:812px){
+padding: 22vh 30vw 0vh 30vw;
+}
+@media (min-width:390px){
+padding: 25vh 30vw 0vh 30vw;
+}
+@media (min-width:412px){
+padding: 30vh 30vw 0vh 30vw;
+}
 
- @media (min-width: 412px) {
-padding: 30vh 30vw 15vh 30vw;
+@media (min-width: 414px) and (min-height:736px){
+padding: 15vh 30vw 0vh 30vw;
   }
- @media (min-width: 412px) and (min-height:896px) {
+@media (min-width: 414px) and (min-height:896px){
 padding: 30vh 30vw 0vh 30vw;
   }
 
- @media (min-width: 540px) and (min-height:720px){
-padding: 15vh 30vw 0vh 30vw;
-  }
+@media (min-width:540px){
+padding: 12vh 30vw 0vh 30vw;
+}
 
-@media(min-width:712px){
+@media (min-width:712px){
 padding: 25vh 30vw 0vh 30vw;
-  }
-  @media(min-width:720px){
-  padding: 25vh 40vw 0vh 40vw;
-  }
-  @media (min-width: 768px) {
-//padding: 1vh 30vw 0vh 30vw;
-  }
-  @media (min-width:820px) {
+}
+@media (min-width:820px){
 padding: 20vh 30vw 0vh 30vw;
-  }
-  @media (min-width: 1024px) and (min-height:600px) {
+}
+@media (min-width:1024px){
+padding: 15vh 44vw 0vh 30vw;
+}
+ @media (min-width: 1024px) and (min-height:600px) {
    padding: 0vh 42vw 15vh 29vw;
   }
-
+    @media (min-width: 1080px) and (min-height:800px) {
+   padding: 15vh 42vw 0vh 29vw;
+  }
   @media (min-width: 1024px) and (min-height:1366px) {
    padding: 15vh 42vw 0vh 29vw;
   }
-        @media (min-width: 1080px) and (min-height:800px) {
-   padding: 15vh 42vw 0vh 29vw;
-  }
-   @media (min-width:1081px) and (min-height:801px) {
-   padding: 25vh 42vw 0vh 29vw;
-   }
 
+  @media (min-width: 1025px) {
+
+  padding: 20vh 42vw 0vh 29vw;
+  }
 `;
 
 
