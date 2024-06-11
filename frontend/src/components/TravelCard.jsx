@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { TravelForm } from "./TravelForm";
 
 const StyledTravelCard = styled.div`
+  box-sizing: border-box;
   border-radius: 20px;
   background: linear-gradient(180deg, #dcded0 82.22%, #cce0a1 100%);
   padding: 40px 0;
@@ -10,7 +11,6 @@ const StyledTravelCard = styled.div`
   width: 100%;
   align-items: center;
   justify-content: center;
-  height: 340px;
   gap: 10px;
 `;
 
@@ -25,13 +25,12 @@ const StyledHeading = styled.h2`
   text-align: center;
 
   @media (min-width: 768px) {
-    font-size: 18px; /* Use a larger font size for larger screens */
+    font-size: 18px; // Use a larger font size for larger screens
   }
 
   @media (min-width: 1024px) {
-    font-size: 22px; /* Use an even larger font size for extra large screens */
+    font-size: 22px; // Use an even larger font size for extra large screens
   }
-  
 `;
 
 export const TravelCard = ({ id }) => {
