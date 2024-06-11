@@ -4,6 +4,7 @@ import { EgoButton } from "../reusables/Button"
 import styled from "styled-components"
 
 const LogoutBtn = styled(EgoButton)`
+width:100px;
 margin: 0 auto;
 `;
 

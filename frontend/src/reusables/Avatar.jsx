@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 
 export const Avatar = ({ id }) => {
   const [avatarUrl, setAvatarUrl] = useState(null);
+   const [username, setUsername] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const apikey = import.meta.env.VITE_API_KEY;
   const API = `${apikey}/user/${id}`;
+
   useEffect(() => {
     const fetchAvatar = async () => {
       try {
@@ -35,7 +37,7 @@ export const Avatar = ({ id }) => {
   return (
     <>
       <img src={avatarUrl} alt="User Avatar" className="user-avatar" />
-
+     
     </>
   );
 };

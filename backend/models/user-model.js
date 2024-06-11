@@ -51,20 +51,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-//update the users travelpoints after saving a travel
-userSchema.methods.incrementPoints = function (points) {
-  return this.model("User")
-    .updateOne({ _id: this._id }, { $inc: { points: points } })
-    .then(() => {
-      console.log(
-        `Points incremented by ${points}. New points: ${this.points + points}`
-      );
-    })
-    .catch((error) => {
-      console.error(`Error incrementing points: ${error}`);
-    });
-};
-
 //this uses matchPassword method to compare the entered password with the hashed password in the database
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcryptjs.compare(enteredPassword, this.password);
