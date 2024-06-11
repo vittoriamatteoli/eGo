@@ -13,7 +13,7 @@ import styled from "styled-components";
 import jwtDecode from "jwt-decode";
 import { MobileHeader } from "../components/MobileHeader";
 import { useMediaQuery } from "react-responsive";
-
+import { DashboardProvider } from "../components/DashboardContext";
 const DashboardLayout = styled.div`
   box-sizing: border-box;
   padding: 20px 12px;
@@ -50,17 +50,19 @@ export const Dashboard = () => {
   const { id } = useParams();
   return (
     <DashboardLayout>
-      <Sidebar id={id} />
+      <DashboardProvider value={id}>
+        <Sidebar id={id} />
 
-      <div>
-        {isMobile && <MobileHeader id={id} />}
-        <PointsCard id={id} />
-        <ActivityGraph id={id} />
-        {/* <DistanceCard id={id} /> */}
-        <EnergyCard id={id} />
-        <TravelCard id={id} />
-        <AdminButton isAdmin={isAdmin} />
-      </div>
+        <div>
+          {isMobile && <MobileHeader id={id} />}
+          <PointsCard id={id} />
+          <ActivityGraph id={id} />
+          {/* <DistanceCard id={id} /> */}
+          <EnergyCard id={id} />
+          <TravelCard id={id} />
+          <AdminButton isAdmin={isAdmin} />
+        </div>
+      </DashboardProvider>
     </DashboardLayout>
   );
 };

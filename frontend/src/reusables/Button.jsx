@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Ripple from "./Ripple";
 
 const StyledEgoButton = styled.button`
   padding: 10px;
@@ -22,5 +23,6 @@ const StyledEgoButton = styled.button`
 export const EgoButton = ({ children, onClick, className, disabled }) => (
   <StyledEgoButton onClick={onClick} className={className} disabled={disabled}>
     {children}
+    <Ripple color="#FDFFF1" />
   </StyledEgoButton>
 );
