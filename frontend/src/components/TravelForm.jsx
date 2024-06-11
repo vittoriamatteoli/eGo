@@ -9,6 +9,7 @@ import Autocomplete from "react-google-autocomplete";
 import { useState, useContext, useEffect } from "react";
 import { DashboardContext } from "./DashboardContext";
 import jwt_decode from "jwt-decode";
+import buttonTree from "../assets/button-effect-tree.svg";
 
 const TravelConfirmContainer = styled.div`
   position: relative;
@@ -107,6 +108,7 @@ export const TravelForm = ({ id }) => {
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
   const [autocompleteKey, setAutocompleteKey] = useState(0);
+  const [isClicked, setIsClicked] = useState(false);
   const {
     travelMode,
     setTravelMode,
@@ -220,6 +222,9 @@ export const TravelForm = ({ id }) => {
 
   //pass the travel data and points to the travel db, and then add points to both pointsdb and user points
   const handleConfirm = async () => {
+    setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 400);
+
     if (origin && destination && travelPoints) {
       await uploadTravel(
         distance,
@@ -312,10 +317,10 @@ export const TravelForm = ({ id }) => {
         }}
       />
 
-      <p>
-        Distance: <TravelPoints>{distance}</TravelPoints> m
-      </p>
       <StyledParagraph>
+        <p>
+          Distance: <TravelPoints>{distance}</TravelPoints> m
+        </p>
         <p>
           You will get <TravelPoints>{travelPoints}</TravelPoints> points for
           this trip
