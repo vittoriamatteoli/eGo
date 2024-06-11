@@ -289,6 +289,7 @@ export const TravelForm = ({ id }) => {
       <TravelModesContainer>
         {googleTravelModes.map((mode) => (
           <TravelModeButton
+            aria-label={mode.mode}
             key={mode.mode}
             selected={travelMode === mode.mode}
             onClick={() => setTravelMode(mode.mode)}
