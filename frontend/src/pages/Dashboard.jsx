@@ -10,7 +10,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdminButton } from "../reusables/AdminButton";
 import styled from "styled-components";
-import { DashboardProvider } from '../components/DashboardContext';
 import jwtDecode from "jwt-decode";
 import { MobileHeader } from "../components/MobileHeader";
 import { useMediaQuery } from "react-responsive";
@@ -51,9 +50,9 @@ export const Dashboard = () => {
   const { id } = useParams();
   return (
     <DashboardLayout>
-      <DashboardProvider value={id}>
-        <Sidebar id={id} />
-        <div>
+      <Sidebar id={id} />
+
+      <div>
         {isMobile && <MobileHeader id={id} />}
         <PointsCard id={id} />
         <ActivityGraph id={id} />
@@ -61,8 +60,7 @@ export const Dashboard = () => {
         <EnergyCard id={id} />
         <TravelCard id={id} />
         <AdminButton isAdmin={isAdmin} />
-        </div>
-      </DashboardProvider>
-    </DashboardLayout >
+      </div>
+    </DashboardLayout>
   );
 };

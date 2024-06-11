@@ -82,7 +82,7 @@ export const ActivityGraph = ({ id }) => {
               fill: {
                 target: "origin",
                 above: "#68794389", // Fill color above the line
-                below: "#687943", // Fill color below the line
+                below: "#687943)", // Fill color below the line
               },
               tension: 0.4, // Controls the curvature of the line
             },

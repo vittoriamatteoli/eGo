@@ -119,6 +119,8 @@ const StyledH1 = styled.h1`
   text-align: center;
   justify-self: center;
   align-self: center;
+  font-size: 2em;
+  color: var(--ego-dark);
   @media (min-width: 1200px) {
     grid-column: 2;
     grid-row: 1;
@@ -136,11 +138,9 @@ const Input = styled.input`
   padding: 10px 10px 10px 24px;
   color: var(--ego-dark);
   box-sizing: border-box;
-  border-radius: 20px;
+  border-radius: 24px;
   border: 1px solid transparent;
   background: var(--ego-gradient-reversed);
-  font-size: 1.3rem;
-  font-weight: 400;
   &:focus,
   &:active {
     background-color: var(--ego-lgt-green);
@@ -149,7 +149,11 @@ const Input = styled.input`
 `;
 
 const ErrorMessage = styled.div`
-
+  margin-bottom: 15px;
+  padding: 10px;
+  color: var(--ego-dark);
+  border-radius: 7px;
+  border: 3px solid var(--ego-error);
 `;
 
 const BottomText = styled.div`
@@ -185,10 +189,6 @@ const ButtonAndSpinnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const FrontBtn = styled(EgoButton)`
-width: 100%;
 `;
 
 export const Login = () => {
@@ -253,10 +253,10 @@ export const Login = () => {
         <StyledImage src={Globe} alt="globe" />
       </LeftColumn>
       <RightColumn>
-        <StyledH1 className="h1">Login</StyledH1>
+        <StyledH1>Login</StyledH1>
         <FormContainer>
           <form onSubmit={handleLogin}>
-            {message && <ErrorMessage className="error">{message}</ErrorMessage>}
+            {message && <ErrorMessage>{message}</ErrorMessage>}
             <FormGroup>
               <Input
                 type="email"
@@ -283,16 +283,16 @@ export const Login = () => {
             </FormGroup>
 
             <ButtonAndSpinnerContainer>
-              <FrontBtn className="frontBtn" type="submit" disabled={loading} aria="log in">
+              <EgoButton type="submit" disabled={loading}>
                 {loading ? "Loading..." : "Log in"}
-              </FrontBtn>
+              </EgoButton>
               {loading && <Loading />}
             </ButtonAndSpinnerContainer>
           </form>
         </FormContainer>
         <BottomText>
-          <p className="h4">
-            Don't have an account yet? <Link className="a" to="/register">Sign up</Link>
+          <p>
+            Don't have an account yet? <Link to="/register">Sign up</Link>
           </p>
         </BottomText>
       </RightColumn>

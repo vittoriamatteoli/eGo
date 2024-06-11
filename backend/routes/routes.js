@@ -13,7 +13,7 @@ dotenv.config();
 const SECRET = process.env.SECRET || "toast is the best secret";
 //const REFRESH_SECRET = process.env.SECRET || "jam is the second best secret";
 const router = express.Router();
-const { calculatePoints } = require("../utils/calculatePoints");
+
 // get all users and return the data
 router.get("/users", async (req, res) => {
   try {
@@ -74,9 +74,7 @@ router.post("/sessions", async (req, res) => {
     const user = await User.findOne({ email });
     if (user && (await user.matchPassword(password))) {
       //generate a token for the user
-      const token = jwt.sign({ id: user._id, role: user.role }, SECRET, {
-        expiresIn: "1h",
-      });
+      const token = jwt.sign({ id: user._id, role:user.role }, SECRET, { expiresIn: "1h" });
       const id = user._id;
 
       const role = user.role;
@@ -86,7 +84,8 @@ router.post("/sessions", async (req, res) => {
       //user.refreshToken = refreshToken;
       //await user.save();
 
-      res.status(200).json({ accessToken: token, id: id, role: role });
+      res.status(200).json({ accessToken: token , id:id, role:role});
+
     } else {
       res.status(401).json({ message: "Invalid username or password" });
     }
@@ -96,6 +95,7 @@ router.post("/sessions", async (req, res) => {
       error: error.message,
     });
   }
+
 });
 
 //route to verify if token is valid with middleware isLoggedIn
@@ -105,6 +105,7 @@ router.get("/verify", authenticateUser, (req, res) => {
 
 router.get("/role", authenticateUser, (req, res) => {
   res.json({ role: req.user.role });
+
 });
 
 // patch request to update the energy level
@@ -197,6 +198,7 @@ router.patch("/user/:id", authenticateUser, async (req, res) => {
       message: "An error occurred while updating the user",
       error: error.message,
     });
+
   }
 });
 
@@ -229,8 +231,8 @@ router.get("/travel/:id", authenticateUser, async (req, res) => {
 
 //upload travel details into travel model
 router.post("/travel", authenticateUser, async (req, res) => {
-  const { distance, mode, origin, destination, travelPoints } = req.body;
-  const user = req.userId;
+  const { distance, mode, origin, destination } = req.body;
+  const user = req.user;
 
   try {
     const newTravel = await new Travel({
@@ -238,8 +240,7 @@ router.post("/travel", authenticateUser, async (req, res) => {
       mode,
       origin,
       destination,
-      travelPoints,
-      user: req.user._id,
+      user: user._id,
     }).save();
 
     res
@@ -251,15 +252,5 @@ router.post("/travel", authenticateUser, async (req, res) => {
   }
 });
 
-// calculate points for the in the calculatepoints function
-// pass energy, distance, and mode as arguments
-//return the calculated points
-
-router.post("/calculate", authenticateUser, async (req, res) => {
-  const { fillPercentage, distance, mode } = req.body;
-  const user = req.user;
-  const points = await calculatePoints(fillPercentage, distance, mode);
-  res.status(200).json({ points });
-});
 
 export default router;

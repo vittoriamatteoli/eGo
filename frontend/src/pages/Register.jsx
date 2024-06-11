@@ -138,11 +138,9 @@ const Input = styled.input`
   padding: 10px 10px 10px 24px;
   color: var(--ego-dark);
   box-sizing: border-box;
-  border-radius: 20px;
+  border-radius: 24px;
   border: 1px solid transparent;
   background: var(--ego-gradient-reversed);
-  font-size: 1.3rem;
-  font-weight: 400;
   &:focus,
   &:active {
     background-color: var(--ego-lgt-green);
@@ -151,7 +149,11 @@ const Input = styled.input`
 `;
 
 const ErrorMessage = styled.div`
-
+  margin-bottom: 15px;
+  padding: 10px;
+  color: var(--ego-dark);
+  border-radius: 7px;
+  border: 3px solid var(--ego-error);
 `;
 
 const BottomText = styled.div`
@@ -186,10 +188,6 @@ const ButtonAndSpinnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const FrontBtn = styled(EgoButton)`
-width: 100%;
 `;
 
 export const Register = () => {
@@ -268,10 +266,10 @@ export const Register = () => {
         <StyledImage src={Globe} alt="globe" />
       </LeftColumn>
       <RightColumn>
-        <StyledH1 className="h1">Sign up</StyledH1>
+        <StyledH1>Sign up</StyledH1>
         <FormContainer>
           <form onSubmit={handleRegister}>
-            {message && <ErrorMessage className="error">{message}</ErrorMessage>}
+            {message && <ErrorMessage>{message}</ErrorMessage>}
             <FormGroup>
               <Input
                 type="text"
@@ -309,16 +307,16 @@ export const Register = () => {
               />
             </FormGroup>
             <ButtonAndSpinnerContainer>
-              <FrontBtn type="submit" disabled={loading}>
+              <EgoButton type="submit" disabled={loading}>
                 {loading ? "Loading..." : "Sign up"}
-              </FrontBtn>
+              </EgoButton>
               {loading && <Loading />}
             </ButtonAndSpinnerContainer>
           </form>
         </FormContainer>
         <BottomText>
-          <p className="h4">
-            Already have an account? <Link className="a" to="/login"> Log in </Link>
+          <p>
+            Already have an account? <Link to="/login"> Log in </Link>
           </p>
         </BottomText>
       </RightColumn>

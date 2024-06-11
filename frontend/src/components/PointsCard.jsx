@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BatterySlider } from "../reusables/BatterySlider";
 import { useMediaQuery } from "react-responsive";
-import { useContext } from 'react';
-import { DashboardContext } from './DashboardContext';
 
 const apikey = import.meta.env.VITE_API_KEY;
 
@@ -74,7 +72,7 @@ const StyledHeader = styled.div`
 `;
 
 export const PointsCard = ({ id }) => {
-  const { points, setPoints } = useContext(DashboardContext);
+  const [points, setPoints] = useState("");
   const [showPopUp, setShowPopUp] = useState(false);
 
   const API = `${apikey}/user/${id}`;
@@ -96,11 +94,7 @@ export const PointsCard = ({ id }) => {
       }
     };
 
-     // Call handlePoints immediately and then every 5 seconds
-  handlePoints();
-  const intervalId = setInterval(handlePoints, 5000);
-  // Clean up the interval on unmount
-  return () => clearInterval(intervalId);
+    handlePoints();
   }, [API]);
 
   const togglePopUp = () => {
