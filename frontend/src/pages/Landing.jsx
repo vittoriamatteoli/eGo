@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { EgoButton } from "../reusables/Button";
 import { Logo } from "../reusables/Logo";
 import Globe from "../assets/Globe-ego.svg";
+import { WalkingMan } from "../reusables/WalkingMan";
 
 //styles
 const LandingSection = styled.section`
@@ -207,6 +208,7 @@ export const Landing = () => {
       </MiddleSection>
 
       <BottomSection>
+        <WalkingMan />
         <StyledEllipse>
           <SignUpButton>
             <Link to="/register">Sign up!</Link>
