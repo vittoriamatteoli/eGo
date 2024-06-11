@@ -73,6 +73,7 @@ export const BatterySlider = ({ showPopUp }) => {
   };
 
   const handleNewEnergy = async () => {
+    const token = sessionStorage.getItem("accessToken");
     try {
       const response = await fetch(API, {
         method: "PATCH",
