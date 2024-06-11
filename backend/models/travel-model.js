@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import { calculatePoints } from "../utils/calculatePoints";
+import { updatePoints } from "../utils/updatePoints";
+
 const travelSchema = new mongoose.Schema({
   distance: {
     type: Number,
@@ -30,11 +31,22 @@ const travelSchema = new mongoose.Schema({
   },
   travelPoints: {
     type: Number,
-    default: calculatePoints,
+    required: [true, "Travel points are required"],
   },
 });
 
-export default mongoose.model("Travel", travelSchema);
+// Update user's points after saving a travel
+travelSchema.post("save", function (doc, next) {
+  const userId = doc.user;
+  const travelId = doc._id;
+  const travelPoints = doc.travelPoints;
+  console.log("calculated points by travelschema:", travelPoints);
+  console.log("userId by travelschema:", userId);
+  console.log("travelId by travelschema:", travelId);
 
-// added distance and date to the travelSchema as required fields so we can use the data to calculate the carbon footprint/pollution of the travel or points better. or to calculate the total distance traveled by the user.
-//date seemed like a good idea to add to the travelSchema so we can use it to calculate the total distance traveled by the user in a specific time period. or just for sorting the travels by date for instance.-> maybe useful for charts???
+  updatePoints(userId, travelId, travelPoints)
+    .then(() => next())
+    .catch((err) => next(err));
+});
+
+export default mongoose.model("Travel", travelSchema);
