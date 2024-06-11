@@ -35,12 +35,21 @@ const DashboardLayout = styled.div`
       display: flex;
       gap: 20px;
     }
+    .cardContainerDash {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
   }
   @media (min-width: 1024px) {
     grid-template-columns: 1fr 4fr; /* Sidebar and main content */
     .cardContainer {
       display: flex;
       gap: 30px;
+    }
+    .cardContainerDash {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
     }
   }
 `;
@@ -73,8 +82,10 @@ export const Dashboard = () => {
 
         <div className="dashboardContainer">
           {isMobile && <MobileHeader id={id} />}
-          <PointsCard id={id} />
-          <ActivityGraph id={id} />
+          <div className="cardContainerDash">
+            <PointsCard id={id} />
+            <ActivityGraph id={id} />
+          </div>
           <div className="cardContainer">
             <EnergyCard id={id} />
             <TravelCard id={id} />

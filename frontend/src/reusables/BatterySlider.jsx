@@ -100,8 +100,16 @@ export const BatterySlider = ({ showPopUp }) => {
 
   return (
     <BatterySliderWrapper>
-      <BatterySVG fillPercentage={fillPercentage} onDrag={handleDrag} />
-      <StyledButton onClick={handleNewEnergy}>Confirm</StyledButton>
+      {showPopUp && <h2>How's your energy level right now?</h2>}
+      {<BatterySVG fillPercentage={fillPercentage} onDrag={handleDrag} />}
+      {message && <div>{message}</div>}
+      {error && <div>Error: {error}</div>}
+      {showPopUp && (
+        <StyledButton onClick={handleNewEnergy}>Confirm</StyledButton>
+      )}
+      {!isMobile && (
+        <StyledButton onClick={handleNewEnergy}>Confirm</StyledButton>
+      )}
     </BatterySliderWrapper>
   );
 };
