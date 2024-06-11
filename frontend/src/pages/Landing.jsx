@@ -73,7 +73,7 @@ const StyledTitle = styled.h1`
 `;
 
 const SmallEgoButton = styled(EgoButton)`
- / width: 76px;
+ // width: 76px;
   //height: 30px;
   border-radius: 36px;
   a {
