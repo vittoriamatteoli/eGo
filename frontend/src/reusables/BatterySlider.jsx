@@ -14,28 +14,23 @@ const BatterySliderWrapper = styled.div`
   gap: 30px;
   align-items: center;
   justify-content: center;
-  @media (max-width: 767px) {
-    height: 50px;
-    div {
-      width: 100px;
-      height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
 `;
 
 const StyledButton = styled(Button)`
-  border-radius: 24px;
-  border: 1px solid #687943;
-  background: #687943;
-  width: 106.213px;
-  height: 35.172px;
-  flex-shrink: 0;
-  color: white;
-  font-family: "Open Sans Hebrew";
-  font-size: 12px;
+  cursor: pointer;
+  outline: none;
+  text-transform: none;
+  position: relative;
+  z-index: 2;
+  border-radius: 30px;
+  border: 2px solid #687943;
+  filter: drop-shadow(0px 4px 6px #00000040);
+  background: ${({ isClicked }) => (isClicked ? "#2D3915" : "#687943")};
+  width: 165px;
+  height: 55px;
+  color: #fff;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -53,16 +48,9 @@ export const BatterySlider = ({ showPopUp }) => {
   const dashboardContextValue = useContext(DashboardContext);
 
   useEffect(() => {
-    const token = sessionStorage.getItem("accessToken");
     const fetchEnergyData = async () => {
       try {
-        const res = await fetch(API, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await fetch(API);
         if (!res.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -71,13 +59,12 @@ export const BatterySlider = ({ showPopUp }) => {
           setFillPercentage(data.energyLevel);
         }
       } catch (error) {
-        setError(
-          "There was a problem with the fetch operation: " + error.message
-        );
+        console.error("Error fetching energy data:", error);
       }
     };
+
     fetchEnergyData();
-  }, [id, API]);
+  }, [id]);
 
   const handleDrag = (percentage) => {
     if (percentage >= 0 && percentage <= 100) {
@@ -86,7 +73,6 @@ export const BatterySlider = ({ showPopUp }) => {
   };
 
   const handleNewEnergy = async () => {
-    const token = sessionStorage.getItem("accessToken");
     try {
       const response = await fetch(API, {
         method: "PATCH",
@@ -105,26 +91,17 @@ export const BatterySlider = ({ showPopUp }) => {
         updatedData.energyLevel !== null
       ) {
         setFillPercentage(updatedData.energyLevel);
-        setMessage(`Energy level updated with ${fillPercentage}%`);
+        console.log(updatedData);
       }
     } catch (error) {
       console.error("Error updating energy data:", error);
-      setError("Error: " + error.message);
     }
   };
 
   return (
     <BatterySliderWrapper>
-      {showPopUp && <h2>How's your energy level right now?</h2>}
-      {<BatterySVG fillPercentage={fillPercentage} onDrag={handleDrag} />}
-      {message && <div>{message}</div>}
-      {error && <div>Error: {error}</div>}
-      {showPopUp && (
-        <StyledButton onClick={handleNewEnergy}>Confirm</StyledButton>
-      )}
-      {!isMobile && (
-        <StyledButton onClick={handleNewEnergy}>Confirm</StyledButton>
-      )}
+      <BatterySVG fillPercentage={fillPercentage} onDrag={handleDrag} />
+      <StyledButton onClick={handleNewEnergy}>Confirm</StyledButton>
     </BatterySliderWrapper>
   );
 };

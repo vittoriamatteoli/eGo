@@ -12,17 +12,27 @@ const StyledBatteryCard = styled.div`
   height: 340px;
   align-items: center;
   justify-content: center;
-  gap: 30px;
 
-  h2 {
-    color: #000;
-    font-family: "Open Sans Hebrew";
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    /* padding: 10px; */
-    text-align: center;
+  gap: 10px;
+`;
+
+const StyledHeading = styled.h2`
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding: 10px;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    font-size: 18px; /* Use a larger font size for larger screens */
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 22px; /* Use an even larger font size for extra large screens */
+
   }
 `;
 
@@ -32,7 +42,7 @@ export const EnergyCard = ({ id }) => {
   return (
     !isMobile && (
       <StyledBatteryCard>
-        <h2>How's your energy level right now?</h2>
+        <StyledHeading>How's your energy level right now?</StyledHeading>
         <BatterySlider id={id} />
       </StyledBatteryCard>
     )

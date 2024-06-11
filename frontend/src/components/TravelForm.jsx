@@ -9,22 +9,63 @@ import Autocomplete from "react-google-autocomplete";
 import { useState, useContext, useEffect } from "react";
 import { DashboardContext } from "./DashboardContext";
 import jwt_decode from "jwt-decode";
+import buttonTree from "../assets/button-effect-tree.svg";
 
-const StyledButton = styled(Button)`
-  border-radius: 24px;
-  border: 1px solid #687943;
-  background: #687943;
-  width: 106.213px;
-  height: 35.172px;
-  flex-shrink: 0;
-  color: white;
+const TravelConfirmContainer = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+const StyledTravelButton = styled(Button)`
+  cursor: pointer;
+  outline: none;
+  text-transform: none;
+  position: relative;
+  z-index: 2;
+  border-radius: 30px;
+  border: 2px solid #687943;
+  filter: drop-shadow(0px 4px 6px #00000040);
+  background: ${({ isClicked }) => (isClicked ? "#2D3915" : "#687943")};
+  width: 165px;
+  height: 55px;
   color: #fff;
-  font-family: "Open Sans Hebrew";
-  font-size: 12px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
   font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  text-transform: capitalize;
+  font-weight: 600;
+  transition: all 0.5s ease-in-out;
+
+  &:hover {
+    filter: drop-shadow(0px 4px 6px #00000080);
+    background: #cce0a1;
+    color: #2d3915;
+  }
+`;
+
+const SvgIcon = styled.img`
+  position: absolute;
+  z-index: 1;
+  width: 55px;
+  height: 55px;
+  transition-duration: 0.4s;
+  transition-timing-function: ease-in-out;
+
+  transform: ${({ isClicked }) =>
+    isClicked ? "translate(-200%, -180%)" : "translate(-200%, 0%)"};
+
+  ${StyledTravelButton}:hover + & {
+    transform: ${({ isClicked }) =>
+      isClicked ? "translate(-200%, -180%)" : "translate(-200%, -55%)"};
+    transition-duration: 0.4s;
+    transition-timing-function: ease-in-out;
+  }
+
+  ${StyledTravelButton}:active + & {
+    transform: ${({ isClicked }) =>
+      isClicked ? "translate(-200%, -200%)" : "translate(-200%, -55%)"};
+    transition-duration: 0.4s;
+    transition-timing-function: ease-in-out;
+  }
 `;
 
 const TravelModesContainer = styled.div`
@@ -45,10 +86,24 @@ const TravelModeButton = styled(IconButton)`
 const StyledAutocomplete = styled(Autocomplete)`
   width: 50%;
   height: 1.5rem;
-  padding: 10px;
+  padding: 15px 10px 15px 20px;
   border: 2px solid #dcded0;
   border-radius: 15px;
   margin-bottom: 10px;
+  font-size: 15px;
+
+  @media (min-width: 768px) {
+    font-size: 18px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 22px;
+  }
+`;
+
+const StyledParagraph = styled.p`
+  margin-top: 0px;
+  margin-bottom: 15%;
 `;
 
 const TravelPoints = styled.span`
@@ -60,6 +115,7 @@ export const TravelForm = ({ id }) => {
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
   const [autocompleteKey, setAutocompleteKey] = useState(0);
+  const [isClicked, setIsClicked] = useState(false);
   const {
     travelMode,
     setTravelMode,
@@ -173,6 +229,9 @@ export const TravelForm = ({ id }) => {
 
   //pass the travel data and points to the travel db, and then add points to both pointsdb and user points
   const handleConfirm = async () => {
+    setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 400);
+
     if (origin && destination && travelPoints) {
       await uploadTravel(
         distance,
@@ -230,6 +289,7 @@ export const TravelForm = ({ id }) => {
       <TravelModesContainer>
         {googleTravelModes.map((mode) => (
           <TravelModeButton
+            aria-label={mode.mode}
             key={mode.mode}
             selected={travelMode === mode.mode}
             onClick={() => setTravelMode(mode.mode)}
@@ -265,14 +325,22 @@ export const TravelForm = ({ id }) => {
         }}
       />
 
-      <p>
-        You will get <TravelPoints>{travelPoints}</TravelPoints> points for this
-        trip
-      </p>
-      <p>
-        Distance: <TravelPoints>{distance}</TravelPoints> m
-      </p>
-      <StyledButton onClick={handleConfirm}>Confirm</StyledButton>
+      <StyledParagraph>
+        <p>
+          Distance: <TravelPoints>{distance}</TravelPoints> m
+        </p>
+        <p>
+          You will get <TravelPoints>{travelPoints}</TravelPoints> points for
+          this trip
+        </p>
+      </StyledParagraph>
+
+      <TravelConfirmContainer className="travel-form-button">
+        <StyledTravelButton onClick={handleConfirm} isClicked={isClicked}>
+          Confirm
+        </StyledTravelButton>
+        <SvgIcon src={buttonTree} alt="Button Tree" isClicked={isClicked} />
+      </TravelConfirmContainer>
     </>
   );
 };

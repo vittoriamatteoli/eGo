@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Ripple from "./Ripple";
 
 const StyledEgoButton = styled.button`
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
   padding: 10px;
   margin-top: 10px;
   background-color: #687943;
@@ -10,13 +12,15 @@ const StyledEgoButton = styled.button`
   border-radius: 24px;
   width: 100%;
   cursor: pointer;
-  box-shadow: 1px 1px 3px rgba(104, 121, 67, 0.55);
+  filter: drop-shadow(0px 4px 6px #00000040);
+  border: 2px solid #687943;
+  transition: all 0.3s ease-in-out;
   &:hover,
   &:focus,
   &:active {
-    background-color: #cce0a1;
-    box-shadow: 1px 1px 2px rgba(104, 121, 67, 0.55);
-    color: #687943;
+    filter: drop-shadow(0px 4px 6px #00000080);
+    background: #cce0a1;
+    color: #2d3915;
   }
 `;
 
