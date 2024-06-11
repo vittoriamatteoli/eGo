@@ -165,7 +165,7 @@ const StyledParagraph = styled.p`
   text-align: center;
   font-size: 20px;
   width: 200px;
-
+  display: flex;
   @media (min-width: 768px) {
     margin-top: 40px;
     font-size: 28px;
@@ -177,7 +177,7 @@ const StyledParagraph = styled.p`
 `;
 
 const SignUpButton = styled(SmallEgoButton)`
-  position: absolute;
+  //position: absolute;
   top: -30px;
 
   @media (min-width: 768px) {
@@ -186,8 +186,81 @@ const SignUpButton = styled(SmallEgoButton)`
 
   @media (min-width: 1024px) {
     top: -32px;
+    left:7vw;
   }
 `;
+
+const Center = styled.div`
+position: relative;
+
+z-index:3;
+padding: 1vh 30vw 0vh 30vw;
+    @media (min-width:320px) and (min-height:568px){
+padding: 29vh 30vw 40vh 30vw;
+    }
+
+    @media (min-width:344px) and (min-height:882px){
+padding: 29vh 30vw 0vh 30vw;
+    }
+
+  @media (min-width: 360px) {
+padding: 3vh 30vw 0vh 30vw;
+    }
+
+    @media (min-width:360px) and (min-height:740px){
+padding: 15vh 30vw 0vh 30vw;
+    }
+ @media (min-width: 375px) {
+padding: 5vh 30vw 0vh 30vw;
+    }
+ @media (min-width: 375px) and (min-height:812px) {
+padding: 20vh 30vw 0vh 30vw;
+    }
+@media (min-width: 390px) {
+padding: 25vh 30vw 0vh 30vw;}
+
+ @media (min-width: 412px) {
+padding: 30vh 30vw 15vh 30vw;
+  }
+ @media (min-width: 412px) and (min-height:896px) {
+padding: 30vh 30vw 0vh 30vw;
+  }
+
+ @media (min-width: 540px) and (min-height:720px){
+padding: 15vh 30vw 0vh 30vw;
+  }
+
+@media(min-width:712px){
+padding: 25vh 30vw 0vh 30vw;
+  }
+  @media(min-width:720px){
+  padding: 25vh 40vw 0vh 40vw;
+  }
+  @media (min-width: 768px) {
+//padding: 1vh 30vw 0vh 30vw;
+  }
+  @media (min-width:820px) {
+padding: 20vh 30vw 0vh 30vw;
+  }
+  @media (min-width: 1024px) and (min-height:600px) {
+   padding: 0vh 42vw 15vh 29vw;
+  }
+
+  @media (min-width: 1024px) and (min-height:1366px) {
+   padding: 15vh 42vw 0vh 29vw;
+  }
+        @media (min-width: 1080px) and (min-height:800px) {
+   padding: 15vh 42vw 0vh 29vw;
+  }
+   @media (min-width:1081px) and (min-height:801px) {
+   padding: 25vh 42vw 0vh 29vw;
+   }
+
+`;
+
+
+
+
 
 //component
 export const Landing = () => {
@@ -197,12 +270,11 @@ export const Landing = () => {
         <Link to="/about">
           <Logo />
         </Link>
-        <SmallEgoButton >
         <Link to="/login">
+        <SmallEgoButton >
           Log in
-          </Link>
         </SmallEgoButton>
-
+        </Link>
       </TopSection>
 
       <MiddleSection>
@@ -212,15 +284,16 @@ export const Landing = () => {
       </MiddleSection>
 
       <BottomSection>
+        <Center>
+      <Link to="/register">
+          <SignUpButton>
+            Sign up!
+          </SignUpButton>
+          </Link>
+        </Center>
         <StyledEllipse>
 
-          <SignUpButton>
-          <Link to="/register">
-            Sign up!
-            </Link>
-          </SignUpButton>
-
-          <StyledParagraph> Reduce carbon emmission.</StyledParagraph>
+          <StyledParagraph> Reduce carbon emission.</StyledParagraph>
         </StyledEllipse>
         <StyledAbout to="/about">
           <p>About us</p>
