@@ -351,7 +351,7 @@ export const TravelForm = ({ id }) => {
       <StyledParagraph>
         <p>
           You will <TravelPoints>{travelModeText}</TravelPoints> for{" "}
-          <TravelPoints>{distance}</TravelPoints> m{distance > 1 && "s"}.
+          <TravelPoints>{distance}</TravelPoints> m.
         </p>
 
         <p>
