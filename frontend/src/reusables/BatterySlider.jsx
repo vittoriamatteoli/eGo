@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useParams } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { BatterySVG } from "../reusables/BatterySVG";
 import { Button } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
-
+import { DashboardContext } from "../components/DashboardContext";
 const apikey = import.meta.env.VITE_API_KEY;
 
 const BatterySliderWrapper = styled.div`
@@ -43,12 +43,14 @@ const StyledButton = styled(Button)`
 `;
 
 export const BatterySlider = ({ showPopUp }) => {
+  const { fillPercentage, setFillPercentage } = useContext(DashboardContext);
   const { id } = useParams();
   const API = `${apikey}/user/${id}`;
-  const [fillPercentage, setFillPercentage] = useState(0);
+  // const [fillPercentage, setFillPercentage] = useState(0);
   const [message, setMessage] = useState("");
   const [error, setError] = useState(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const dashboardContextValue = useContext(DashboardContext);
 
   useEffect(() => {
     const token = sessionStorage.getItem("accessToken");

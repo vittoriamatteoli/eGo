@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import logo from "../../src/assets/globe-logo.svg";
 import styled from "styled-components";
 import { Typography } from "@mui/material";
-// import { useContext } from 'react';
-// import { DashboardContext } from './DashboardContext';
+import { useContext } from "react";
+import { DashboardContext } from "./DashboardContext";
 const StyledHeader = styled.header`
   display: flex;
   align-items: center;
@@ -55,14 +55,14 @@ const StyledLogo = styled.img`
   width: 70px;
 `;
 export const MobileHeader = ({ id }) => {
-  // const { username, setUsername } = useContext(DashboardContext);
+  const { username, setUsername } = useContext(DashboardContext);
   return (
     <StyledHeader>
       <div className="avatar">
         <Avatar id={id} />
         <div className="typography">
           <Typography style={{ textTransform: "capitalize" }} variant="body1">
-            {/* {username} */}
+            {username}
           </Typography>
           <Logout />
         </div>
