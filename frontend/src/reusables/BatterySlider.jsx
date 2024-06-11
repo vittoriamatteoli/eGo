@@ -1,10 +1,11 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useParams } from "react-router";
 import { useEffect, useState, useContext } from "react";
 import { BatterySVG } from "../reusables/BatterySVG";
 import { Button } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
 import { DashboardContext } from "../components/DashboardContext";
+import batteryUpdate from "../assets/battery-update.svg";
 const apikey = import.meta.env.VITE_API_KEY;
 
 const BatterySliderWrapper = styled.div`
@@ -14,6 +15,31 @@ const BatterySliderWrapper = styled.div`
   gap: 30px;
   align-items: center;
   justify-content: center;
+`;
+
+const rotateOnce = keyframes`
+  from {
+    transform: translate(-5%, -80%) rotate(360deg);
+  }
+  to {
+    transform:translate(-5%, -80%) rotate(0deg);
+  }
+`;
+
+const BatteryUpdateIcon = styled.img.withConfig({
+  shouldForwardProp: (prop) => prop !== "isClicked",
+})`
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  width: 55px;
+  height: 55px;
+  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+
+  transform: translate(-5%, -80%) rotate(360deg);
+  opacity: ${({ isClicked }) => (isClicked ? "1" : "0")};
+  animation: ${({ isClicked }) => (isClicked ? rotateOnce : "none")} 0.8s
+    ease-in-out forwards;
 `;
 
 const StyledButton = styled(Button)`
@@ -44,6 +70,7 @@ export const BatterySlider = ({ showPopUp }) => {
   // const [fillPercentage, setFillPercentage] = useState(0);
   const [message, setMessage] = useState("");
   const [error, setError] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const dashboardContextValue = useContext(DashboardContext);
 
@@ -73,6 +100,9 @@ export const BatterySlider = ({ showPopUp }) => {
   };
 
   const handleNewEnergy = async () => {
+    setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 400);
+
     const token = sessionStorage.getItem("accessToken");
     try {
       const response = await fetch(API, {
@@ -102,6 +132,12 @@ export const BatterySlider = ({ showPopUp }) => {
   return (
     <BatterySliderWrapper>
       {showPopUp && <h2>How's your energy level right now?</h2>}
+      <BatteryUpdateIcon
+        src={batteryUpdate}
+        alt="Battery update icon"
+        isClicked={isClicked}
+        draggable="false"
+      />
       {<BatterySVG fillPercentage={fillPercentage} onDrag={handleDrag} />}
       {message && <div>{message}</div>}
       {error && <div>Error: {error}</div>}

@@ -16,7 +16,9 @@ const TravelConfirmContainer = styled.div`
   display: inline-block;
 `;
 
-const StyledTravelButton = styled(Button)`
+const StyledTravelButton = styled(Button).withConfig({
+  shouldForwardProp: (prop) => prop !== "isClicked",
+})`
   cursor: pointer;
   outline: none;
   text-transform: none;
@@ -42,7 +44,9 @@ const StyledTravelButton = styled(Button)`
   }
 `;
 
-const SvgIcon = styled.img`
+const SvgIcon = styled.img.withConfig({
+  shouldForwardProp: (prop) => prop !== "isClicked",
+})`
   position: absolute;
   z-index: 1;
   width: 55px;
@@ -101,7 +105,7 @@ const StyledAutocomplete = styled(Autocomplete)`
   }
 `;
 
-const StyledParagraph = styled.p`
+const StyledParagraph = styled.div`
   margin-top: 0px;
   margin-bottom: 15%;
 `;
@@ -329,6 +333,7 @@ export const TravelForm = ({ id }) => {
         <p>
           Distance: <TravelPoints>{distance}</TravelPoints> m
         </p>
+
         <p>
           You will get <TravelPoints>{travelPoints}</TravelPoints> points for
           this trip
