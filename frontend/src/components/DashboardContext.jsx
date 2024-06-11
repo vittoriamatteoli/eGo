@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 export const DashboardContext = createContext();
 export const DashboardProvider = ({ children }) => {
   const [fillPercentage, setFillPercentage] = useState(0);
-  const [travelMode, setTravelMode] = useState([]);
+  const [travelMode, setTravelMode] = useState("WALK");
   const [username, setUsername] = useState("");
   const [points, setPoints] = useState(0);
   const [distance, setDistance] = useState(0);
