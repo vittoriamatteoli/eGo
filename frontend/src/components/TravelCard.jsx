@@ -10,6 +10,7 @@ const StyledTravelCard = styled.div`
   width: 100%;
   align-items: center;
   justify-content: center;
+  height: 340px;
   gap: 10px;
   h2 {
     color: #000;
@@ -21,6 +22,7 @@ const StyledTravelCard = styled.div`
     padding: 10px;
     text-align: center;
   }
+  
 `;
 
 export const TravelCard = ({ id }) => {
