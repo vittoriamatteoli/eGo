@@ -59,6 +59,13 @@ const SvgIcon = styled.img`
     transition-duration: 0.4s;
     transition-timing-function: ease-in-out;
   }
+
+  ${StyledTravelButton}:active + & {
+    transform: ${({ isClicked }) =>
+      isClicked ? "translate(-200%, -200%)" : "translate(-200%, -55%)"};
+    transition-duration: 0.4s;
+    transition-timing-function: ease-in-out;
+  }
 `;
 
 const TravelModesContainer = styled.div`
