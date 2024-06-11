@@ -32,6 +32,7 @@ const BatteryUpdateIcon = styled.img.withConfig({
   position: absolute;
   pointer-events: none;
   z-index: 1;
+
   width: 55px;
   height: 55px;
   transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
