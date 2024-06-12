@@ -3,8 +3,16 @@ import styled from "styled-components";
 import { EgoButton } from "../reusables/Button";
 import { Logo } from "../reusables/Logo";
 import Globe from "../assets/Globe-ego.svg";
+import { NoSelect } from "../reusables/NoSelect";
 
 //styles
+// const NoSelect = styled.div`
+//   user-select: none; /* Standard syntax */
+//   -webkit-user-select: none; /* Chrome, Safari, Opera */
+//   -moz-user-select: none; /* Firefox */
+//   -ms-user-select: none; /* Internet Explorer/Edge */
+// `;
+
 const LandingSection = styled.section`
   overflow: hidden;
   height: 100vh;
@@ -29,6 +37,7 @@ const MiddleSection = styled.div`
   position: relative;
   width: 100%;
   height: 300px;
+  z-index: 1;
 
   @media all and (min-width: 1024px) {
     justify-content: space-around;
@@ -42,6 +51,10 @@ const StyledImage = styled.img`
   top: 55%;
   left: 52%;
   transform: translate(-50%, -50%);
+  /* user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none; */
 
   @media (min-width: 768px) {
     height: 140%;
@@ -60,6 +73,10 @@ const StyledTitle = styled.h1`
   font-size: 240px;
   margin: 0;
   z-index: 1;
+  /* user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none; */
 
   @media (min-width: 768px) {
     font-size: 450px;
@@ -114,7 +131,7 @@ const BottomSection = styled.div`
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  z-index: 3;
+  z-index: 4;
 `;
 const StyledEllipse = styled.div`
   display: flex;
@@ -192,18 +209,22 @@ export const Landing = () => {
   return (
     <LandingSection>
       <TopSection>
-        <Link to="/about">
-          <Logo />
-        </Link>
+        <Logo />
         <SmallEgoButton>
           <Link to="/login">Log in</Link>
         </SmallEgoButton>
       </TopSection>
 
       <MiddleSection>
-        <StyledTitle>e</StyledTitle>
-        <StyledImage src={Globe} alt="globe" />
-        <StyledTitle>o</StyledTitle>
+        <NoSelect>
+          <StyledTitle>e</StyledTitle>{" "}
+        </NoSelect>
+        <NoSelect>
+          <StyledImage src={Globe} alt="globe" />
+        </NoSelect>
+        <NoSelect>
+          <StyledTitle>o</StyledTitle>{" "}
+        </NoSelect>
       </MiddleSection>
 
       <BottomSection>
