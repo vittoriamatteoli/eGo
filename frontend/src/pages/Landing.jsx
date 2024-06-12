@@ -6,13 +6,6 @@ import Globe from "../assets/Globe-ego.svg";
 import { NoSelect } from "../reusables/NoSelect";
 
 //styles
-// const NoSelect = styled.div`
-//   user-select: none; /* Standard syntax */
-//   -webkit-user-select: none; /* Chrome, Safari, Opera */
-//   -moz-user-select: none; /* Firefox */
-//   -ms-user-select: none; /* Internet Explorer/Edge */
-// `;
-
 const LandingSection = styled.section`
   overflow: hidden;
   height: 100vh;
@@ -51,10 +44,6 @@ const StyledImage = styled.img`
   top: 55%;
   left: 52%;
   transform: translate(-50%, -50%);
-  /* user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none; */
 
   @media (min-width: 768px) {
     height: 140%;
@@ -73,10 +62,6 @@ const StyledTitle = styled.h1`
   font-size: 240px;
   margin: 0;
   z-index: 1;
-  /* user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none; */
 
   @media (min-width: 768px) {
     font-size: 450px;
