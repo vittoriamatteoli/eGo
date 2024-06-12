@@ -75,8 +75,19 @@ const SvgIcon = styled.img.withConfig({
 const TravelModesContainer = styled.div`
   width: 50%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-bottom: 10px;
+  padding: 0px 5px;
+  background: #cce0a1;
+  border-radius: 10px;
+
+  @media (min-width: 768px) {
+    width: 60%;
+  }
+
+  @media (min-width: 1024px) {
+    width: 50%;
+  }
 `;
 
 const TravelModeButton = styled(IconButton)`
@@ -101,7 +112,7 @@ const StyledAutocomplete = styled(Autocomplete)`
   }
 
   @media (min-width: 1024px) {
-    font-size: 22px;
+    font-size: 20px;
   }
 `;
 
@@ -119,6 +130,7 @@ export const TravelForm = ({ id }) => {
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
   const [autocompleteKey, setAutocompleteKey] = useState(0);
+  const [travelModeText, setTravelModeText] = useState("walk");
   const [isClicked, setIsClicked] = useState(false);
   const {
     travelMode,
@@ -135,10 +147,14 @@ export const TravelForm = ({ id }) => {
   } = useContext(DashboardContext);
 
   const googleTravelModes = [
-    { mode: "DRIVE", icon: <DriveEtaIcon /> },
-    { mode: "BICYCLE", icon: <DirectionsBikeIcon /> },
-    { mode: "WALK", icon: <DirectionsWalkIcon /> },
-    { mode: "TRANSIT", icon: <DirectionsTransitIcon /> },
+    { mode: "DRIVE", description: "drive", icon: <DriveEtaIcon /> },
+    { mode: "BICYCLE", description: "bike", icon: <DirectionsBikeIcon /> },
+    { mode: "WALK", description: "walk", icon: <DirectionsWalkIcon /> },
+    {
+      mode: "TRANSIT",
+      description: "commute",
+      icon: <DirectionsTransitIcon />,
+    },
     // { mode: "TWO_WHEELER", icon: <TwoWheelerIcon /> }, note:this mode is in beta in google api
   ];
 
@@ -296,7 +312,10 @@ export const TravelForm = ({ id }) => {
             aria-label={mode.mode}
             key={mode.mode}
             selected={travelMode === mode.mode}
-            onClick={() => setTravelMode(mode.mode)}
+            onClick={() => {
+              setTravelMode(mode.mode);
+              setTravelModeText(mode.description);
+            }}
           >
             {mode.icon}
           </TravelModeButton>
@@ -331,12 +350,13 @@ export const TravelForm = ({ id }) => {
 
       <StyledParagraph>
         <p>
-          Distance: <TravelPoints>{distance}</TravelPoints> m
+          You will <TravelPoints>{travelModeText}</TravelPoints> for{" "}
+          <TravelPoints>{distance}</TravelPoints> m.
         </p>
 
         <p>
           You will get <TravelPoints>{travelPoints}</TravelPoints> points for
-          this trip
+          this trip.
         </p>
       </StyledParagraph>
 
