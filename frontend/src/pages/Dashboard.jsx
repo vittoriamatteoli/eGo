@@ -12,6 +12,8 @@ import jwtDecode from "jwt-decode";
 import { MobileHeader } from "../components/MobileHeader";
 import { useMediaQuery } from "react-responsive";
 import { DashboardProvider } from "../components/DashboardContext";
+import { UserFlowArrow } from "../reusables/UserFlowArrow";
+
 const DashboardLayout = styled.div`
   display: grid;
   grid-template-columns: auto;
@@ -44,7 +46,7 @@ const DashboardLayout = styled.div`
     grid-template-columns: 1fr 4fr; /* Sidebar and main content */
     .cardContainer {
       display: flex;
-      gap: 30px;
+      gap: 15px;
     }
     .cardContainerDash {
       display: grid;
@@ -79,7 +81,6 @@ export const Dashboard = () => {
     <DashboardLayout>
       <DashboardProvider value={id}>
         <Sidebar id={id} />
-
         <div className="dashboardContainer">
           {isMobile && <MobileHeader id={id} />}
           <div className="cardContainerDash">
@@ -88,6 +89,7 @@ export const Dashboard = () => {
           </div>
           <div className="cardContainer">
             <EnergyCard id={id} />
+            {!isMobile && <UserFlowArrow />}
             <TravelCard id={id} />
           </div>
           <AdminButton isAdmin={isAdmin} />
