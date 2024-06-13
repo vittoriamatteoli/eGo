@@ -6,9 +6,12 @@ import { CreateUser } from '../components/forms/CreateUser';
 import { UpdateUserRole } from '../components/forms/UpdateUserRole';
 import styled from 'styled-components';
 import { BackArrowWithHistory } from '../reusables/BackArrowWithHistory';
+import { useContext } from 'react';
+import { DashboardContext } from '../components/DashboardContext';
 
 
 const StyledDiv = styled.div`
+max-height:auto;
 background: var(--ego-light);
 border-radius: 25px;
 padding: 20px;
@@ -65,6 +68,7 @@ export const Admin = () => {
   const [users, setUsers] = useState([]);
   const token = sessionStorage.getItem('accessToken');
   const [message, setMessage] = useState("");
+ 
 
   const getUsers = useCallback(async () => {
     try {
@@ -93,12 +97,16 @@ export const Admin = () => {
       <StyledH1>Admin page</StyledH1>
 
       <BackArrowWithHistory />
-      <UpdateUser getUsers={getUsers} />
+      <Logout />
+      <h2>Users</h2>
+      <AdminContainer>
+      <UpdateUser getUsers={getUsers} />   <CreateUser getUsers={getUsers} />
+<div>
       <UpdateUserRole getUsers={getUsers} />
       <DeleteUser getUsers={getUsers} />
-      <CreateUser getUsers={getUsers} />
+</div>
+      </AdminContainer>
 
-      <Logout />
 
 
 
