@@ -104,7 +104,9 @@ export const PointsCard = ({ id }) => {
   }, [API]);
 
   const togglePopUp = () => {
-    setShowPopUp(!showPopUp);
+    if (event.type === "click") {
+      setShowPopUp(!showPopUp);
+    }
   };
 
   // Media query for mobile devices
