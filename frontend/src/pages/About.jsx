@@ -50,6 +50,9 @@ const StyledIntro = styled.div`
   flex-direction: row;
   align-items: flex-end;
   padding-bottom: 30px;
+  @media all and (min-width: 768px) {
+    align-items: normal;
+  }
 `;
 
 const StyledTop = styled.h1`

@@ -85,13 +85,13 @@ const StyledLogoLink = styled(Link)`
 
 const StyledImage = styled.img`
   grid-area: image;
-  grid-column: 1 / span 4;
-  grid: row 1;
+  grid-column: 1 / span 3;
+  grid-row: 2 / span 2;
   z-index: 2;
-  width: 100vw;
+  width: 100%;
   margin: 0 0 0 0vw;
   align-self: center;
-  max-height: 380px;
+  max-height: 350px;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
