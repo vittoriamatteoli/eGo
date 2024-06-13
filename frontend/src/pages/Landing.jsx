@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { EgoButton } from "../reusables/Button";
 import { Logo } from "../reusables/Logo";
 import Globe from "../assets/Globe-ego.svg";
+import { NoSelect } from "../reusables/NoSelect";
 
 //styles
 const LandingSection = styled.section`
@@ -29,6 +30,7 @@ const MiddleSection = styled.div`
   position: relative;
   width: 100%;
   height: 300px;
+  z-index: 1;
 
   @media all and (min-width: 1024px) {
     justify-content: space-around;
@@ -114,7 +116,7 @@ const BottomSection = styled.div`
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  z-index: 3;
+  z-index: 4;
 `;
 const StyledEllipse = styled.div`
   display: flex;
@@ -192,18 +194,22 @@ export const Landing = () => {
   return (
     <LandingSection>
       <TopSection>
-        <Link to="/about">
-          <Logo />
-        </Link>
+        <Logo />
         <SmallEgoButton>
           <Link to="/login">Log in</Link>
         </SmallEgoButton>
       </TopSection>
 
       <MiddleSection>
-        <StyledTitle>e</StyledTitle>
-        <StyledImage src={Globe} alt="globe" />
-        <StyledTitle>o</StyledTitle>
+        <NoSelect>
+          <StyledTitle>e</StyledTitle>{" "}
+        </NoSelect>
+        <NoSelect>
+          <StyledImage src={Globe} alt="globe" />
+        </NoSelect>
+        <NoSelect>
+          <StyledTitle>o</StyledTitle>{" "}
+        </NoSelect>
       </MiddleSection>
 
       <BottomSection>
