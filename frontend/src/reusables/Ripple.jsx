@@ -8,17 +8,15 @@ const RippleContainer = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-
   span {
     transform: scale(0);
     border-radius: 100%;
     position: absolute;
     opacity: 0.75;
-    background-color: ${props => props.color};
+    background-color: ${(props) => props.color};
     animation-name: ripple;
-    animation-duration: ${props => props.duration}ms;
+    animation-duration: ${(props) => props.duration}ms;
   }
-
   @keyframes ripple {
     to {
       opacity: 0;
@@ -50,7 +48,7 @@ const Ripple = ({ duration = 850, color = "#fff" }) => {
     setRippleArray([]);
   });
 
-  const addRipple = event => {
+  const addRipple = (event) => {
     const rippleContainer = event.currentTarget.getBoundingClientRect();
     const size =
       rippleContainer.width > rippleContainer.height
@@ -61,7 +59,7 @@ const Ripple = ({ duration = 850, color = "#fff" }) => {
     const newRipple = {
       x,
       y,
-      size
+      size,
     };
 
     setRippleArray([...rippleArray, newRipple]);
@@ -78,7 +76,7 @@ const Ripple = ({ duration = 850, color = "#fff" }) => {
                 top: ripple.y,
                 left: ripple.x,
                 width: ripple.size,
-                height: ripple.size
+                height: ripple.size,
               }}
             />
           );
@@ -89,8 +87,7 @@ const Ripple = ({ duration = 850, color = "#fff" }) => {
 
 Ripple.propTypes = {
   duration: PropTypes.number,
-  color: PropTypes.string
+  color: PropTypes.string,
 };
-
 
 export default Ripple;

@@ -50,7 +50,6 @@ const userSchema = new mongoose.Schema({
     },
   },
 });
-
 //update the users travelpoints after saving a travel
 userSchema.methods.incrementPoints = function (points) {
   return this.model("User")

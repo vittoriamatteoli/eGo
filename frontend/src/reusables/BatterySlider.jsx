@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useParams } from "react-router";
 import { useEffect, useState, useContext } from "react";
 import { BatterySVG } from "../reusables/BatterySVG";
 import { Button } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
-import { DashboardContext } from '../components/DashboardContext';
-
+import { DashboardContext } from "../components/DashboardContext";
+import batteryUpdate from "../assets/battery-update.svg";
 const apikey = import.meta.env.VITE_API_KEY;
 
 const BatterySliderWrapper = styled.div`
@@ -15,28 +15,49 @@ const BatterySliderWrapper = styled.div`
   gap: 30px;
   align-items: center;
   justify-content: center;
-  @media (max-width: 767px) {
-    height: 50px;
-    div {
-      width: 100px;
-      height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+`;
+
+const rotateOnce = keyframes`
+  from {
+    transform: translate(-5%, -80%) rotate(360deg);
+  }
+  to {
+    transform:translate(-5%, -80%) rotate(0deg);
   }
 `;
 
+const BatteryUpdateIcon = styled.img.withConfig({
+  shouldForwardProp: (prop) => prop !== "isClicked",
+})`
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+
+  width: 55px;
+  height: 55px;
+  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+
+  transform: translate(-5%, -80%) rotate(360deg);
+  opacity: ${({ isClicked }) => (isClicked ? "1" : "0")};
+  animation: ${({ isClicked }) => (isClicked ? rotateOnce : "none")} 0.8s
+    ease-in-out forwards;
+`;
+
 const StyledButton = styled(Button)`
-  border-radius: 24px;
-  border: 1px solid #687943;
-  background: #687943;
-  width: 106.213px;
-  height: 35.172px;
-  flex-shrink: 0;
-  color: white;
-  font-family: "Open Sans Hebrew";
-  font-size: 12px;
+  cursor: pointer;
+  outline: none;
+  text-transform: none;
+  position: relative;
+  z-index: 2;
+  border-radius: 30px;
+  border: 2px solid #687943;
+  filter: drop-shadow(0px 4px 6px #00000040);
+  background: ${({ isClicked }) => (isClicked ? "#2D3915" : "#687943")};
+  width: 165px;
+  height: 55px;
+  color: #fff;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -47,23 +68,17 @@ export const BatterySlider = ({ showPopUp }) => {
   const { fillPercentage, setFillPercentage } = useContext(DashboardContext);
   const { id } = useParams();
   const API = `${apikey}/user/${id}`;
+  // const [fillPercentage, setFillPercentage] = useState(0);
   const [message, setMessage] = useState("");
   const [error, setError] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const dashboardContextValue = useContext(DashboardContext);
 
   useEffect(() => {
-   // console.log(dashboardContextValue);
-    const token = sessionStorage.getItem("accessToken");
     const fetchEnergyData = async () => {
       try {
-        const res = await fetch(API, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await fetch(API);
         if (!res.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -73,13 +88,12 @@ export const BatterySlider = ({ showPopUp }) => {
           setFillPercentage(data.energyLevel);
         }
       } catch (error) {
-        setError(
-          "There was a problem with the fetch operation: " + error.message
-        );
+        console.error("Error fetching energy data:", error);
       }
     };
+
     fetchEnergyData();
-  }, [id, API]);
+  }, [id]);
 
   const handleDrag = (percentage) => {
     if (percentage >= 0 && percentage <= 100) {
@@ -90,6 +104,9 @@ export const BatterySlider = ({ showPopUp }) => {
   };
 
   const handleNewEnergy = async () => {
+    setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 400);
+
     const token = sessionStorage.getItem("accessToken");
     try {
       const response = await fetch(API, {
@@ -109,17 +126,22 @@ export const BatterySlider = ({ showPopUp }) => {
         updatedData.energyLevel !== null
       ) {
         setFillPercentage(updatedData.energyLevel);
-
+        console.log(updatedData);
       }
     } catch (error) {
       console.error("Error updating energy data:", error);
-      setError("Error: " + error.message);
     }
   };
 
   return (
     <BatterySliderWrapper>
       {showPopUp && <h2>How's your energy level right now?</h2>}
+      <BatteryUpdateIcon
+        src={batteryUpdate}
+        alt="Battery update icon"
+        isClicked={isClicked}
+        draggable="false"
+      />
       {<BatterySVG fillPercentage={fillPercentage} onDrag={handleDrag} />}
       {message && <div>{message}</div>}
       {error && <div>Error: {error}</div>}

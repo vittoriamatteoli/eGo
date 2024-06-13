@@ -17,7 +17,7 @@ const Container = styled.div`
     "leftColumn leftColumn leftColumn"
     "rightColumn rightColumn rightColumn";
 
-  @media (min-width: 1200px) {
+  @media all and (min-width: 768px) {
     grid-template-columns: 50vw 50vw;
     grid-template-rows: 10vh 80vh 10vh;
     grid-template-areas:
@@ -38,7 +38,7 @@ const LeftColumn = styled.div`
     "img img img"
     "img img img";
 
-  @media (min-width: 1200px) {
+  @media all and (min-width: 768px) {
     background: var(--ego-gradient-cutoff-dt);
     grid-template-areas:
       "logo "
@@ -59,7 +59,7 @@ const RightColumn = styled.div`
     "form form form"
     "link link link";
   align-self: center;
-  @media (min-width: 1200px) {
+  @media all and (min-width: 768px) {
     grid-column: 2;
     grid-row: 2;
 
@@ -77,7 +77,7 @@ const StyledLogoLink = styled(Link)`
   height: auto;
   margin: 2vh 0 0 -15vw;
   z-index: 3;
-  @media (min-width: 1200px) {
+  @media all and (min-width: 768px) {
     grid-column: 1;
     margin: 2vh -10vw 0 2vh;
   }
@@ -91,14 +91,17 @@ const StyledImage = styled.img`
   width: 100vw;
   margin: 0 0 0 0vw;
   align-self: center;
-  @media (min-width: 768px) {
-    width: 100vw;
-    margin: -5vh 0 0 0;
-  }
-  @media (min-width: 1200px) {
+  max-height: 380px;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  @media all and (min-width: 768px) {
     width: 50vw;
     margin: 5vh 0 0 -2vw;
     grid-row: 1 / span 2;
+    max-height: 50vw;
   }
 `;
 
@@ -107,8 +110,8 @@ const FormContainer = styled.div`
   align-self: center;
   justify-self: center;
   width: 60vw;
-  @media (min-width: 1200px) {
-    width: 20vw;
+  @media all and (min-width: 768px) {
+    width: 30vw;
   }
 `;
 
@@ -119,9 +122,17 @@ const StyledH1 = styled.h1`
   text-align: center;
   justify-self: center;
   align-self: center;
-  @media (min-width: 1200px) {
+  font-size: 2em;
+  color: var(--ego-dark);
+  @media all and (min-width: 768px) {
     grid-column: 2;
     grid-row: 1;
+    font-size: 40px;
+  }
+  @media (min-width: 1024px) {
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 48px;
   }
 `;
 
@@ -136,20 +147,29 @@ const Input = styled.input`
   padding: 10px 10px 10px 24px;
   color: var(--ego-dark);
   box-sizing: border-box;
-  border-radius: 20px;
+  border-radius: 24px;
   border: 1px solid transparent;
   background: var(--ego-gradient-reversed);
-  font-size: 1.3rem;
-  font-weight: 400;
   &:focus,
   &:active {
     background-color: var(--ego-lgt-green);
     border: 1px solid var(--ego-green);
   }
+
+  @media (min-width: 768px) {
+    font-size: 20px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 24px;
+  }
 `;
 
 const ErrorMessage = styled.div`
-
+  margin-bottom: 15px;
+  padding: 10px;
+  color: var(--ego-dark);
+  border-radius: 7px;
+  border: 3px solid var(--ego-error);
 `;
 
 const BottomText = styled.div`
@@ -172,7 +192,7 @@ const BottomText = styled.div`
       color: var(--ego-purple);
     }
   }
-  @media (min-width: 1200px) {
+  @media all and (min-width: 768px) {
     grid-row: 4;
     position: fixed;
     bottom: 5vh;
@@ -187,8 +207,22 @@ const ButtonAndSpinnerContainer = styled.div`
   align-items: center;
 `;
 
-const FrontBtn = styled(EgoButton)`
-width: 100%;
+const StyledEgoButton = styled(EgoButton)`
+  @media (min-width: 768px) {
+    font-size: 20px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 24px;
+  }
+`;
+
+const StyledParagraph = styled.p`
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 20px;
+  }
 `;
 
 export const Login = () => {
@@ -253,10 +287,10 @@ export const Login = () => {
         <StyledImage src={Globe} alt="globe" />
       </LeftColumn>
       <RightColumn>
-        <StyledH1 className="h1">Login</StyledH1>
+        <StyledH1>Login</StyledH1>
         <FormContainer>
           <form onSubmit={handleLogin}>
-            {message && <ErrorMessage className="error">{message}</ErrorMessage>}
+            {message && <ErrorMessage>{message}</ErrorMessage>}
             <FormGroup>
               <Input
                 type="email"
@@ -283,17 +317,17 @@ export const Login = () => {
             </FormGroup>
 
             <ButtonAndSpinnerContainer>
-              <FrontBtn className="frontBtn" type="submit" disabled={loading} aria="log in">
+              <StyledEgoButton type="submit" disabled={loading}>
                 {loading ? "Loading..." : "Log in"}
-              </FrontBtn>
+              </StyledEgoButton>
               {loading && <Loading />}
             </ButtonAndSpinnerContainer>
           </form>
         </FormContainer>
         <BottomText>
-          <p className="h4">
-            Don't have an account yet? <Link className="a" to="/register">Sign up</Link>
-          </p>
+          <StyledParagraph>
+            Don't have an account yet? <Link to="/register">Sign up</Link>
+          </StyledParagraph>
         </BottomText>
       </RightColumn>
     </Container>

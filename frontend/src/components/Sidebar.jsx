@@ -1,21 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
 import styled from "styled-components";
 import { Drawer, List, ListItem, Typography } from "@mui/material";
 import { Logo } from "../reusables/Logo";
 import { Avatar } from "../reusables/Avatar";
 import { Logout } from "../pages/Logout";
 import { Link } from "react-router-dom";
-
-import { useContext } from 'react';
-import { DashboardContext } from './DashboardContext';
-
+import { useContext } from "react";
+import { DashboardContext } from "./DashboardContext";
 const apikey = import.meta.env.VITE_API_KEY;
 
 const StyledDrawer = styled(Drawer)`
   width: 260px;
   flex-shrink: 0;
+
   @media (max-width: 768px) {
     display: none; // Hide on mobile devices
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    width: 100px;
+  }
+  @media (min-width: 1024px) and (max-width: 1250px) {
+    width: 200px;
   }
 `;
 
@@ -31,6 +37,12 @@ const SidebarContent = styled.div`
   gap: 30px;
   @media (max-width: 768px) {
     display: none; // Hide on mobile devices
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    width: 100px;
+  }
+  @media (min-width: 1024px) and (max-width: 1250px) {
+    width: 200px;
   }
 `;
 

@@ -24,7 +24,7 @@ box-shadow: 0px 1px 5px 0px var(--ego-green);
     text-align: center;
   }
   @media (min-width: 768px) {
-    width:100%;
+    width: 100%;
   }
 `;
 
@@ -39,11 +39,9 @@ const AdminContainer = styled.div`
   }
 
   @media (min-width: 768px) {
-    width:100%;
+    width: 100%;
   }
-
 `;
-
 
 const Message = styled.div`
   margin-bottom: 15px;
@@ -54,36 +52,35 @@ const Message = styled.div`
 `;
 
 const StyledH1 = styled.h1`
- display: block;
+  display: block;
   color: var(--ego-dark);
   font-size: 1em;
   margin: 0.5em;
   font-weight: bold;
 `;
 
-
 export const Admin = () => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const API = apiKey + "/admin";
   const [users, setUsers] = useState([]);
-  const token = sessionStorage.getItem('accessToken');
+  const token = sessionStorage.getItem("accessToken");
   const [message, setMessage] = useState("");
- 
+
 
   const getUsers = useCallback(async () => {
     try {
       const response = await fetch(`${API}/users`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
       const data = await response.json();
       setUsers(data);
-      setMessage('User fetched successfully');
+      setMessage("User fetched successfully");
     } catch (error) {
-      setMessage('An unexpected error occurred.');
+      setMessage("An unexpected error occurred.");
     }
   }, [API, token, setUsers]);
 
@@ -93,7 +90,6 @@ export const Admin = () => {
 
   return (
     <div>
-
       <StyledH1>Admin page</StyledH1>
 
       <BackArrowWithHistory />
@@ -108,24 +104,22 @@ export const Admin = () => {
       </AdminContainer>
 
 
-
-
-      {users.map(({ _id, name, email, role, points, energyLevel, avatarUrl }) => (
-        <StyledDiv key={_id}>
-          <ul>
-            <li>ID: {_id}</li>
-            <li>NAME: {name}</li>
-            <li>EMAIL:{email}</li>
-            <li>ROLE: {role}</li>
-            <li>POINTS: {points}</li>
-            <li>ENERGYLEVEL: {energyLevel}</li>
-            <li>AVATARURL:{avatarUrl}</li>
-          </ul>
-        </StyledDiv>
-      ))}
+      {users.map(
+        ({ _id, name, email, role, points, energyLevel, avatarUrl }) => (
+          <StyledDiv key={_id}>
+            <ul>
+              <li>ID: {_id}</li>
+              <li>NAME: {name}</li>
+              <li>EMAIL:{email}</li>
+              <li>ROLE: {role}</li>
+              <li>POINTS: {points}</li>
+              <li>ENERGYLEVEL: {energyLevel}</li>
+              <li>AVATARURL:{avatarUrl}</li>
+            </ul>
+          </StyledDiv>
+        )
+      )}
       {message && <Message>{message}</Message>}
-
     </div>
-
   );
-}
+};

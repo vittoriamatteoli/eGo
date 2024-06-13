@@ -4,25 +4,36 @@ import Chart from "chart.js/auto";
 
 const apikey = import.meta.env.VITE_API_KEY;
 const StyledContainer = styled.div`
-  border-radius: 20px;
-  background: linear-gradient(180deg, #dcded0 82.22%, #cce0a1 100%);
-  /* padding: 40px 0; */
+  box-sizing: border-box;
+  border-radius: 16px;
+  border: 3px solid #dcded0;
+  background: rgba(217, 217, 217, 0);
   display: flex;
+  padding: 40px 0;
   flex-direction: column;
   width: 100%;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  height: 340px;
   canvas {
     width: 100%;
-    height: 200px;
+    height: 340px;
     padding: 0;
     margin: 0;
+    cursor: pointer;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    height: 145px;
+  }
+
+  @media (min-width: 1024px) {
+    height: 200px;
   }
 `;
 
 export const ActivityGraph = ({ id }) => {
-  const [chartData, setChartData] = useState({ x: [], y: [] });
+  const [chartData, setChartData] = useState({ x: [], y: [], z: [] });
   const [chartInstance, setChartInstance] = useState(null);
 
   useEffect(() => {
@@ -51,8 +62,9 @@ export const ActivityGraph = ({ id }) => {
         // Process data
         const x = filteredData.map((entry) => entry.distance);
         const y = filteredData.map((entry) => entry.travelPoints);
+        const z = filteredData.map((entry) => entry.distance); // retrieve the mood!!!
 
-        setChartData({ x, y });
+        setChartData({ x, y, z });
       } catch (error) {
         console.error("Error fetching data", error);
       }
@@ -67,48 +79,55 @@ export const ActivityGraph = ({ id }) => {
       chartInstance.destroy();
     }
 
-    if (chartData.x.length > 0 && chartData.y.length > 0) {
+    if (
+      chartData.x.length > 0 &&
+      (chartData.y.length > 0 || chartData.z.length > 0)
+    ) {
       const ctx = document.getElementById("myChart");
       const newChartInstance = new Chart(ctx, {
-        type: "line",
+        type: "bar", // Set the base type to bar
         data: {
           labels: chartData.x,
           datasets: [
             {
               label: "Travel Points",
               data: chartData.y,
-              borderColor: "#687943",
+              borderColor: "#39AA44",
+              backgroundColor: "#39AA44",
+              stack: "combined",
+              type: "line", // Line type for this dataset
               borderWidth: 2,
               fill: {
                 target: "origin",
-                above: "#68794389", // Fill color above the line
-                below: "#687943", // Fill color below the line
+                above: "rgba(217, 217, 217, 0.00)", // Fill color above the line
+                below: "rgba(217, 217, 217, 0.00)", // Fill color below the line
               },
               tension: 0.4, // Controls the curvature of the line
+            },
+            {
+              label: "Mood",
+              data: chartData.z,
+              borderColor: " #CCE0A1",
+              backgroundColor: " #CCE0A1",
+              stack: "combined",
+              type: "bar", // Bar type for this dataset
+              borderWidth: 1,
             },
           ],
         },
         options: {
           scales: {
             x: {
-              display: false, // Hide x-axis
+              display: false,
             },
             y: {
-              display: false, // Hide y-axis
+              display: false,
             },
-            // y: {
-            //   display: true,
-            //   title: {
-            //     display: true,
-            //     text: 'Y-axis Label'
-            //   }
-            // }
           },
           plugins: {
             title: {
               display: true,
               text: "Activity",
-              // align: "start",
             },
           },
         },

@@ -1,7 +1,6 @@
 import { Sidebar } from "../components/Sidebar";
 import { PointsCard } from "../components/PointsCard";
 import { ActivityGraph } from "../components/ActivityGraph";
-//import { DistanceCard } from "../components/DistanceCard";
 import { EnergyCard } from "../components/EnergyCard";
 import { TravelCard } from "../components/TravelCard";
 import { useParams } from "react-router-dom";
@@ -10,26 +9,56 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdminButton } from "../reusables/AdminButton";
 import styled from "styled-components";
-import { DashboardProvider } from '../components/DashboardContext';
 import jwtDecode from "jwt-decode";
 import { MobileHeader } from "../components/MobileHeader";
 import { useMediaQuery } from "react-responsive";
+import { DashboardProvider } from "../components/DashboardContext";
+import { UserFlowArrow } from "../reusables/UserFlowArrow";
 
 const DashboardLayout = styled.div`
-  box-sizing: border-box;
-  padding: 20px 12px;
   display: grid;
-  grid-template-columns: auto auto auto; /* Sidebar and main content */
-  width: 100%;
+  grid-template-columns: auto;
+  width: 100vw;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr; /* Single column layout on mobile */
+  justify-items: center;
+  .dashboardContainer {
+    width: 80%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    grid-template-columns: 1fr 5fr; /* Sidebar and main content */
+    .cardContainer {
+      display: flex;
+      gap: 20px;
+    }
+    .cardContainerDash {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 1024px) {
+    grid-template-columns: 1fr 4fr; /* Sidebar and main content */
+    .cardContainer {
+      display: flex;
+      gap: 15px;
+    }
+    .cardContainerDash {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
   }
 `;
 
 export const Dashboard = () => {
   const [isAdmin, setIsAdmin] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const token = sessionStorage.getItem("accessToken");
@@ -53,14 +82,18 @@ export const Dashboard = () => {
     <DashboardLayout>
        <DashboardProvider value={id}>
         <Sidebar id={id} />
-        <div>
-        {isMobile && <MobileHeader id={id} />}
-        <PointsCard id={id} />
-        <ActivityGraph id={id} />
-        {/* <DistanceCard id={id} /> */}
-        <EnergyCard id={id} />
-        <TravelCard id={id} />
-        <AdminButton isAdmin={isAdmin} />
+        <div className="dashboardContainer">
+          {isMobile && <MobileHeader id={id} />}
+          <div className="cardContainerDash">
+            <PointsCard id={id} />
+            <ActivityGraph id={id} />
+          </div>
+          <div className="cardContainer">
+            <EnergyCard id={id} />
+            {!isMobile && <UserFlowArrow />}
+            <TravelCard id={id} />
+          </div>
+          <AdminButton isAdmin={isAdmin} />
         </div>
      </DashboardProvider>
     </DashboardLayout >

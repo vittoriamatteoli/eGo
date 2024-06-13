@@ -250,7 +250,6 @@ router.post("/travel", authenticateUser, async (req, res) => {
     res.status(500).send({ message: "Error uploading travel" });
   }
 });
-
 // calculate points for the in the calculatepoints function
 // pass energy, distance, and mode as arguments
 //return the calculated points
