@@ -5,10 +5,20 @@
   </a>
 </p>
 
-> eGo is a mobile app that rewards eco-friendly travel choices. Integrated with the Google Routing API, it suggests low-emission routes for walking, cycling, public transport, and carpooling. Users earn &#34;Green Points&#34; for sustainable travel, redeemable for rewards.
+> eGo is a mobile app that rewards eco-friendly travel choices. Integrated with the Google Routing API, it suggests low-emission routes for walking, cycling, public transport, and carpooling. Users earn &#34;Green Points&#34; for sustainable travel.
 > Developed with React, MongoDB, and styled-components, eGo tracks carbon footprint reduction and helps users set sustainability goals.
 
 ### ✨ [Demo](https://ego-app.netlify.app/)
+
+## Tech stack
+<ul>
+  <li>Styled-components</li>
+  <li>Material UI </li>
+  <li>Cloudinary</li>
+  <li>Chart.js</li>
+  <li>React-google-autocomplete</li>
+  <li>React-joyride</li>
+</ul>
 
 ## Install
 
@@ -24,7 +34,7 @@ npm run dev
 
 ## Author
 
-👤 **Yifan - Kathinka - Eliane - Vittoria**
+👤 ** [Yifan](https://github.com/Yifan-858) -  [Kathinka](https://github.com/kathinka) -  [Eliane ](https://github.com/El1an3 )  - [Vittoria](https://github.com/vittoriamatteoli)** 
 
 ## Show your support
 
