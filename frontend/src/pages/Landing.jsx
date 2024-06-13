@@ -42,7 +42,7 @@ const StyledImage = styled.img`
   height: 90%;
   position: absolute;
   top: 55%;
-  left: 52%;
+  left: 50%;
   transform: translate(-50%, -50%);
 
   @media (min-width: 768px) {
