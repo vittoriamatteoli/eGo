@@ -17,7 +17,7 @@ const Container = styled.div`
     "leftColumn leftColumn leftColumn"
     "rightColumn rightColumn rightColumn";
 
-  @media (min-width: 1200px) {
+  @media all and (min-width: 768px) {
     grid-template-columns: 50vw 50vw;
     grid-template-rows: 10vh 80vh 10vh;
     grid-template-areas:
@@ -38,7 +38,7 @@ const LeftColumn = styled.div`
     "img img img"
     "img img img";
 
-  @media (min-width: 1200px) {
+  @media all and (min-width: 768px) {
     background: var(--ego-gradient-cutoff-dt);
     grid-template-areas:
       "logo "
@@ -59,7 +59,7 @@ const RightColumn = styled.div`
     "form form form"
     "link link link";
   align-self: center;
-  @media (min-width: 1200px) {
+  @media all and (min-width: 768px) {
     grid-column: 2;
     grid-row: 2;
 
@@ -77,7 +77,7 @@ const StyledLogoLink = styled(Link)`
   height: auto;
   margin: 2vh 0 0 -15vw;
   z-index: 3;
-  @media (min-width: 1200px) {
+  @media all and (min-width: 768px) {
     grid-column: 1;
     margin: 2vh -10vw 0 2vh;
   }
@@ -91,14 +91,17 @@ const StyledImage = styled.img`
   width: 100vw;
   margin: 0 0 0 0vw;
   align-self: center;
-  @media (min-width: 768px) {
-    width: 100vw;
-    margin: -5vh 0 0 0;
-  }
-  @media (min-width: 1200px) {
+  max-height: 380px;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  @media all and (min-width: 768px) {
     width: 50vw;
     margin: 5vh 0 0 -2vw;
     grid-row: 1 / span 2;
+    max-height: 50vw;
   }
 `;
 
@@ -107,8 +110,8 @@ const FormContainer = styled.div`
   align-self: center;
   justify-self: center;
   width: 60vw;
-  @media (min-width: 1200px) {
-    width: 20vw;
+  @media all and (min-width: 768px) {
+    width: 30vw;
   }
 `;
 
@@ -121,9 +124,15 @@ const StyledH1 = styled.h1`
   align-self: center;
   font-size: 2em;
   color: var(--ego-dark);
-  @media (min-width: 1200px) {
+  @media all and (min-width: 768px) {
     grid-column: 2;
     grid-row: 1;
+    font-size: 40px;
+  }
+  @media (min-width: 1024px) {
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 48px;
   }
 `;
 
@@ -145,6 +154,13 @@ const Input = styled.input`
   &:active {
     background-color: var(--ego-lgt-green);
     border: 1px solid var(--ego-green);
+  }
+
+  @media (min-width: 768px) {
+    font-size: 20px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 24px;
   }
 `;
 
@@ -176,7 +192,7 @@ const BottomText = styled.div`
       color: var(--ego-purple);
     }
   }
-  @media (min-width: 1200px) {
+  @media all and (min-width: 768px) {
     grid-row: 4;
     position: fixed;
     bottom: 5vh;
@@ -189,6 +205,24 @@ const ButtonAndSpinnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const StyledEgoButton = styled(EgoButton)`
+  @media (min-width: 768px) {
+    font-size: 20px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 24px;
+  }
+`;
+
+const StyledParagraph = styled.p`
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 20px;
+  }
 `;
 
 export const Login = () => {
@@ -283,17 +317,17 @@ export const Login = () => {
             </FormGroup>
 
             <ButtonAndSpinnerContainer>
-              <EgoButton type="submit" disabled={loading}>
+              <StyledEgoButton type="submit" disabled={loading}>
                 {loading ? "Loading..." : "Log in"}
-              </EgoButton>
+              </StyledEgoButton>
               {loading && <Loading />}
             </ButtonAndSpinnerContainer>
           </form>
         </FormContainer>
         <BottomText>
-          <p>
+          <StyledParagraph>
             Don't have an account yet? <Link to="/register">Sign up</Link>
-          </p>
+          </StyledParagraph>
         </BottomText>
       </RightColumn>
     </Container>
