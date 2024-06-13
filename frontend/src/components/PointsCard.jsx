@@ -119,7 +119,7 @@ export const PointsCard = ({ id }) => {
         {isMobile && <p>Your Energy Level</p>}
         <a>
           Your Points
-          <span>
+          <span className="info-tag">
             <img src="/info.svg" alt="information-icon" />
           </span>
         </a>
@@ -131,7 +131,7 @@ export const PointsCard = ({ id }) => {
             <BatterySlider id={id} />
           </a>
         )}
-        <h3>{points}</h3>
+        <h3 className="total-points">{points}</h3>
       </StyledSection>
       {showPopUp && (
         <PopUpOverlay onClick={togglePopUp}>

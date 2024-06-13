@@ -7,11 +7,13 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdminButton } from "../reusables/AdminButton";
+import { Walkthrough } from "../reusables/Walkthrough";
 import styled from "styled-components";
 import jwtDecode from "jwt-decode";
 import { MobileHeader } from "../components/MobileHeader";
 import { useMediaQuery } from "react-responsive";
 import { DashboardProvider } from "../components/DashboardContext";
+
 const DashboardLayout = styled.div`
   display: grid;
   grid-template-columns: auto;
@@ -56,6 +58,7 @@ const DashboardLayout = styled.div`
 
 export const Dashboard = () => {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [runWalkthrough, setRunWalkthrough] = useState(true);
 
   useEffect(() => {
     const token = sessionStorage.getItem("accessToken");
@@ -70,6 +73,14 @@ export const Dashboard = () => {
         console.error("Invalid token", e);
       }
     }
+
+    // const isFirstVisit = localStorage.getItem("firstVisit") !== "false";
+    // if (isFirstVisit) {
+    //   setRunWalkthrough(true);
+    //   localStorage.setItem("firstVisit", "false");
+    // } else {
+    //   setRunWalkthrough(false);
+    // }
   }, []);
   // Media query for mobile devices
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -80,7 +91,14 @@ export const Dashboard = () => {
       <DashboardProvider value={id}>
         <Sidebar id={id} />
 
-        <div className="dashboardContainer">
+        <div
+          className="dashboardContainer step1"
+          style={{
+            position: "relative",
+          }}
+        >
+          {/* {runWalkthrough && <Walkthrough />} */}
+          <Walkthrough runWalkthrough={runWalkthrough} />
           {isMobile && <MobileHeader id={id} />}
           <div className="cardContainerDash">
             <PointsCard id={id} />

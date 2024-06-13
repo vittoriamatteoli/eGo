@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "react-google-autocomplete": "^2.7.3",
+    "react-joyride": "^2.8.2",
     "react-responsive": "^10.0.0",
     "react-router-dom": "^6.23.1"
   },
