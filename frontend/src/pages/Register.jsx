@@ -7,7 +7,7 @@ import Globe from "../assets/Globe-ego.svg";
 import { Logo } from "../reusables/Logo";
 
 const Container = styled.div`
-  overflow: hidden;
+  /* overflow: hidden; */
   color: var(--ego-dark);
   display: grid;
   grid-template-columns: 1vw 98vw 1vw;
@@ -72,7 +72,7 @@ const RightColumn = styled.div`
 const StyledLogoLink = styled(Link)`
   grid-area: logo;
   grid-column: 3;
-  max-width: 15vw;
+  padding: 10px;
   height: auto;
   margin: 2vh 0 0 -15vw;
   z-index: 3;
@@ -84,13 +84,13 @@ const StyledLogoLink = styled(Link)`
 
 const StyledImage = styled.img`
   grid-area: image;
-  grid-column: 1 / span 4;
-  grid: row 1;
+  grid-column: 1 / span 3;
+  grid-row: 2 / span 2;
   z-index: 2;
-  width: 100vw;
+  width: 100%;
   margin: 0 0 0 0vw;
   align-self: center;
-  max-height: 380px;
+  max-height: 350px;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
