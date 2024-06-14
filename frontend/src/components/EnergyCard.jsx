@@ -10,7 +10,7 @@ const StyledBatteryCard = styled.div`
   flex-direction: column;
   width: 100%;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 30px;
   button {
   }
@@ -27,11 +27,11 @@ const StyledHeading = styled.h2`
   text-align: center;
 
   @media (min-width: 768px) {
-    font-size: 18px; /* Use a larger font size for larger screens */
+    font-size: 18px;
   }
 
   @media (min-width: 1024px) {
-    font-size: 22px; /* Use an even larger font size for extra large screens */
+    font-size: 24px;
   }
 `;
 
