@@ -59,7 +59,6 @@ const StyledButton = styled(Button)`
   color: #fff;
   font-family: "Open Sans", sans-serif;
   font-size: 18px;
-  font-style: normal;
   font-weight: 700;
   line-height: normal;
   text-transform: capitalize;

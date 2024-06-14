@@ -20,10 +20,9 @@ const StyledHeading = styled.h2`
   color: #000;
   font-family: "Open Sans", sans-serif;
   font-size: 14px;
-  font-style: normal;
   font-weight: 700;
   line-height: normal;
-  padding: 10px;
+  padding: 10px 20px;
   text-align: center;
 
   @media (min-width: 768px) {

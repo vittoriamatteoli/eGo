@@ -36,6 +36,7 @@ const DashboardLayout = styled.div`
     .cardContainer {
       display: flex;
       gap: 20px;
+      /* align-items: center; */
     }
     .cardContainerDash {
       display: grid;
