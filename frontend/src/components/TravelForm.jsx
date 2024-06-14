@@ -116,10 +116,9 @@ const StyledAutocomplete = styled(Autocomplete)`
   }
 `;
 
-const StyledParagraph = styled.div`
+const StyledParagraph = styled.p`
   margin-top: 0px;
-  margin-bottom: 15%;
-  width: 55%;
+  padding: 0 20px;
 `;
 
 const TravelPoints = styled.span`

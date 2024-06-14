@@ -3,15 +3,16 @@ import styled from "styled-components";
 import Chart from "chart.js/auto";
 
 const apikey = import.meta.env.VITE_API_KEY;
+
 const StyledContainer = styled.div`
   box-sizing: border-box;
   border-radius: 16px;
   border: 3px solid #dcded0;
   background: rgba(217, 217, 217, 0);
   display: flex;
-  padding: 40px 0;
   flex-direction: column;
-  width: 100%;
+  /* width: 100%; */
+  flex-grow: 1;
   align-items: center;
   justify-content: center;
   gap: 10px;
@@ -23,12 +24,9 @@ const StyledContainer = styled.div`
     margin: 0;
     cursor: pointer;
   }
-  @media (min-width: 769px) and (max-width: 1024px) {
-    height: 145px;
-  }
 
-  @media (min-width: 1024px) {
-    height: 200px;
+  @media all and (min-width: 768px) {
+    height: 250px;
   }
 `;
 

@@ -21,8 +21,8 @@ const DashboardLayout = styled.div`
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-
   justify-items: center;
+
   .dashboardContainer {
     width: 90%;
     box-sizing: border-box;
@@ -31,8 +31,9 @@ const DashboardLayout = styled.div`
     gap: 35px;
   }
 
-  @media (min-width: 769px) and (max-width: 1024px) {
+  @media (min-width: 769px) {
     grid-template-columns: 1fr 5fr; /* Sidebar and main content */
+
     .cardContainer {
       display: flex;
       gap: 5px;
@@ -41,6 +42,8 @@ const DashboardLayout = styled.div`
     .cardContainerDash {
       display: grid;
       grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 86px;
     }
   }
   @media (min-width: 1024px) {
@@ -52,7 +55,7 @@ const DashboardLayout = styled.div`
     .cardContainerDash {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 100px;
     }
   }
 `;
