@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-
 import styled from "styled-components";
 import { Drawer, List, ListItem, Typography } from "@mui/material";
 import { Logo } from "../reusables/Logo";
@@ -51,21 +50,25 @@ const StyledList = styled(List)`
   flex-direction: column;
   align-items: center;
   gap: 30px;
-  justify-content: center;
+  @media (min-width: 1024px) {
+    gap: 50px;
+  }
 `;
 
 const StyledListItem = styled(ListItem)`
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 3px;
   justify-content: center;
-  color: #000;
-  font-family: "Open Sans Hebrew";
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
+  .username {
+    font-family: "Open Sans";
+    font-size: 20px;
+    font-weight: 700;
+
+    @media (min-width: 1024px) {
+      font-size: 24px;
+    }
+  }
 `;
 
 const CenteredLogoutButton = styled.div`
@@ -110,7 +113,11 @@ export const Sidebar = ({ id }) => {
           </Link>
           <StyledListItem>
             <Avatar id={id} />
-            <Typography style={{ textTransform: "capitalize" }} variant="body1">
+            <Typography
+              style={{ textTransform: "capitalize" }}
+              className="username"
+              variant="body1"
+            >
               {username}
             </Typography>
           </StyledListItem>
