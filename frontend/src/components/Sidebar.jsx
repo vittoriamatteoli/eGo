@@ -26,7 +26,7 @@ const StyledDrawer = styled(Drawer)`
 
 const SidebarContent = styled.div`
   position: relative;
-  width: 300px;
+  width: 250px;
   padding: 20px;
   background: linear-gradient(180deg, #dcded0 71.72%, #cce0a1 100%);
   height: 100vh;

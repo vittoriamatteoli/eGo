@@ -24,7 +24,7 @@ const DashboardLayout = styled.div`
 
   justify-items: center;
   .dashboardContainer {
-    width: 80%;
+    width: 90%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -35,7 +35,7 @@ const DashboardLayout = styled.div`
     grid-template-columns: 1fr 5fr; /* Sidebar and main content */
     .cardContainer {
       display: flex;
-      gap: 20px;
+      gap: 5px;
       /* align-items: center; */
     }
     .cardContainerDash {
