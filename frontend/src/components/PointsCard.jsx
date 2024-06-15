@@ -160,7 +160,7 @@ export const PointsCard = ({ id }) => {
 
   return (
     <StyledWrapper>
-      <StyledHeader>
+      <StyledHeader role="banner">
         <h2>Dashboard</h2>
       </StyledHeader>
       <StyledSection>

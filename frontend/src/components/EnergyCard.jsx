@@ -39,9 +39,13 @@ export const EnergyCard = ({ id }) => {
 
   return (
     !isMobile && (
-      <StyledBatteryCard>
+      <StyledBatteryCard
+        role="region"
+        aria-label="Energy Level Card"
+        tabIndex="0"
+      >
         <StyledHeading>How's your energy level right now?</StyledHeading>
-        <BatterySlider id={id} />
+        <BatterySlider id={id} tabIndex="0" />
       </StyledBatteryCard>
     )
   );

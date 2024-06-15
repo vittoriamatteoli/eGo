@@ -34,8 +34,10 @@ export const Logout = () => {
   };
   return (
     <div>
-      <LogoutBtn onClick={handleLogout}>Log out</LogoutBtn>
-      <p>{message}</p>
+      <LogoutBtn onClick={handleLogout} aria-label="Logout">
+        Log out
+      </LogoutBtn>
+      <p aria-live="polite">{message}</p>
     </div>
   );
 };

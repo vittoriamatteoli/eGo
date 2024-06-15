@@ -201,8 +201,8 @@ export const ActivityGraph = ({ id }) => {
   return (
     <StyledWrapper>
       {!isMobile ? (
-        <StyledContainer>
-          <canvas id="myChart"></canvas>
+        <StyledContainer aria-label="Activity Chart">
+          <canvas id="myChart" aria-label="Activity Chart"></canvas>
         </StyledContainer>
       ) : (
         <StyledBottomWrapper showPopUp={showPopUp}>
@@ -210,10 +210,13 @@ export const ActivityGraph = ({ id }) => {
             src="/Activity-button.png"
             alt="activity-button"
             onClick={togglePopUp}
+            role="button"
+            aria-expanded={showPopUp}
+            aria-controls="popup-chart"
           />
           <StyledPopupWrapper>
             <StyledPopup>
-              <canvas id="myChart"></canvas>
+              <canvas id="myChart" aria-label="Activity Chart"></canvas>
             </StyledPopup>
           </StyledPopupWrapper>
         </StyledBottomWrapper>

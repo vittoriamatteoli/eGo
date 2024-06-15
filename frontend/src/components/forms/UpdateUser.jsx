@@ -1,16 +1,15 @@
-import { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { EgoButton } from '../../reusables/Button';
+import { useState, useEffect } from "react";
+import styled from "styled-components";
+import { EgoButton } from "../../reusables/Button";
 
 const apiKey = import.meta.env.VITE_API_KEY;
-const API = apiKey + "/admin"
-
+const API = apiKey + "/admin";
 
 const FormContainer = styled.div`
-background: var(--ego-gradient-trans);
-border-radius: 25px;
-padding: 20px;
-box-shadow: 0px 0px 3px 0px var(--ego-green);
+  background: var(--ego-gradient-trans);
+  border-radius: 25px;
+  padding: 20px;
+  box-shadow: 0px 0px 3px 0px var(--ego-green);
   width: 100%;
   max-width: 80vw;
   margin: 0 auto;
@@ -18,13 +17,12 @@ box-shadow: 0px 0px 3px 0px var(--ego-green);
     text-align: center;
   }
   @media (min-width: 768px) {
-    width:400px;
+    width: 400px;
   }
 `;
 
 const FormGroup = styled.div`
   margin-bottom: 15px;
-
 `;
 
 const Input = styled.input`
@@ -39,11 +37,11 @@ const Input = styled.input`
   border: 1px solid transparent;
   background: var(--ego-light-tint);
 
-  &:focus, &:active {
+  &:focus,
+  &:active {
     background-color: var(--ego-light);
     border: 1px solid var(--ego-light-tint);
   }
-
 `;
 
 const ErrorMessage = styled.div`
@@ -54,56 +52,56 @@ const ErrorMessage = styled.div`
   border: 3px solid var(--ego-error);
 `;
 const StyledSelect = styled.select`
- display: block;
+  display: block;
   background: var(--ego-light-tint);
-   box-shadow: 2px 3px 5px -5px var(--ego-green);
+  box-shadow: 2px 3px 5px -5px var(--ego-green);
   color: var(--ego-dark);
   font-size: 1em;
   padding: 0.5em;
-    border: 1px solid var(--ego-lgt-green);
+  border: 1px solid var(--ego-lgt-green);
   border-radius: 25px;
 
-    &:focus, &:active {
+  &:focus,
+  &:active {
     background-color: var(--ego-light);
     border: 1px solid var(--ego-light-tint);
   }
 `;
 
 const StyledLabel = styled.label`
- display: block;
+  display: block;
   color: var(--ego-dark);
   font-size: 1em;
   margin: 0.5em;
 `;
 const StyledH1 = styled.h1`
- display: block;
+  display: block;
   color: var(--ego-dark);
   font-size: 1em;
   margin: 0.5em;
   font-weight: bold;
 `;
 
-
 export const UpdateUser = ({ getUsers }) => {
-  const [id, setId] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [role, setRole] = useState('user');
+  const [id, setId] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("user");
   const [energyLevel, setEnergyLevel] = useState(0);
   const [points, setPoints] = useState(0);
-  const [avatarUrl, setAvatarUrl] = useState('');
-  const [password, setPassword] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   // Store the initial values
   const [initialName, setInitialName] = useState(name);
   const [initialEmail, setInitialEmail] = useState(email);
   const [initialRole, setInitialRole] = useState(role);
   const [initialPassword, setInitialPassword] = useState(password);
-    const [initialenergyLevel, setInitialEnergyLevel] = useState(0);
+  const [initialenergyLevel, setInitialEnergyLevel] = useState(0);
   const [initialpoints, setInitialPoints] = useState(0);
-  const [initialavatarUrl, setInitialAvatarUrl] = useState('');
+  const [initialavatarUrl, setInitialAvatarUrl] = useState("");
 
   // Set the initial values when the component mounts
   useEffect(() => {
@@ -117,11 +115,19 @@ export const UpdateUser = ({ getUsers }) => {
   }, []);
 
   const Update = async () => {
-    const token = sessionStorage.getItem('accessToken');
+    const token = sessionStorage.getItem("accessToken");
     let userData = {};
 
     // Check if any field has changed
-    if (name === initialName && email === initialEmail && role === initialRole && password === initialPassword && energyLevel === initialEnergyLevel && points === initialPoints && avatarUrl === initialAvatarUrl) {
+    if (
+      name === initialName &&
+      email === initialEmail &&
+      role === initialRole &&
+      password === initialPassword &&
+      energyLevel === initialEnergyLevel &&
+      points === initialPoints &&
+      avatarUrl === initialAvatarUrl
+    ) {
       setMessage("No changes made to the form, lets try again.😅");
       return; // Stop execution if no fields have changed
     }
@@ -135,10 +141,10 @@ export const UpdateUser = ({ getUsers }) => {
 
     try {
       const response = await fetch(`${API}/users/${id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
 
         body: JSON.stringify({ name, email, role, password }),
@@ -146,11 +152,11 @@ export const UpdateUser = ({ getUsers }) => {
       if (response.ok) {
         setMessage("User updated successfully");
         getUsers();
-      } else
-        if (!response.ok) {
-          setMessage("An error occurred while updating the user." + response.statusText);
-        }
-
+      } else if (!response.ok) {
+        setMessage(
+          "An error occurred while updating the user." + response.statusText
+        );
+      }
     } catch (error) {
       console.error(error);
     }
@@ -160,7 +166,15 @@ export const UpdateUser = ({ getUsers }) => {
     e.preventDefault();
     let errors = {};
     //check that at least one field in the form is filled in
-    if (!name && !email && !password && !role && !energyLevel && !points && !avatarUrl ) {
+    if (
+      !name &&
+      !email &&
+      !password &&
+      !role &&
+      !energyLevel &&
+      !points &&
+      !avatarUrl
+    ) {
       errors.general = "At least one field is required for update.";
       setErrors(errors);
       return;
@@ -171,51 +185,86 @@ export const UpdateUser = ({ getUsers }) => {
     }
   };
 
-
   return (
     <FormContainer>
-    <form onSubmit={handleSubmit}>
-    <FormGroup>
-    <StyledH1>Update userinfo</StyledH1>
+      <form onSubmit={handleSubmit}>
+        <FormGroup>
+          <StyledH1>Update userinfo</StyledH1>
 
-    <StyledLabel>ID</StyledLabel>
-    <Input type="text" name="id" value={id} onChange={(e) => setId(e.target.value.trim())} />
-    <StyledLabel>Name</StyledLabel>
-    <Input type="text" name="name" onChange={e => setName(e.target.value.trim())} />
-    {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
-    <StyledLabel>Email</StyledLabel>
-    <Input type="text" name="email" onChange={e => setEmail(e.target.value.trim())} />
-    {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
-    <StyledLabel>Role</StyledLabel>
-    <StyledSelect name="role" value={role} onChange={e => setRole(e.target.value)}>
-      <option value="user" disabled>User</option>
-      <option value="VIP">Editor</option>
-      <option value="admin">Admin</option>
-    </StyledSelect>
-    {errors.role && <ErrorMessage>{errors.role}</ErrorMessage>}
-    <StyledLabel>Password</StyledLabel>
-    <Input type="password" name="password" onChange={e => setPassword(e.target.value.trim())} />
-    {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
-    </FormGroup>
-    <FormGroup>
-    <StyledLabel>Energy Level</StyledLabel>
-    <Input type="text" name="energyLevel" onChange={e => setEnergyLevel(e.target.value.trim())} />
-    {errors.energyLevel && <ErrorMessage>{errors.energyLevel}</ErrorMessage>}
-    </FormGroup>
-    <FormGroup>
-    <StyledLabel>Points</StyledLabel>
-    <Input type="text" name="points" onChange={e => setPoints(e.target.value.trim())} />
-    {errors.points && <ErrorMessage>{errors.points}</ErrorMessage>}
-    </FormGroup>
-    <FormGroup>
-    <StyledLabel>Avatar Url</StyledLabel>
-    <Input type="text" name="avatarUrl" onChange={e => setAvatarUrl(e.target.value.trim())} />
-    {errors.avatarUrl && <ErrorMessage>{errors.avatarUrl}</ErrorMessage>}
-    </FormGroup>
-    <EgoButton type="submit">Update info</EgoButton>
-    {message && <ErrorMessage>{message}</ErrorMessage>}
-  </form>
-  </FormContainer>
-
+          <StyledLabel>ID</StyledLabel>
+          <Input
+            type="text"
+            name="id"
+            value={id}
+            onChange={(e) => setId(e.target.value.trim())}
+          />
+          <StyledLabel>Name</StyledLabel>
+          <Input
+            type="text"
+            name="name"
+            onChange={(e) => setName(e.target.value.trim())}
+          />
+          {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
+          <StyledLabel>Email</StyledLabel>
+          <Input
+            type="text"
+            name="email"
+            onChange={(e) => setEmail(e.target.value.trim())}
+          />
+          {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+          <StyledLabel>Role</StyledLabel>
+          <StyledSelect
+            name="role"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          >
+            <option value="user" disabled>
+              User
+            </option>
+            <option value="VIP">Editor</option>
+            <option value="admin">Admin</option>
+          </StyledSelect>
+          {errors.role && <ErrorMessage>{errors.role}</ErrorMessage>}
+          <StyledLabel>Password</StyledLabel>
+          <Input
+            type="password"
+            name="password"
+            onChange={(e) => setPassword(e.target.value.trim())}
+          />
+          {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+        </FormGroup>
+        <FormGroup>
+          <StyledLabel>Energy Level</StyledLabel>
+          <Input
+            type="text"
+            name="energyLevel"
+            onChange={(e) => setEnergyLevel(e.target.value.trim())}
+          />
+          {errors.energyLevel && (
+            <ErrorMessage>{errors.energyLevel}</ErrorMessage>
+          )}
+        </FormGroup>
+        <FormGroup>
+          <StyledLabel>Points</StyledLabel>
+          <Input
+            type="text"
+            name="points"
+            onChange={(e) => setPoints(e.target.value.trim())}
+          />
+          {errors.points && <ErrorMessage>{errors.points}</ErrorMessage>}
+        </FormGroup>
+        <FormGroup>
+          <StyledLabel>Avatar Url</StyledLabel>
+          <Input
+            type="text"
+            name="avatarUrl"
+            onChange={(e) => setAvatarUrl(e.target.value.trim())}
+          />
+          {errors.avatarUrl && <ErrorMessage>{errors.avatarUrl}</ErrorMessage>}
+        </FormGroup>
+        <EgoButton type="submit">Update info</EgoButton>
+        {message && <ErrorMessage>{message}</ErrorMessage>}
+      </form>
+    </FormContainer>
   );
-}
+};
