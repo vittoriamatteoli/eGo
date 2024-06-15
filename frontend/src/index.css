@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap");
 
 body {
+  position: relative;
   margin: 0;
   padding: 0;
   background-color: white;

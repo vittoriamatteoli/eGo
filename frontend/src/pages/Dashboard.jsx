@@ -15,6 +15,7 @@ import { DashboardProvider } from "../components/DashboardContext";
 import { UserFlowArrow } from "../reusables/UserFlowArrow";
 
 const DashboardLayout = styled.div`
+  position: relative;
   display: grid;
   grid-template-columns: auto;
   width: 100vw;
@@ -24,6 +25,7 @@ const DashboardLayout = styled.div`
   justify-items: center;
 
   .dashboardContainer {
+    position: relative;
     width: 90%;
     box-sizing: border-box;
     display: flex;

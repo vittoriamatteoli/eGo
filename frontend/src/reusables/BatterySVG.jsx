@@ -4,8 +4,6 @@ import { useState } from "react";
 const BatteryWrapper = styled.div`
   position: relative;
 
-  /* width: ${({ width }) => width || "200px"};
-  height: ${({ height }) => height || "200px"}; */
   svg {
     cursor: pointer;
   }

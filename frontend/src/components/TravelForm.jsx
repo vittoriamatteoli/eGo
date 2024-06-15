@@ -23,7 +23,8 @@ const StyledTravelButton = styled(Button).withConfig({
   outline: none;
   text-transform: none;
   position: relative;
-  z-index: 2;
+  /* z-index: 2; */
+  z-index: 1;
   border-radius: 30px;
   border: 2px solid #687943;
   filter: drop-shadow(0px 4px 6px #00000040);
@@ -48,7 +49,7 @@ const SvgIcon = styled.img.withConfig({
   shouldForwardProp: (prop) => prop !== "isClicked",
 })`
   position: absolute;
-  z-index: 1;
+  z-index: 0;
   width: 55px;
   height: 55px;
   transition-duration: 0.4s;
