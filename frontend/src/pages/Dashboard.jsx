@@ -23,6 +23,7 @@ const DashboardLayout = styled.div`
   padding: 0;
   margin: 0;
   justify-items: center;
+  margin-bottom: 100px;
 
   .dashboardContainer {
     position: relative;
@@ -35,7 +36,7 @@ const DashboardLayout = styled.div`
 
   @media (min-width: 769px) {
     grid-template-columns: 1fr 5fr; /* Sidebar and main content */
-
+    margin-bottom: 0;
     .cardContainer {
       display: flex;
       gap: 5px;
@@ -49,6 +50,7 @@ const DashboardLayout = styled.div`
     }
   }
   @media (min-width: 1024px) {
+    margin-bottom: 20px;
     grid-template-columns: 1fr 4fr; /* Sidebar and main content */
     .cardContainer {
       display: flex;

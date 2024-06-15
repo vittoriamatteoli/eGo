@@ -10,6 +10,7 @@ const StyledWrapper = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
 const StyledEllipseGraph = styled.img`
   display: flex;
   align-items: flex-start;
@@ -17,6 +18,7 @@ const StyledEllipseGraph = styled.img`
   color: white;
   text-decoration: none;
 `;
+
 const StyledPopup = styled.div`
   box-sizing: border-box;
   border-radius: 16px;
@@ -25,34 +27,34 @@ const StyledPopup = styled.div`
   justify-content: center;
   margin: 30px 20px;
 `;
+
 const StyledPopupWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
   box-sizing: border-box;
   border-radius: 16px;
   border: 3px solid #dcded0;
   background: white;
   height: 340px;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); /* animation */
-  transform: ${({ showPopUp }) =>
-    showPopUp ? "translateY(-300px)" : "translateY(0)"};
-  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 `;
 
-const StyledBottom = styled.div`
-  position: absolute;
-  bottom: ${({ showPopUp }) => (showPopUp ? "300px" : "-290px")};
-  width: 100%;
-  height: 500px;
+const StyledBottomWrapper = styled.div`
+  position: fixed;
+  bottom: 31px;
+  left: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  z-index: 2; /* Ensure it's below StyledEllipseGraph */
-  transition: bottom 0.5s cubic-bezier(0.22, 1, 0.36, 1); /* animation */
+  z-index: 4;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: ${({ showPopUp }) =>
+    showPopUp ? "translateY(0)" : "translateY(100%)"};
 `;
+
 const StyledContainer = styled.div`
   box-sizing: border-box;
   border-radius: 16px;
@@ -65,6 +67,7 @@ const StyledContainer = styled.div`
   justify-content: center;
   gap: 10px;
   height: 340px;
+
   canvas {
     width: 100%;
     height: 340px;
@@ -98,7 +101,6 @@ export const ActivityGraph = ({ id }) => {
         const data = await response.json();
         console.log(data, "data");
 
-        // Filter data for the last week
         const oneWeekAgo = new Date();
         oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
@@ -106,7 +108,6 @@ export const ActivityGraph = ({ id }) => {
           (entry) => new Date(entry.date) >= oneWeekAgo
         );
 
-        // Process data
         const x = filteredData.map((entry) => `${entry.distance} km`);
         const y = filteredData.map((entry) => {
           switch (entry.mode) {
@@ -135,7 +136,6 @@ export const ActivityGraph = ({ id }) => {
 
   useEffect(() => {
     if (chartInstance) {
-      // Destroy the existing chart instance
       chartInstance.destroy();
     }
 
@@ -145,7 +145,7 @@ export const ActivityGraph = ({ id }) => {
     ) {
       const ctx = document.getElementById("myChart");
       const newChartInstance = new Chart(ctx, {
-        type: "bar", // Set the base type to bar
+        type: "bar",
         data: {
           labels: chartData.x,
           datasets: [
@@ -155,9 +155,9 @@ export const ActivityGraph = ({ id }) => {
               borderColor: "#39AA44",
               backgroundColor: "#39AA44",
               stack: "combined",
-              type: "line", // Line type for this dataset
+              type: "line",
               borderWidth: 2,
-              tension: 0.4, // Controls the curvature of the line
+              tension: 0.4,
               order: 1,
             },
             {
@@ -166,9 +166,9 @@ export const ActivityGraph = ({ id }) => {
               borderColor: "#CCE0A1",
               backgroundColor: "#CCE0A1",
               stack: "combined",
-              type: "bar", // Bar type for this dataset
+              type: "bar",
               borderWidth: 1,
-              order: 0, // Ensure bars are drawn over line
+              order: 0,
             },
           ],
         },
@@ -195,7 +195,7 @@ export const ActivityGraph = ({ id }) => {
   }, [chartData]);
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const togglePopUp = () => {
-    setShowPopUp(!showPopUp); // Toggle popup state
+    setShowPopUp(!showPopUp);
   };
 
   return (
@@ -205,20 +205,18 @@ export const ActivityGraph = ({ id }) => {
           <canvas id="myChart"></canvas>
         </StyledContainer>
       ) : (
-        <StyledBottom>
+        <StyledBottomWrapper showPopUp={!showPopUp}>
           <StyledEllipseGraph
             src="/Activity-button.png"
             alt="activity-button"
             onClick={togglePopUp}
-          ></StyledEllipseGraph>
-          {showPopUp && (
-            <StyledPopupWrapper>
-              <StyledPopup>
-                <canvas id="myChart"></canvas>
-              </StyledPopup>
-            </StyledPopupWrapper>
-          )}
-        </StyledBottom>
+          />
+          <StyledPopupWrapper>
+            <StyledPopup>
+              <canvas id="myChart"></canvas>
+            </StyledPopup>
+          </StyledPopupWrapper>
+        </StyledBottomWrapper>
       )}
     </StyledWrapper>
   );
