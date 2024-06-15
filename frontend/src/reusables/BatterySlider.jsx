@@ -68,12 +68,11 @@ export const BatterySlider = ({ showPopUp }) => {
   const { fillPercentage, setFillPercentage } = useContext(DashboardContext);
   const { id } = useParams();
   const API = `${apikey}/user/${id}`;
-  // const [fillPercentage, setFillPercentage] = useState(0);
   const [message, setMessage] = useState("");
   const [error, setError] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 767 });
-  const dashboardContextValue = useContext(DashboardContext);
+
 
   useEffect(() => {
     const fetchEnergyData = async () => {
