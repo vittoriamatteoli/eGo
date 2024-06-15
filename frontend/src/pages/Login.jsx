@@ -277,11 +277,11 @@ export const Login = () => {
   return (
     <Container>
       <LeftColumn>
-        <StyledLogoLink to="/">
+        <StyledLogoLink to="/" aria-label="Go to homepage">
           <Logo alt="logo" />
         </StyledLogoLink>
 
-        <StyledImage src={Globe} alt="globe" />
+        <StyledImage src={Globe} alt="globe"  aria-hidden="true"/>
       </LeftColumn>
       <RightColumn>
         <StyledH1>Login</StyledH1>
@@ -314,7 +314,7 @@ export const Login = () => {
             </FormGroup>
 
             <ButtonAndSpinnerContainer>
-              <StyledEgoButton type="submit" disabled={loading}>
+              <StyledEgoButton type="submit" disabled={loading} aria-busy={loading}>
                 {loading ? "Loading..." : "Log in"}
               </StyledEgoButton>
               {loading && <Loading />}

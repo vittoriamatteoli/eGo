@@ -1,6 +1,6 @@
-import Back from '../assets/back-arrow.svg';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import Back from "../assets/back-arrow.svg";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 const StyledImage = styled.img`
   width: 30px;
@@ -16,6 +16,11 @@ export const BackArrowWithHistory = () => {
   };
 
   return (
-    <StyledImage src={Back} alt="back-arrow" onClick={handleClick} />
+    <StyledImage
+      src={Back}
+      alt="back-arrow"
+      onClick={handleClick}
+      aria-label="back-to-home"
+    />
   );
 };

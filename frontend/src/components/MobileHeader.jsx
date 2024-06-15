@@ -53,9 +53,9 @@ const StyledLogo = styled.img`
   width: 70px;
 `;
 export const MobileHeader = ({ id }) => {
-  const { username, setUsername } = useContext(DashboardContext);
+  const { username } = useContext(DashboardContext);
   return (
-    <StyledHeader>
+    <StyledHeader role="banner">
       <div className="avatar">
         <Avatar id={id} />
         <div className="typography">
@@ -65,7 +65,7 @@ export const MobileHeader = ({ id }) => {
           <Logout />
         </div>
       </div>
-      <Link to="/">
+      <Link to="/" aria-label="Home">
         <StyledLogo src={logo} alt="logo" />
       </Link>
     </StyledHeader>

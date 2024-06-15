@@ -35,7 +35,7 @@ const StyledHeading = styled.h2`
 
 export const TravelCard = ({ id }) => {
   return (
-    <StyledTravelCard>
+    <StyledTravelCard role="region" aria-label="Travel Card">
       <StyledHeading>Where do you want to go?</StyledHeading>
       <TravelForm id={id} />
     </StyledTravelCard>

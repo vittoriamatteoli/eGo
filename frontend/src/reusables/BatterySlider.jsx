@@ -73,7 +73,6 @@ export const BatterySlider = ({ showPopUp }) => {
   const [isClicked, setIsClicked] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
-
   useEffect(() => {
     const fetchEnergyData = async () => {
       try {
@@ -131,21 +130,44 @@ export const BatterySlider = ({ showPopUp }) => {
 
   return (
     <BatterySliderWrapper>
-      {showPopUp && <h2>How's your energy level right now?</h2>}
+      {showPopUp && (
+        <h2 aria-label="Energy Level Question">
+          How's your energy level right now?
+        </h2>
+      )}
       <BatteryUpdateIcon
         src={batteryUpdate}
         alt="Battery update icon"
         isClicked={isClicked}
         draggable="false"
+        aria-label="Battery Update Icon"
       />
-      {<BatterySVG fillPercentage={fillPercentage} onDrag={handleDrag} />}
-      {message && <div>{message}</div>}
-      {error && <div>Error: {error}</div>}
+      {
+        <BatterySVG
+          fillPercentage={fillPercentage}
+          onDrag={handleDrag}
+          aria-label="Battery Slider"
+        />
+      }
+      {message && (
+        <div aria-live="polite" aria-label="Message">
+          {message}
+        </div>
+      )}
+      {error && (
+        <div aria-live="assertive" aria-label="Error Message">
+          Error: {error}
+        </div>
+      )}
       {showPopUp && (
-        <StyledButton onClick={handleNewEnergy}>Confirm</StyledButton>
+        <StyledButton onClick={handleNewEnergy} aria-label="Confirm Button">
+          Confirm
+        </StyledButton>
       )}
       {!isMobile && (
-        <StyledButton onClick={handleNewEnergy}>Confirm</StyledButton>
+        <StyledButton onClick={handleNewEnergy} aria-label="Confirm Button">
+          Confirm
+        </StyledButton>
       )}
     </BatterySliderWrapper>
   );

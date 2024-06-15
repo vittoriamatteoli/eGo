@@ -105,10 +105,15 @@ export const Sidebar = ({ id }) => {
   }, [id]);
 
   return (
-    <StyledDrawer variant="persistent" anchor="left" open={true}>
+    <StyledDrawer
+      variant="persistent"
+      anchor="left"
+      open={true}
+      role="navigation"
+    >
       <SidebarContent>
         <StyledList>
-          <Link to="/">
+          <Link to="/" aria-label="Home">
             <Logo />
           </Link>
           <StyledListItem>

@@ -143,8 +143,6 @@ export const TravelForm = ({ id }) => {
     travelPoints,
     setTravelPoints,
     fillPercentage,
-    points,
-    setPoints,
   } = useContext(DashboardContext);
 
   const googleTravelModes = [
@@ -310,7 +308,7 @@ export const TravelForm = ({ id }) => {
       <TravelModesContainer>
         {googleTravelModes.map((mode) => (
           <TravelModeButton
-            aria-label={mode.mode}
+            aria-label={`${mode.mode} travel mode`}
             key={mode.mode}
             selected={travelMode === mode.mode}
             onClick={() => {
@@ -362,7 +360,11 @@ export const TravelForm = ({ id }) => {
       </StyledParagraph>
 
       <TravelConfirmContainer className="travel-form-button">
-        <StyledTravelButton onClick={handleConfirm} isClicked={isClicked}>
+        <StyledTravelButton
+          onClick={handleConfirm}
+          isClicked={isClicked}
+          aria-label="Confirm travel"
+        >
           Confirm
         </StyledTravelButton>
         <SvgIcon src={buttonTree} alt="Button Tree" isClicked={isClicked} />

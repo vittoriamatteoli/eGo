@@ -1,4 +1,3 @@
-import { BackArrow } from "../reusables/BackArrow";
 import { Logo } from "../reusables/Logo";
 import { BackArrowWithHistory } from "../reusables/BackArrowWithHistory";
 import styled from "styled-components";
