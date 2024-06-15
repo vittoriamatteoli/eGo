@@ -205,7 +205,7 @@ export const ActivityGraph = ({ id }) => {
           <canvas id="myChart"></canvas>
         </StyledContainer>
       ) : (
-        <StyledBottomWrapper showPopUp={!showPopUp}>
+        <StyledBottomWrapper showPopUp={showPopUp}>
           <StyledEllipseGraph
             src="/Activity-button.png"
             alt="activity-button"
