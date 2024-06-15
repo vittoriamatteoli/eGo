@@ -21,15 +21,15 @@ const StyledHeading = styled.h2`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  padding: 10px;
+  padding: 10px 20px;
   text-align: center;
 
   @media (min-width: 768px) {
-    font-size: 18px; // Use a larger font size for larger screens
+    font-size: 18px;
   }
 
   @media (min-width: 1024px) {
-    font-size: 22px; // Use an even larger font size for extra large screens
+    font-size: 24px;
   }
 `;
 

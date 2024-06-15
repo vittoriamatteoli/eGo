@@ -34,7 +34,7 @@ const StyledTravelButton = styled(Button).withConfig({
   font-family: "Open Sans", sans-serif;
   font-size: 18px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 700;
   transition: all 0.5s ease-in-out;
 
   &:hover {
@@ -116,9 +116,9 @@ const StyledAutocomplete = styled(Autocomplete)`
   }
 `;
 
-const StyledParagraph = styled.div`
+const StyledParagraph = styled.p`
   margin-top: 0px;
-  margin-bottom: 15%;
+  padding: 0 20px;
 `;
 
 const TravelPoints = styled.span`

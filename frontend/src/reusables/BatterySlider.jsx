@@ -10,11 +10,12 @@ const apikey = import.meta.env.VITE_API_KEY;
 
 const BatterySliderWrapper = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 30px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 `;
 
 const rotateOnce = keyframes`
@@ -58,7 +59,6 @@ const StyledButton = styled(Button)`
   color: #fff;
   font-family: "Open Sans", sans-serif;
   font-size: 18px;
-  font-style: normal;
   font-weight: 700;
   line-height: normal;
   text-transform: capitalize;

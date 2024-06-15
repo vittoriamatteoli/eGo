@@ -15,8 +15,19 @@ const updateAnimation = keyframes`
 //styled component for points with animation
 const AnimatedPoints = styled.h3`
   color: var(--ego-green);
+  font-size: 24px;
+  font-weight: 800;
+  margin: 10px 0 100px 0;
+
   &.animate {
     animation: ${updateAnimation} 0.5s ease-in-out;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 32px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 36px;
   }
 `;
 
@@ -24,6 +35,14 @@ const apikey = import.meta.env.VITE_API_KEY;
 
 const StyledWrapper = styled.div`
   text-align: right;
+  font-size: 12px;
+  @media (min-width: 768px) {
+    font-size: 20px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 24px;
+  }
+
   h2 {
     text-align: left;
   }
@@ -35,8 +54,12 @@ const StyledWrapper = styled.div`
 const StyledSection = styled.section`
   display: flex;
   justify-content: space-between;
+  /* align-items: center; */
   @media (min-width: 768px) {
     justify-content: flex-end;
+  }
+  .a {
+    font-size: 24px;
   }
 
   svg {
