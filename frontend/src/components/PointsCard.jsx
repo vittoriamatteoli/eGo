@@ -1,9 +1,24 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import { BatterySlider } from "../reusables/BatterySlider";
 import { useMediaQuery } from "react-responsive";
 import { useContext } from "react";
 import { DashboardContext } from "./DashboardContext";
+import styled, { keyframes } from "styled-components";
+
+//define keyframes for animation
+const updateAnimation = keyframes`
+ 0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1.5); }
+`;
+
+//styled component for points with animation
+const AnimatedPoints = styled.h3`
+  color: var(--ego-green);
+  &.animate {
+    animation: ${updateAnimation} 0.5s ease-in-out;
+  }
+`;
 
 const apikey = import.meta.env.VITE_API_KEY;
 
@@ -76,6 +91,8 @@ const StyledHeader = styled.div`
 export const PointsCard = ({ id }) => {
   const { points, setPoints } = useContext(DashboardContext);
   const [showPopUp, setShowPopUp] = useState(false);
+  //new for animation
+  const [animate, setAnimate] = useState(false);
 
   const API = `${apikey}/user/${id}`;
 
@@ -89,7 +106,13 @@ export const PointsCard = ({ id }) => {
         }
         const data = await res.json();
         if (data.points !== undefined && data.points !== null) {
-          setPoints(data.points);
+          setPoints((prevPoints) => {
+            if (prevPoints !== data.points) {
+              setAnimate(true); //set animation
+              setTimeout(() => setAnimate(false), 500); //reset animation after 0.5s
+            }
+            return data.points;
+          });
         }
       } catch (error) {
         console.error("Error fetching energy data:", error);
@@ -133,7 +156,9 @@ export const PointsCard = ({ id }) => {
             <BatterySlider id={id} />
           </a>
         )}
-        <h3>{points}</h3>
+        <AnimatedPoints className={animate ? "animate" : ""}>
+          {points}
+        </AnimatedPoints>
       </StyledSection>
       {showPopUp && (
         <PopUpOverlay onClick={togglePopUp}>
