@@ -20,10 +20,10 @@ const BatterySliderWrapper = styled.div`
 
 const rotateOnce = keyframes`
   from {
-    transform: translate(-5%, -80%) rotate(360deg);
+    transform: translate(-20%, 30%) rotate(360deg);
   }
   to {
-    transform:translate(-5%, -80%) rotate(0deg);
+    transform:translate(-20%, 30%) rotate(0deg);
   }
 `;
 
@@ -38,7 +38,7 @@ const BatteryUpdateIcon = styled.img.withConfig({
   height: 55px;
   transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
 
-  transform: translate(-5%, -80%) rotate(360deg);
+  transform: translate(-20%, 30%) rotate(360deg);
   opacity: ${({ isClicked }) => (isClicked ? "1" : "0")};
   animation: ${({ isClicked }) => (isClicked ? rotateOnce : "none")} 0.8s
     ease-in-out forwards;
@@ -121,7 +121,6 @@ export const BatterySlider = ({ showPopUp }) => {
         updatedData.energyLevel !== null
       ) {
         setFillPercentage(updatedData.energyLevel);
-        
       }
     } catch (error) {
       console.error("Error updating energy data:", error);
