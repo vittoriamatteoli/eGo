@@ -275,7 +275,7 @@ export const Register = () => {
         return;
       }
 
-      console.log(data);
+      
       setMessage("Registration successful");
       setUsername("");
       setEmail("");

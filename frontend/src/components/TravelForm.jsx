@@ -194,13 +194,13 @@ export const TravelForm = ({ id }) => {
 
       const data = await response.json();
 
-      console.log("Route details:", data);
+      
 
       if (data) {
-        console.log("First route in  meters:", data.routes[0].distanceMeters);
+        
         setDistance(data.routes[0].distanceMeters);
         setTravelDistance(data.routes[0].distanceMeters);
-        console.log("Travel distance:", travelDistance);
+       
       }
     } catch (error) {
       console.error("Error fetching route details:", error.message);
@@ -279,7 +279,7 @@ export const TravelForm = ({ id }) => {
     travelPoints,
     user
   ) => {
-    //console.log(`LOGG LOGG: distance: ${distance}, mode: ${mode}, origin: ${origin}, destination: ${destination}, travelPoints: ${travelPoints}, user: ${user}`);
+   
     const API = `${import.meta.env.VITE_API_KEY}/travel`;
     const accessToken = sessionStorage.getItem("accessToken");
     const decodedToken = jwt_decode(accessToken);
@@ -299,7 +299,7 @@ export const TravelForm = ({ id }) => {
       }),
     });
     const { travel } = await response.json();
-    console.log("Response from server travel:", travel);
+    
     return travel;
   };
 

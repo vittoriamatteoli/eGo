@@ -69,12 +69,12 @@ export const Dashboard = () => {
 
   useEffect(() => {
     const token = sessionStorage.getItem("accessToken");
-    console.log("Stored token:", token);
+    
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        console.log("Decoded token:", decodedToken);
-        console.log("Role:", decodedToken.role);
+        
+        
         setIsAdmin(decodedToken.role === "admin");
       } catch (e) {
         console.error("Invalid token", e);

@@ -99,7 +99,7 @@ export const ActivityGraph = ({ id }) => {
         });
 
         const data = await response.json();
-        console.log(data, "data");
+       
 
         const oneWeekAgo = new Date();
         oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
