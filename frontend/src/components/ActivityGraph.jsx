@@ -37,11 +37,12 @@ const StyledPopupWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  width: 90vw;
 `;
 
 const StyledBottomWrapper = styled.div`
   position: fixed;
-  bottom: 31px;
+  bottom: 30px;
   left: 0;
   right: 0;
   display: flex;
@@ -207,7 +208,7 @@ export const ActivityGraph = ({ id }) => {
       ) : (
         <StyledBottomWrapper showPopUp={showPopUp}>
           <StyledEllipseGraph
-            src="/Activity-button.png"
+            src="../icons/activity-button.svg"
             alt="activity-button"
             onClick={togglePopUp}
             role="button"
