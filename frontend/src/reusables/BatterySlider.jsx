@@ -121,7 +121,7 @@ export const BatterySlider = ({ showPopUp }) => {
         updatedData.energyLevel !== null
       ) {
         setFillPercentage(updatedData.energyLevel);
-        console.log(updatedData);
+        
       }
     } catch (error) {
       console.error("Error updating energy data:", error);
