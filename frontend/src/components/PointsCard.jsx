@@ -4,6 +4,7 @@ import { useMediaQuery } from "react-responsive";
 import { useContext } from "react";
 import { DashboardContext } from "./DashboardContext";
 import styled, { keyframes } from "styled-components";
+import info from "../assets/info.svg";
 
 //define keyframes for animation
 const updateAnimation = keyframes`
@@ -168,7 +169,7 @@ export const PointsCard = ({ id }) => {
         <a>
           Your Points
           <span>
-            <img src="/info.svg" alt="information-icon" />
+            <img src={info} alt="information-icon" />
           </span>
         </a>
       </StyledSection>

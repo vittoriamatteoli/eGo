@@ -35,11 +35,9 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#dcded0",endCo
     .open-sans-regular {
       font-family: "Open Sans", sans-serif;
       font-optical-sizing: auto;
-      font-weight: <weight>;
+      font-weight: 400;
       font-style: normal;
-      font-variation-settings:
-        "wdth" 100;
-    }
+        }
 
   }
 
