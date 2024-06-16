@@ -1,6 +1,7 @@
 import { Logo } from "../reusables/Logo";
 import { BackArrowWithHistory } from "../reusables/BackArrowWithHistory";
 import styled from "styled-components";
+import World from "../assets/world.svg";
 
 const StyledImg = styled.img`
   position: fixed;
@@ -182,60 +183,72 @@ export const About = () => {
           <StyledTitle>Meet our Team</StyledTitle>
           <TeamCard>
             <SingleCard>
-              <img src="/Eliane-tree.svg" alt="tree" />
+              <img src="/avatars/Eliane-tree.svg" alt="tree" />
               <StyledName>Eliane</StyledName>
               <SocialLinks>
                 <a href="https://github.com/El1an3">
-                  <SocialImg src="/github-icon.svg" alt="github-icon" />
+                  <SocialImg src="/icons/github-icon.svg" alt="github-icon" />
                 </a>
                 <a href="https://www.linkedin.com/in/eliane-b-weber">
-                  <SocialImg src="/linkedin-icon.svg" alt="linkedin-icon" />
+                  <SocialImg
+                    src="/icons/linkedin-icon.svg"
+                    alt="linkedin-icon"
+                  />
                 </a>
               </SocialLinks>
             </SingleCard>
 
             <SingleCard>
-              <img src="/Kathinka-tree.svg" alt="tree" />
+              <img src="/avatars/Kathinka-tree.svg" alt="tree" />
               <StyledName>Kathinka</StyledName>
               <SocialLinks>
                 <a href="https://github.com/kathinka">
-                  <SocialImg src="/github-icon.svg" alt="github-icon" />
+                  <SocialImg src="/icons/github-icon.svg" alt="github-icon" />
                 </a>
                 <a href="https://www.linkedin.com/in/kathinkamartinsen/">
-                  <SocialImg src="/linkedin-icon.svg" alt="linkedin-icon" />
+                  <SocialImg
+                    src="/icons/linkedin-icon.svg"
+                    alt="linkedin-icon"
+                  />
                 </a>
               </SocialLinks>
             </SingleCard>
 
             <SingleCard>
-              <img src="/Vittoria-tree.svg" alt="tree" />
+              <img src="/avatars/Vittoria-tree.svg" alt="tree" />
               <StyledName>Vittoria</StyledName>
               <SocialLinks>
                 <a href="https://github.com/vittoriamatteoli">
-                  <SocialImg src="/github-icon.svg" alt="github-icon" />
+                  <SocialImg src="/icons/github-icon.svg" alt="github-icon" />
                 </a>
                 <a href="https://www.linkedin.com/in/vittoria-matteoli/">
-                  <SocialImg src="/linkedin-icon.svg" alt="linkedin-icon" />
+                  <SocialImg
+                    src="/icons/linkedin-icon.svg"
+                    alt="linkedin-icon"
+                  />
                 </a>
               </SocialLinks>
             </SingleCard>
 
             <SingleCard>
-              <img src="/Yifan-tree.svg" alt="tree" />
+              <img src="/avatars/Yifan-tree.svg" alt="tree" />
               <StyledName>Yifan</StyledName>
               <SocialLinks>
                 <a href="https://github.com/Yifan-858">
-                  <SocialImg src="/github-icon.svg" alt="github-icon" />
+                  <SocialImg src="/icons/github-icon.svg" alt="github-icon" />
                 </a>
                 <a href="https://www.linkedin.com/in/yifan-wang-dev/">
-                  <SocialImg src="/linkedin-icon.svg" alt="linkedin-icon" />
+                  <SocialImg
+                    src="/icons/linkedin-icon.svg"
+                    alt="linkedin-icon"
+                  />
                 </a>
               </SocialLinks>
             </SingleCard>
           </TeamCard>
           <CopyrightText>© 2024 eGo. All rights reserved.</CopyrightText>
         </SectionWrapper>
-        <StyledImg className="WorldPic" src="/world.svg" alt="world" />
+        <StyledImg className="WorldPic" src={World} alt="world" />
       </ScrollableWrapper>
     </StyledSection>
   );
