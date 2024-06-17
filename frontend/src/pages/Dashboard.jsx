@@ -4,8 +4,7 @@ import { ActivityGraph } from "../components/ActivityGraph";
 import { EnergyCard } from "../components/EnergyCard";
 import { TravelCard } from "../components/TravelCard";
 import { useParams } from "react-router-dom";
-//import { TravelForm } from "../components/TravelForm"
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdminButton } from "../reusables/AdminButton";
 import styled from "styled-components";
@@ -88,7 +87,7 @@ export const Dashboard = () => {
   const { id } = useParams();
   return (
     <DashboardLayout>
-       <DashboardProvider value={id}>
+      <DashboardProvider value={id}>
         <Sidebar id={id} />
         <div className="dashboardContainer">
           {isMobile && <MobileHeader id={id} />}
@@ -103,7 +102,7 @@ export const Dashboard = () => {
           </div>
           <AdminButton isAdmin={isAdmin} />
         </div>
-     </DashboardProvider>
-    </DashboardLayout >
+      </DashboardProvider>
+    </DashboardLayout>
   );
 };
