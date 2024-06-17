@@ -287,7 +287,6 @@ export const Landing = () => {
           <SignUpButton>
             <Link to="/register">Sign up!</Link>
           </SignUpButton>
-          </Link>
           <StyledParagraph> Reduce carbon emission.</StyledParagraph>
         </StyledEllipse>
         <StyledAbout to="/about">
