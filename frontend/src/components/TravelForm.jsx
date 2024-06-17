@@ -23,7 +23,8 @@ const StyledTravelButton = styled(Button).withConfig({
   outline: none;
   text-transform: none;
   position: relative;
-  z-index: 2;
+  /* z-index: 2; */
+  z-index: 1;
   border-radius: 30px;
   border: 2px solid #687943;
   filter: drop-shadow(0px 4px 6px #00000040);
@@ -34,7 +35,7 @@ const StyledTravelButton = styled(Button).withConfig({
   font-family: "Open Sans", sans-serif;
   font-size: 18px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 700;
   transition: all 0.5s ease-in-out;
 
   &:hover {
@@ -48,7 +49,7 @@ const SvgIcon = styled.img.withConfig({
   shouldForwardProp: (prop) => prop !== "isClicked",
 })`
   position: absolute;
-  z-index: 1;
+  z-index: 0;
   width: 55px;
   height: 55px;
   transition-duration: 0.4s;
@@ -116,9 +117,9 @@ const StyledAutocomplete = styled(Autocomplete)`
   }
 `;
 
-const StyledParagraph = styled.div`
+const StyledParagraph = styled.p`
   margin-top: 0px;
-  margin-bottom: 15%;
+  padding: 0 20px;
 `;
 
 const TravelPoints = styled.span`
@@ -142,8 +143,6 @@ export const TravelForm = ({ id }) => {
     travelPoints,
     setTravelPoints,
     fillPercentage,
-    points,
-    setPoints,
   } = useContext(DashboardContext);
 
   const googleTravelModes = [
@@ -195,13 +194,13 @@ export const TravelForm = ({ id }) => {
 
       const data = await response.json();
 
-      console.log("Route details:", data);
+      
 
       if (data) {
-        console.log("First route in  meters:", data.routes[0].distanceMeters);
+        
         setDistance(data.routes[0].distanceMeters);
         setTravelDistance(data.routes[0].distanceMeters);
-        console.log("Travel distance:", travelDistance);
+       
       }
     } catch (error) {
       console.error("Error fetching route details:", error.message);
@@ -280,7 +279,7 @@ export const TravelForm = ({ id }) => {
     travelPoints,
     user
   ) => {
-    //console.log(`LOGG LOGG: distance: ${distance}, mode: ${mode}, origin: ${origin}, destination: ${destination}, travelPoints: ${travelPoints}, user: ${user}`);
+   
     const API = `${import.meta.env.VITE_API_KEY}/travel`;
     const accessToken = sessionStorage.getItem("accessToken");
     const decodedToken = jwt_decode(accessToken);
@@ -300,7 +299,7 @@ export const TravelForm = ({ id }) => {
       }),
     });
     const { travel } = await response.json();
-    console.log("Response from server travel:", travel);
+    
     return travel;
   };
 
@@ -309,7 +308,7 @@ export const TravelForm = ({ id }) => {
       <TravelModesContainer>
         {googleTravelModes.map((mode) => (
           <TravelModeButton
-            aria-label={mode.mode}
+            aria-label={`${mode.mode} travel mode`}
             key={mode.mode}
             selected={travelMode === mode.mode}
             onClick={() => {
@@ -361,7 +360,11 @@ export const TravelForm = ({ id }) => {
       </StyledParagraph>
 
       <TravelConfirmContainer className="travel-form-button">
-        <StyledTravelButton onClick={handleConfirm} isClicked={isClicked}>
+        <StyledTravelButton
+          onClick={handleConfirm}
+          isClicked={isClicked}
+          aria-label="Confirm travel"
+        >
           Confirm
         </StyledTravelButton>
         <SvgIcon src={buttonTree} alt="Button Tree" isClicked={isClicked} />

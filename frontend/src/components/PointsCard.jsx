@@ -1,14 +1,49 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import { BatterySlider } from "../reusables/BatterySlider";
 import { useMediaQuery } from "react-responsive";
 import { useContext } from "react";
 import { DashboardContext } from "./DashboardContext";
+import styled, { keyframes } from "styled-components";
+import info from "../assets/info.svg";
+
+//define keyframes for animation
+const updateAnimation = keyframes`
+ 0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1.5); }
+`;
+
+//styled component for points with animation
+const AnimatedPoints = styled.h3`
+  color: var(--ego-green);
+  font-size: 24px;
+  font-weight: 800;
+  margin: 10px 0 100px 0;
+
+  &.animate {
+    animation: ${updateAnimation} 0.5s ease-in-out;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 32px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 36px;
+  }
+`;
 
 const apikey = import.meta.env.VITE_API_KEY;
 
 const StyledWrapper = styled.div`
   text-align: right;
+  font-size: 12px;
+  @media (min-width: 768px) {
+    font-size: 20px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 24px;
+  }
+
   h2 {
     text-align: left;
   }
@@ -20,8 +55,12 @@ const StyledWrapper = styled.div`
 const StyledSection = styled.section`
   display: flex;
   justify-content: space-between;
+  /* align-items: center; */
   @media (min-width: 768px) {
     justify-content: flex-end;
+  }
+  .a {
+    font-size: 24px;
   }
 
   svg {
@@ -76,6 +115,8 @@ const StyledHeader = styled.div`
 export const PointsCard = ({ id }) => {
   const { points, setPoints } = useContext(DashboardContext);
   const [showPopUp, setShowPopUp] = useState(false);
+  //new for animation
+  const [animate, setAnimate] = useState(false);
 
   const API = `${apikey}/user/${id}`;
 
@@ -89,7 +130,13 @@ export const PointsCard = ({ id }) => {
         }
         const data = await res.json();
         if (data.points !== undefined && data.points !== null) {
-          setPoints(data.points);
+          setPoints((prevPoints) => {
+            if (prevPoints !== data.points) {
+              setAnimate(true); //set animation
+              setTimeout(() => setAnimate(false), 500); //reset animation after 0.5s
+            }
+            return data.points;
+          });
         }
       } catch (error) {
         console.error("Error fetching energy data:", error);
@@ -104,7 +151,9 @@ export const PointsCard = ({ id }) => {
   }, [API]);
 
   const togglePopUp = () => {
-    setShowPopUp(!showPopUp);
+    if (event.type === "click") {
+      setShowPopUp(!showPopUp);
+    }
   };
 
   // Media query for mobile devices
@@ -112,7 +161,7 @@ export const PointsCard = ({ id }) => {
 
   return (
     <StyledWrapper>
-      <StyledHeader>
+      <StyledHeader role="banner">
         <h2>Dashboard</h2>
       </StyledHeader>
       <StyledSection>
@@ -120,7 +169,7 @@ export const PointsCard = ({ id }) => {
         <a>
           Your Points
           <span>
-            <img src="/info.svg" alt="information-icon" />
+            <img src={info} alt="information-icon" />
           </span>
         </a>
       </StyledSection>
@@ -131,7 +180,9 @@ export const PointsCard = ({ id }) => {
             <BatterySlider id={id} />
           </a>
         )}
-        <h3>{points}</h3>
+        <AnimatedPoints className={animate ? "animate" : ""}>
+          {points}
+        </AnimatedPoints>
       </StyledSection>
       {showPopUp && (
         <PopUpOverlay onClick={togglePopUp}>

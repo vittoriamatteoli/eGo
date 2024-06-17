@@ -27,7 +27,12 @@ const StyledEgoButton = styled.button`
 `;
 
 export const EgoButton = ({ children, onClick, className, disabled }) => (
-  <StyledEgoButton onClick={onClick} className={className} disabled={disabled}>
+  <StyledEgoButton
+    onClick={onClick}
+    className={className}
+    disabled={disabled}
+    aria-label={children}
+  >
     {children}
     {/* <Ripple color="#FDFFF1" /> */}
   </StyledEgoButton>

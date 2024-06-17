@@ -16,34 +16,42 @@ import { DashboardProvider } from "../components/DashboardContext";
 import { UserFlowArrow } from "../reusables/UserFlowArrow";
 
 const DashboardLayout = styled.div`
+  position: relative;
   display: grid;
   grid-template-columns: auto;
   width: 100vw;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-
   justify-items: center;
+  margin-bottom: 100px;
+
   .dashboardContainer {
-    width: 80%;
+    position: relative;
+    width: 90%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 35px;
   }
 
-  @media (min-width: 769px) and (max-width: 1024px) {
+  @media (min-width: 769px) {
     grid-template-columns: 1fr 5fr; /* Sidebar and main content */
+    margin-bottom: 0;
     .cardContainer {
       display: flex;
-      gap: 20px;
+      gap: 5px;
+      /* align-items: center; */
     }
     .cardContainerDash {
       display: grid;
       grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 86px;
     }
   }
   @media (min-width: 1024px) {
+    margin-bottom: 20px;
     grid-template-columns: 1fr 4fr; /* Sidebar and main content */
     .cardContainer {
       display: flex;
@@ -52,7 +60,7 @@ const DashboardLayout = styled.div`
     .cardContainerDash {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 100px;
     }
   }
 `;
@@ -62,12 +70,12 @@ export const Dashboard = () => {
 
   useEffect(() => {
     const token = sessionStorage.getItem("accessToken");
-    console.log("Stored token:", token);
+    
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        console.log("Decoded token:", decodedToken);
-        console.log("Role:", decodedToken.role);
+        
+        
         setIsAdmin(decodedToken.role === "admin");
       } catch (e) {
         console.error("Invalid token", e);

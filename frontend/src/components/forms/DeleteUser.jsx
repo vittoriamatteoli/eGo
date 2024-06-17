@@ -1,13 +1,12 @@
 import { useState } from "react";
-import styled from 'styled-components';
-import { EgoButton } from '../../reusables/Button';
-
+import styled from "styled-components";
+import { EgoButton } from "../../reusables/Button";
 
 const FormContainer = styled.div`
-background: var(--ego-gradient-trans);
-border-radius: 25px;
-padding: 20px;
-box-shadow: 0px 0px 3px 0px var(--ego-green);
+  background: var(--ego-gradient-trans);
+  border-radius: 25px;
+  padding: 20px;
+  box-shadow: 0px 0px 3px 0px var(--ego-green);
   width: 100%;
   max-width: 80vw;
   margin: 0 auto;
@@ -15,13 +14,12 @@ box-shadow: 0px 0px 3px 0px var(--ego-green);
     text-align: center;
   }
   @media (min-width: 768px) {
-    width:400px;
+    width: 400px;
   }
 `;
 
 const FormGroup = styled.div`
   margin-bottom: 15px;
-
 `;
 
 const Input = styled.input`
@@ -36,11 +34,11 @@ const Input = styled.input`
   border: 1px solid transparent;
   background: var(--ego-light-tint);
 
-  &:focus, &:active {
+  &:focus,
+  &:active {
     background-color: var(--ego-light);
     border: 1px solid var(--ego-light-tint);
   }
-
 `;
 
 const ErrorMessage = styled.div`
@@ -51,15 +49,14 @@ const ErrorMessage = styled.div`
   border: 3px solid var(--ego-error);
 `;
 
-
 const StyledLabel = styled.label`
- display: block;
+  display: block;
   color: var(--ego-dark);
   font-size: 1em;
   margin: 0.5em;
 `;
 const StyledH1 = styled.h1`
- display: block;
+  display: block;
   color: var(--ego-dark);
   font-size: 1em;
   margin: 0.5em;
@@ -69,7 +66,7 @@ const StyledH1 = styled.h1`
 export const DeleteUser = ({ getUsers }) => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const API = apiKey + "/admin";
-  const token = sessionStorage.getItem('accessToken');
+  const token = sessionStorage.getItem("accessToken");
   const [message, setMessage] = useState(""); // Move this line inside the DeleteUser component
 
   const Delete = async (e) => {
@@ -77,21 +74,20 @@ export const DeleteUser = ({ getUsers }) => {
     const id = e.target.id.value;
     try {
       await fetch(`${API}/users/${id}`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
 
-      setMessage('User deleted successfully');
+      setMessage("User deleted successfully");
       getUsers();
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
-      setMessage('An unexpected error occurred.');
+      setMessage("An unexpected error occurred.");
     }
-  }
+  };
   return (
     <FormContainer>
       <FormGroup>

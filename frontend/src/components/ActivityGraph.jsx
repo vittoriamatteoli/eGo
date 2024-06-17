@@ -1,21 +1,74 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Chart from "chart.js/auto";
+import { useMediaQuery } from "react-responsive";
 
 const apikey = import.meta.env.VITE_API_KEY;
+
+const StyledWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StyledEllipseGraph = styled.img`
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+`;
+
+const StyledPopup = styled.div`
+  box-sizing: border-box;
+  border-radius: 16px;
+  border: 3px solid #dcded0;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 20px;
+`;
+
+const StyledPopupWrapper = styled.div`
+  box-sizing: border-box;
+  border-radius: 16px;
+  border: 3px solid #dcded0;
+  background: white;
+  height: 340px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 90vw;
+`;
+
+const StyledBottomWrapper = styled.div`
+  position: fixed;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 4;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: ${({ showPopUp }) =>
+    showPopUp ? "translateY(0)" : "translateY(100%)"};
+`;
+
 const StyledContainer = styled.div`
   box-sizing: border-box;
   border-radius: 16px;
   border: 3px solid #dcded0;
   background: rgba(217, 217, 217, 0);
   display: flex;
-  padding: 40px 0;
   flex-direction: column;
-  width: 100%;
+  flex-grow: 1;
   align-items: center;
   justify-content: center;
   gap: 10px;
   height: 340px;
+
   canvas {
     width: 100%;
     height: 340px;
@@ -23,18 +76,16 @@ const StyledContainer = styled.div`
     margin: 0;
     cursor: pointer;
   }
-  @media (min-width: 769px) and (max-width: 1024px) {
-    height: 145px;
-  }
 
-  @media (min-width: 1024px) {
-    height: 200px;
+  @media all and (min-width: 768px) {
+    height: 250px;
   }
 `;
 
 export const ActivityGraph = ({ id }) => {
   const [chartData, setChartData] = useState({ x: [], y: [], z: [] });
   const [chartInstance, setChartInstance] = useState(null);
+  const [showPopUp, setShowPopUp] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,9 +100,8 @@ export const ActivityGraph = ({ id }) => {
         });
 
         const data = await response.json();
-        console.log(data, "data");
+       
 
-        // Filter data for the last week
         const oneWeekAgo = new Date();
         oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
@@ -59,10 +109,22 @@ export const ActivityGraph = ({ id }) => {
           (entry) => new Date(entry.date) >= oneWeekAgo
         );
 
-        // Process data
-        const x = filteredData.map((entry) => entry.distance);
-        const y = filteredData.map((entry) => entry.travelPoints);
-        const z = filteredData.map((entry) => entry.distance); // retrieve the mood!!!
+        const x = filteredData.map((entry) => `${entry.distance} km`);
+        const y = filteredData.map((entry) => {
+          switch (entry.mode) {
+            case "WALK":
+              return 10000;
+            case "BICYCLE":
+              return 8000;
+            case "TRANSIT":
+              return 7000;
+            case "DRIVE":
+              return 5000;
+            default:
+              return 0;
+          }
+        });
+        const z = filteredData.map((entry) => entry.travelPoints);
 
         setChartData({ x, y, z });
       } catch (error) {
@@ -71,11 +133,10 @@ export const ActivityGraph = ({ id }) => {
     };
 
     fetchData();
-  }, [id]);
+  }, [id, showPopUp]);
 
   useEffect(() => {
     if (chartInstance) {
-      // Destroy the existing chart instance
       chartInstance.destroy();
     }
 
@@ -85,33 +146,30 @@ export const ActivityGraph = ({ id }) => {
     ) {
       const ctx = document.getElementById("myChart");
       const newChartInstance = new Chart(ctx, {
-        type: "bar", // Set the base type to bar
+        type: "bar",
         data: {
           labels: chartData.x,
           datasets: [
             {
               label: "Travel Points",
-              data: chartData.y,
+              data: chartData.z,
               borderColor: "#39AA44",
               backgroundColor: "#39AA44",
               stack: "combined",
-              type: "line", // Line type for this dataset
+              type: "line",
               borderWidth: 2,
-              fill: {
-                target: "origin",
-                above: "rgba(217, 217, 217, 0.00)", // Fill color above the line
-                below: "rgba(217, 217, 217, 0.00)", // Fill color below the line
-              },
-              tension: 0.4, // Controls the curvature of the line
+              tension: 0.4,
+              order: 1,
             },
             {
               label: "Mood",
-              data: chartData.z,
-              borderColor: " #CCE0A1",
-              backgroundColor: " #CCE0A1",
+              data: chartData.y,
+              borderColor: "#CCE0A1",
+              backgroundColor: "#CCE0A1",
               stack: "combined",
-              type: "bar", // Bar type for this dataset
+              type: "bar",
               borderWidth: 1,
+              order: 0,
             },
           ],
         },
@@ -136,10 +194,34 @@ export const ActivityGraph = ({ id }) => {
       setChartInstance(newChartInstance);
     }
   }, [chartData]);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const togglePopUp = () => {
+    setShowPopUp(!showPopUp);
+  };
 
   return (
-    <StyledContainer>
-      <canvas id="myChart"></canvas>
-    </StyledContainer>
+    <StyledWrapper>
+      {!isMobile ? (
+        <StyledContainer aria-label="Activity Chart">
+          <canvas id="myChart" aria-label="Activity Chart"></canvas>
+        </StyledContainer>
+      ) : (
+        <StyledBottomWrapper showPopUp={showPopUp}>
+          <StyledEllipseGraph
+            src="../icons/activity-button.svg"
+            alt="activity-button"
+            onClick={togglePopUp}
+            role="button"
+            aria-expanded={showPopUp}
+            aria-controls="popup-chart"
+          />
+          <StyledPopupWrapper>
+            <StyledPopup>
+              <canvas id="myChart" aria-label="Activity Chart"></canvas>
+            </StyledPopup>
+          </StyledPopupWrapper>
+        </StyledBottomWrapper>
+      )}
+    </StyledWrapper>
   );
 };

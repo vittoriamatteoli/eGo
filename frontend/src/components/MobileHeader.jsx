@@ -10,7 +10,7 @@ const StyledHeader = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 10px;
+  padding: 20px 0;
   img {
     width: 44px;
     height: 44px;
@@ -19,9 +19,8 @@ const StyledHeader = styled.header`
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
     font-size: 8px;
-    width: 50px;
+    width: 75px;
     height: 15px;
   }
   .typography {
@@ -37,9 +36,8 @@ const StyledHeader = styled.header`
       margin: 0;
       padding: 0;
       color: #000;
-      font-family: "Open Sans Hebrew";
+      font-family: "Open Sans";
       font-size: 13px;
-      font-style: normal;
       font-weight: 700;
       line-height: normal;
     }
@@ -55,9 +53,9 @@ const StyledLogo = styled.img`
   width: 70px;
 `;
 export const MobileHeader = ({ id }) => {
-  const { username, setUsername } = useContext(DashboardContext);
+  const { username } = useContext(DashboardContext);
   return (
-    <StyledHeader>
+    <StyledHeader role="banner">
       <div className="avatar">
         <Avatar id={id} />
         <div className="typography">
@@ -67,7 +65,7 @@ export const MobileHeader = ({ id }) => {
           <Logout />
         </div>
       </div>
-      <Link to="/">
+      <Link to="/" aria-label="Home">
         <StyledLogo src={logo} alt="logo" />
       </Link>
     </StyledHeader>

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 
 export const Avatar = ({ id }) => {
   const [avatarUrl, setAvatarUrl] = useState(null);
-   const [username, setUsername] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const apikey = import.meta.env.VITE_API_KEY;
@@ -17,7 +16,6 @@ export const Avatar = ({ id }) => {
         }
         const data = await response.json();
         setAvatarUrl(data.avatarUrl);
-
       } catch (error) {
         console.error("Failed at fetching avatar", error);
         setError(true);
@@ -25,7 +23,6 @@ export const Avatar = ({ id }) => {
         setLoading(false);
       }
     };
-
 
     fetchAvatar();
   }, [id]);
@@ -36,8 +33,12 @@ export const Avatar = ({ id }) => {
 
   return (
     <>
-      <img src={avatarUrl} alt="User Avatar" className="user-avatar" />
-     
+      <img
+        src={avatarUrl}
+        alt="User Avatar"
+        className="user-avatar"
+        aria-label="user-avatar"
+      />
     </>
   );
 };

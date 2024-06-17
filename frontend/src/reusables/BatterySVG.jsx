@@ -1,11 +1,9 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const BatteryWrapper = styled.div`
   position: relative;
 
-  /* width: ${({ width }) => width || "200px"};
-  height: ${({ height }) => height || "200px"}; */
   svg {
     cursor: pointer;
   }
@@ -16,8 +14,49 @@ export const BatterySVG = ({
   onDrag,
   width = "195px",
   height = "89px",
+  ariaLabel = "Battery Slider",
 }) => {
   const [dragging, setDragging] = useState(false);
+  const handleDragByArrowKey = useCallback(
+    (increment) => {
+      const step = 5; // Adjust the step size as needed
+      let newPercentage = fillPercentage + increment * step;
+      newPercentage = Math.max(0, Math.min(100, newPercentage)); // Clamp within 0-100 range
+      onDrag(newPercentage);
+      setDragging(true);
+    },
+    [fillPercentage, onDrag]
+  );
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (!dragging) {
+        switch (event.key) {
+          case "ArrowLeft":
+            event.preventDefault();
+            handleDragByArrowKey(-1);
+            break;
+          case "ArrowRight":
+            event.preventDefault();
+            handleDragByArrowKey(1);
+            break;
+          default:
+            break;
+        }
+      }
+    };
+
+    const handleKeyUp = () => {
+      setDragging(false);
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [dragging, handleDragByArrowKey]);
 
   const handleMouseDown = (event) => {
     event.preventDefault();
@@ -86,6 +125,8 @@ export const BatterySVG = ({
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
         onTouchEnd={handleTouchEnd}
+        aria-label={ariaLabel}
+        tabIndex="0" // Make SVG focusable
       >
         {/* Outer rectangle for battery outline */}
         <rect

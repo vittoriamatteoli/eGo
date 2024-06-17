@@ -1,12 +1,10 @@
-
-import { BackArrow } from "../reusables/BackArrow"
-import { Logo } from "../reusables/Logo"
-import { BackArrowWithHistory } from "../reusables/BackArrowWithHistory"
-import styled from "styled-components"
-
+import { Logo } from "../reusables/Logo";
+import { BackArrowWithHistory } from "../reusables/BackArrowWithHistory";
+import styled from "styled-components";
+import World from "../assets/world.svg";
 
 const StyledImg = styled.img`
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 0;
   width: 70%;
@@ -24,8 +22,19 @@ const StyledImg = styled.img`
 
 const StyledSection = styled.section`
   background: linear-gradient(205deg, #dcded0 14.71%, #cce0a1 87.05%);
-  height: 100vh;
-  /* position: relative; */
+  position: fixed; // Changed from relative
+  width: 100vw; // Ensures it covers the full width of the viewport
+  height: 100vh; // Ensures it covers the full height of the viewport
+  top: 0; // Positions it at the top of the viewport
+  left: 0; // Positions it at the left of the viewport
+  z-index: -1; // Ensures it stays behind all other content
+`;
+
+const ScrollableWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
 `;
 
 const SectionWrapper = styled.div`
@@ -41,6 +50,9 @@ const StyledIntro = styled.div`
   flex-direction: row;
   align-items: flex-end;
   padding-bottom: 30px;
+  @media all and (min-width: 768px) {
+    align-items: normal;
+  }
 `;
 
 const StyledTop = styled.h1`
@@ -151,80 +163,93 @@ const CopyrightText = styled.p`
 export const About = () => {
   return (
     <StyledSection>
+      <ScrollableWrapper>
+        <SectionWrapper>
+          <BackArrowWithHistory />
+          <StyledTop>
+            <StyledIntro>
+              <StyledTitle>About</StyledTitle>
+              <Logo />
+            </StyledIntro>
+            <StyledText>
+              eGo is a user-friendly platform that encourages and incentivizes
+              sustainable travel. Whether you walk, cycle, use public
+              transportation, or carpool, eGo tracks your eco-friendly journeys
+              and rewards you with points. These points can be redeemed for a
+              variety of rewards, fostering a community of conscious travelers
+              dedicated to preserving our planet.
+            </StyledText>
+          </StyledTop>
+          <StyledTitle>Meet our Team</StyledTitle>
+          <TeamCard>
+            <SingleCard>
+              <img src="/avatars/Eliane-tree.svg" alt="tree" />
+              <StyledName>Eliane</StyledName>
+              <SocialLinks>
+                <a href="https://github.com/El1an3">
+                  <SocialImg src="/icons/github-icon.svg" alt="github-icon" />
+                </a>
+                <a href="https://www.linkedin.com/in/eliane-b-weber">
+                  <SocialImg
+                    src="/icons/linkedin-icon.svg"
+                    alt="linkedin-icon"
+                  />
+                </a>
+              </SocialLinks>
+            </SingleCard>
 
-      <SectionWrapper>
-    <BackArrowWithHistory />
-        <StyledTop>
-          <StyledIntro>
-            <StyledTitle>About</StyledTitle>
-            <Logo />
-          </StyledIntro>
-          <StyledText>
-            eGo is a user-friendly platform that encourages and incentivizes
-            sustainable travel. Whether you walk, cycle, use public
-            transportation, or carpool, eGo tracks your eco-friendly journeys
-            and rewards you with points. These points can be redeemed for a
-            variety of rewards, fostering a community of conscious travelers
-            dedicated to preserving our planet.
-          </StyledText>
-        </StyledTop>
-        <StyledTitle>Meet our Team</StyledTitle>
-        <TeamCard>
-          <SingleCard>
-            <img src="/Eliane-tree.svg" alt="tree" />
-            <StyledName>Eliane</StyledName>
-            <SocialLinks>
-              <a href="https://github.com/El1an3">
-                <SocialImg src="/github-icon.svg" alt="github-icon" />
-              </a>
-              <a href="https://www.linkedin.com/in/eliane-b-weber">
-                <SocialImg src="/linkedin-icon.svg" alt="linkedin-icon" />
-              </a>
-            </SocialLinks>
-          </SingleCard>
+            <SingleCard>
+              <img src="/avatars/Kathinka-tree.svg" alt="tree" />
+              <StyledName>Kathinka</StyledName>
+              <SocialLinks>
+                <a href="https://github.com/kathinka">
+                  <SocialImg src="/icons/github-icon.svg" alt="github-icon" />
+                </a>
+                <a href="https://www.linkedin.com/in/kathinkamartinsen/">
+                  <SocialImg
+                    src="/icons/linkedin-icon.svg"
+                    alt="linkedin-icon"
+                  />
+                </a>
+              </SocialLinks>
+            </SingleCard>
 
-          <SingleCard>
-            <img src="/Kathinka-tree.svg" alt="tree" />
-            <StyledName>Kathinka</StyledName>
-            <SocialLinks>
-              <a href="https://github.com/kathinka">
-                <SocialImg src="/github-icon.svg" alt="github-icon" />
-              </a>
-              <a href="https://www.linkedin.com/in/kathinkamartinsen/">
-                <SocialImg src="/linkedin-icon.svg" alt="linkedin-icon" />
-              </a>
-            </SocialLinks>
-          </SingleCard>
+            <SingleCard>
+              <img src="/avatars/Vittoria-tree.svg" alt="tree" />
+              <StyledName>Vittoria</StyledName>
+              <SocialLinks>
+                <a href="https://github.com/vittoriamatteoli">
+                  <SocialImg src="/icons/github-icon.svg" alt="github-icon" />
+                </a>
+                <a href="https://www.linkedin.com/in/vittoria-matteoli/">
+                  <SocialImg
+                    src="/icons/linkedin-icon.svg"
+                    alt="linkedin-icon"
+                  />
+                </a>
+              </SocialLinks>
+            </SingleCard>
 
-          <SingleCard>
-            <img src="/Vittoria-tree.svg" alt="tree" />
-            <StyledName>Vittoria</StyledName>
-            <SocialLinks>
-              <a href="https://github.com/vittoriamatteoli">
-                <SocialImg src="/github-icon.svg" alt="github-icon" />
-              </a>
-              <a href="https://www.linkedin.com/in/vittoria-matteoli/">
-                <SocialImg src="/linkedin-icon.svg" alt="linkedin-icon" />
-              </a>
-            </SocialLinks>
-          </SingleCard>
-
-          <SingleCard>
-            <img src="/Yifan-tree.svg" alt="tree" />
-            <StyledName>Yifan</StyledName>
-            <SocialLinks>
-              <a href="https://github.com/Yifan-858">
-                <SocialImg src="/github-icon.svg" alt="github-icon" />
-              </a>
-              <a href="https://www.linkedin.com/in/yifan-wang-dev/">
-                <SocialImg src="/linkedin-icon.svg" alt="linkedin-icon" />
-              </a>
-            </SocialLinks>
-          </SingleCard>
-        </TeamCard>
-        <CopyrightText>© 2024 eGo. All rights reserved.</CopyrightText>
-      </SectionWrapper>
-      <StyledImg className="WorldPic" src="/world.svg" alt="world" />
+            <SingleCard>
+              <img src="/avatars/Yifan-tree.svg" alt="tree" />
+              <StyledName>Yifan</StyledName>
+              <SocialLinks>
+                <a href="https://github.com/Yifan-858">
+                  <SocialImg src="/icons/github-icon.svg" alt="github-icon" />
+                </a>
+                <a href="https://www.linkedin.com/in/yifan-wang-dev/">
+                  <SocialImg
+                    src="/icons/linkedin-icon.svg"
+                    alt="linkedin-icon"
+                  />
+                </a>
+              </SocialLinks>
+            </SingleCard>
+          </TeamCard>
+          <CopyrightText>© 2024 eGo. All rights reserved.</CopyrightText>
+        </SectionWrapper>
+        <StyledImg className="WorldPic" src={World} alt="world" />
+      </ScrollableWrapper>
     </StyledSection>
   );
 };

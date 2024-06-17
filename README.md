@@ -20,6 +20,26 @@
   <li>React-joyride</li>
 </ul>
 
+## Development process
+
+## 1 Step
+We designed the interface in Figma, established the primary database models, and set up the main server routes.
+## 2 Step
+We set up all the backend endpoints for user registration and login, and on the frontend, we implemented the forms and main component.
+## 3 Step
+We implemented a model for travels and stored points in the backend. On the frontend, we integrated all necessary travel forms, graphs, and components.
+## 4 Step
+We integrated the admin functionality and its dashboard and worked on the final documentation.To make the whole app more user-friendly we integrated a walkthrough.
+
+## Extra features
+If we had more time we would start integrate the following features:
+- Rewards for points
+- Weather data 
+- Add a function for display the password to the user when they log in 
+- AI coach integration.
+- Add function for the user to upload their profile image to Cloudinary.
+- Integrate carbon footprints API.
+
 ## Install
 
 ```sh

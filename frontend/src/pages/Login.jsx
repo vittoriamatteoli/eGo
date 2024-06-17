@@ -7,7 +7,7 @@ import { Logo } from "../reusables/Logo";
 import { Loading } from "../reusables/Loading";
 
 const Container = styled.div`
-  overflow: hidden;
+  /* overflow: hidden; */
   color: var(--ego-dark);
   display: grid;
   grid-template-columns: 1vw 98vw 1vw;
@@ -62,7 +62,6 @@ const RightColumn = styled.div`
   @media all and (min-width: 768px) {
     grid-column: 2;
     grid-row: 2;
-
     grid-template-areas:
       ". title . "
       ". form . "
@@ -73,7 +72,7 @@ const RightColumn = styled.div`
 const StyledLogoLink = styled(Link)`
   grid-area: logo;
   grid-column: 3;
-  max-width: 15vw;
+  padding: 10px;
   height: auto;
   margin: 2vh 0 0 -15vw;
   z-index: 3;
@@ -85,13 +84,13 @@ const StyledLogoLink = styled(Link)`
 
 const StyledImage = styled.img`
   grid-area: image;
-  grid-column: 1 / span 4;
-  grid: row 1;
+  grid-column: 1 / span 3;
+  grid-row: 2 / span 2;
   z-index: 2;
-  width: 100vw;
+  width: 100%;
   margin: 0 0 0 0vw;
   align-self: center;
-  max-height: 380px;
+  max-height: 350px;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -155,7 +154,6 @@ const Input = styled.input`
     background-color: var(--ego-lgt-green);
     border: 1px solid var(--ego-green);
   }
-
   @media (min-width: 768px) {
     font-size: 20px;
   }
@@ -187,7 +185,6 @@ const BottomText = styled.div`
     color: var(--ego-dark);
     text-decoration: none;
     font-weight: bold;
-
     &:hover {
       color: var(--ego-purple);
     }
@@ -261,7 +258,7 @@ export const Login = () => {
       }
 
       const data = await response.json();
-      console.log(data);
+
       const id = data.id; // get the user id from the response data
       const role = data.role; // get the user id from the response data
       setMessage("Login successful");
@@ -280,11 +277,11 @@ export const Login = () => {
   return (
     <Container>
       <LeftColumn>
-        <StyledLogoLink to="/">
+        <StyledLogoLink to="/" aria-label="Go to homepage">
           <Logo alt="logo" />
         </StyledLogoLink>
 
-        <StyledImage src={Globe} alt="globe" />
+        <StyledImage src={Globe} alt="globe"  aria-hidden="true"/>
       </LeftColumn>
       <RightColumn>
         <StyledH1>Login</StyledH1>
@@ -317,7 +314,7 @@ export const Login = () => {
             </FormGroup>
 
             <ButtonAndSpinnerContainer>
-              <StyledEgoButton type="submit" disabled={loading}>
+              <StyledEgoButton type="submit" disabled={loading} aria-busy={loading}>
                 {loading ? "Loading..." : "Log in"}
               </StyledEgoButton>
               {loading && <Loading />}
