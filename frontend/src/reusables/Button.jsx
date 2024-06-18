@@ -6,9 +6,9 @@ const StyledEgoButton = styled.button`
   font-weight: 600;
   padding: 10px;
   margin-top: 10px;
-  background-color: var(--ego-green);
-  color: var(--ego-white);
-  border: 1px solid var(--ego-green);
+  background-color: #687943;
+  color: #ffffff;
+  border: none;
   border-radius: 24px;
   width: 100%;
   cursor: pointer;
@@ -18,11 +18,9 @@ const StyledEgoButton = styled.button`
   &:hover,
   &:focus,
   &:active {
-    background-color: #cce0a1;
-    box-shadow: 1px 1px 2px rgba(104, 121, 67, 0.55);
-    color: var(--ego-dark);
-
-
+    filter: drop-shadow(0px 4px 6px #00000080);
+    background: #cce0a1;
+    color: #2d3915;
   }
 `;
 

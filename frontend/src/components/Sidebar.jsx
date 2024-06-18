@@ -80,7 +80,8 @@ const CenteredLogoutButton = styled.div`
 `;
 
 export const Sidebar = ({ id }) => {
- const { username, setUsername} = useContext(DashboardContext);
+  const { username, setUsername } = useContext(DashboardContext);
+
   const API = `${apikey}/user/${id}`;
 
   //fetch username

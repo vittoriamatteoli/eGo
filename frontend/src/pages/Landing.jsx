@@ -73,8 +73,8 @@ const StyledTitle = styled.h1`
 `;
 
 const SmallEgoButton = styled(EgoButton)`
- // width: 76px;
-  //height: 30px;
+  width: 76px;
+  height: 30px;
   border-radius: 36px;
   a {
     display: flex;
@@ -84,26 +84,26 @@ const SmallEgoButton = styled(EgoButton)`
     height: 100%;
     color: inherit;
     text-decoration: none;
-   // font-size: 12px;
+    font-size: 12px;
     z-index: 3;
 
     @media (min-width: 768px) {
-      //font-size: 20px;
+      font-size: 20px;
     }
 
     @media (min-width: 1024px) {
-      //font-size: 24px;
+      font-size: 24px;
     }
   }
 
   @media (min-width: 768px) {
-   // width: 126px;
-    //height: 50px;
+    width: 126px;
+    height: 50px;
   }
 
   @media (min-width: 1024px) {
-    //width: 160px;
-    //height: 65px;
+    width: 160px;
+    height: 65px;
   }
 `;
 
@@ -165,7 +165,7 @@ const StyledParagraph = styled.p`
   text-align: center;
   font-size: 20px;
   width: 200px;
-  display: flex;
+
   @media (min-width: 768px) {
     margin-top: 40px;
     font-size: 28px;
@@ -177,8 +177,8 @@ const StyledParagraph = styled.p`
 `;
 
 const SignUpButton = styled(SmallEgoButton)`
-  //position: absolute;
-  top: -30px;
+  position: absolute;
+  top: -20px;
 
   @media (min-width: 768px) {
     top: -30px;
@@ -186,78 +186,8 @@ const SignUpButton = styled(SmallEgoButton)`
 
   @media (min-width: 1024px) {
     top: -32px;
-    left:7vw;
   }
 `;
-
-const Center = styled.div`
-position: relative;
-
-z-index:3;
-padding: 0vh 30vw 10vh 30vw;
-
-@media (min-width:344px){
-padding: 27vh 30vw 0vh 30vw;
-}
-
-@media (min-width:360px){
-padding: 5vh 30vw 0vh 30vw;
-}
-@media (min-width:360px) and (min-height:740px){
-padding:15vh 30vw 0vh 30vw;
-}
-@media (min-width:375px){
-padding: 5vh 30vw 0vh 30vw;
-}
-@media (min-width:375px) and (min-height:812px){
-padding: 22vh 30vw 0vh 30vw;
-}
-@media (min-width:390px){
-padding: 25vh 30vw 0vh 30vw;
-}
-@media (min-width:412px){
-padding: 30vh 30vw 0vh 30vw;
-}
-
-@media (min-width: 414px) and (min-height:736px){
-padding: 15vh 30vw 0vh 30vw;
-  }
-@media (min-width: 414px) and (min-height:896px){
-padding: 30vh 30vw 0vh 30vw;
-  }
-
-@media (min-width:540px){
-padding: 12vh 30vw 0vh 30vw;
-}
-
-@media (min-width:712px){
-padding: 25vh 30vw 0vh 30vw;
-}
-@media (min-width:820px){
-padding: 20vh 30vw 0vh 30vw;
-}
-@media (min-width:1024px){
-padding: 15vh 44vw 0vh 30vw;
-}
- @media (min-width: 1024px) and (min-height:600px) {
-   padding: 0vh 42vw 15vh 29vw;
-  }
-    @media (min-width: 1080px) and (min-height:800px) {
-   padding: 15vh 42vw 0vh 29vw;
-  }
-  @media (min-width: 1024px) and (min-height:1366px) {
-   padding: 15vh 42vw 0vh 29vw;
-  }
-
-  @media (min-width: 1025px) {
-
-  padding: 20vh 42vw 0vh 29vw;
-  }
-`;
-
-
-
-
 
 //component
 export const Landing = () => {
@@ -287,7 +217,7 @@ export const Landing = () => {
           <SignUpButton>
             <Link to="/register">Sign up!</Link>
           </SignUpButton>
-          <StyledParagraph> Reduce carbon emission.</StyledParagraph>
+          <StyledParagraph> Reduce carbon emmission.</StyledParagraph>
         </StyledEllipse>
         <StyledAbout to="/about">
           <p>About us</p>
