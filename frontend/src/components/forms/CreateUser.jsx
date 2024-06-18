@@ -4,6 +4,7 @@ import { EgoButton } from "../../reusables/Button";
 const apiKey = import.meta.env.VITE_API_KEY;
 const API = apiKey + "/admin";
 
+
 const FormContainer = styled.div`
 background: var(--ego-lgt-green);
 border-radius: 25px 0px;
@@ -85,12 +86,13 @@ text-transform: uppercase;
 `;
 
 export const CreateUser = ({ getUsers }) => {
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("user");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
+
   const Update = async () => {
     const token = sessionStorage.getItem("accessToken");
     try {
@@ -100,8 +102,9 @@ export const CreateUser = ({ getUsers }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ name, email, role, password }),
+        body: JSON.stringify({ username, email, role, password }),
       });
+
       if (!response.ok) {
         const errorData = await response.json();
         const errorMessage = errorData.message || errorData.error;
@@ -127,7 +130,7 @@ export const CreateUser = ({ getUsers }) => {
     e.preventDefault();
     let errors = {};
 
-    if (!name) errors.name = "Name is required.";
+    if (!username) errors.name = "Name is required.";
     if (!email) errors.email = "Email is required.";
     if (!password) errors.password = "Password is required.";
     if (!role) errors.role = "Role is required.";
@@ -136,6 +139,12 @@ export const CreateUser = ({ getUsers }) => {
     if (Object.keys(errors).length === 0) {
       // If no errors, celebrate and send fresh user data to the server
       Update();
+
+      // Clear the form
+      setUsername("");
+      setEmail("");
+      setRole("user");
+      setPassword("");
     }
   };
 
@@ -148,14 +157,16 @@ export const CreateUser = ({ getUsers }) => {
           <StyledLabel>Name</StyledLabel>
           <Input
             type="text"
-            name="name"
-            onChange={(e) => setName(e.target.value.trim())}
+            name="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value.trim())}
           />
           {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
           <StyledLabel>Email</StyledLabel>
           <Input
             type="text"
             name="email"
+            value={email}
             onChange={(e) => setEmail(e.target.value.trim())}
           />
           {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
@@ -168,7 +179,7 @@ export const CreateUser = ({ getUsers }) => {
             <option value="user" disabled>
               User
             </option>
-            <option value="VIP">Editor</option>
+            <option value="VIP">VIP</option>
             <option value="admin">Admin</option>
           </StyledSelect>
           {errors.role && <ErrorMessage>{errors.role}</ErrorMessage>}
@@ -176,6 +187,7 @@ export const CreateUser = ({ getUsers }) => {
           <Input
             type="password"
             name="password"
+            value={password}
             onChange={(e) => setPassword(e.target.value.trim())}
           />
           {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}

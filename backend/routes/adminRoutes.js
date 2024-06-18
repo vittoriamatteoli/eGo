@@ -7,7 +7,6 @@ const SECRET = process.env.SECRET || "toast is the best secret";
 const adminRouter = express.Router();
 adminRouter.use(authenticateUser, authorizeUser(["admin"]));
 
-
 // route for getting content behind authorization
 adminRouter.get("/", (req, res) => {
   // This code will only run if the user is an admin
@@ -30,7 +29,7 @@ adminRouter.get("/users", async (req, res) => {
 //admin add user
 adminRouter.post("/users", async (req, res) => {
   try {
-    const { username, email, role, password} = req.body;
+    const { username, email, role, password } = req.body;
     if (!username || !email || !role || !password) {
       return res.status(400).json({ error: "All fields are required" });
     }
@@ -50,7 +49,7 @@ adminRouter.post("/users", async (req, res) => {
     res.json(savedUser);
   } catch (error) {
     res.status(500).json({
-      error: "An error occurred while adding the user"
+      error: "An error occurred while adding the user",
     });
   }
 });
@@ -59,9 +58,20 @@ adminRouter.post("/users", async (req, res) => {
 adminRouter.put("/users/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { username, email, role, password, points, energyLevel, avatarUrl } = req.body;
+    const { username, email, role, password, points, energyLevel, avatarUrl } =
+      req.body;
 
-    if (!(username || email || role || password || points || energyLevel || avatarUrl)) {
+    if (
+      !(
+        username ||
+        email ||
+        role ||
+        password ||
+        points ||
+        energyLevel ||
+        avatarUrl
+      )
+    ) {
       return res.status(400).json({
         error: "At least one field is required to update user data",
       });
@@ -92,7 +102,6 @@ adminRouter.put("/users/:id", async (req, res) => {
   }
 });
 
-
 adminRouter.delete("/users/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -105,6 +114,29 @@ adminRouter.delete("/users/:id", async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: "An error occurred while deleting the user",
+      error: error.message,
+    });
+  }
+});
+
+//patch user with new role
+adminRouter.patch("/users/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { role } = req.body;
+    if (!role) {
+      return res.status(400).json({ error: "Role is required" });
+    }
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    user.role = role;
+    const updatedUser = await user.save();
+    res.json(updatedUser);
+  } catch (error) {
+    res.status(500).json({
+      message: "An error occurred while updating the user role",
       error: error.message,
     });
   }

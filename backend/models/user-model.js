@@ -17,13 +17,11 @@ const userSchema = new mongoose.Schema({
     required: [true, "Email is required"],
     unique: true,
     match: [/\S+@\S+\.\S+/, "Email is invalid"],
-    match: [/\S+@\S+\.\S+/, "Email is invalid"],
   },
   password: {
     type: String,
     required: [true, "Password is required"],
     minlength: [6, "Password must be at least 6 characters long"],
-    maxlength: [30, "Password must be at most 30 characters long"],
   },
   role: {
     type: String,

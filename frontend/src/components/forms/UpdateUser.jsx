@@ -85,7 +85,7 @@ const StyledH1 = styled.h1`
 
 export const UpdateUser = ({ getUsers }) => {
   const [id, setId] = useState("");
-  const [name, setName] = useState("");
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("user");
   const [energyLevel, setEnergyLevel] = useState(0);
@@ -96,17 +96,17 @@ export const UpdateUser = ({ getUsers }) => {
   const [message, setMessage] = useState("");
 
   // Store the initial values
-  const [initialName, setInitialName] = useState(name);
+  const [initialUserName, setInitialUserName] = useState(name);
   const [initialEmail, setInitialEmail] = useState(email);
   const [initialRole, setInitialRole] = useState(role);
   const [initialPassword, setInitialPassword] = useState(password);
-  const [initialenergyLevel, setInitialEnergyLevel] = useState(0);
-  const [initialpoints, setInitialPoints] = useState(0);
-  const [initialavatarUrl, setInitialAvatarUrl] = useState("");
+  const [initialEnergyLevel, setInitialEnergyLevel] = useState(0);
+  const [initialPoints, setInitialPoints] = useState(0);
+  const [initialAvatarUrl, setInitialAvatarUrl] = useState("");
 
   // Set the initial values when the component mounts
   useEffect(() => {
-    setInitialName(name);
+    setInitialUserName(username);
     setInitialEmail(email);
     setInitialRole(role);
     setInitialPassword(password);
@@ -121,7 +121,7 @@ export const UpdateUser = ({ getUsers }) => {
 
     // Check if any field has changed
     if (
-      name === initialName &&
+      username === initialUserName &&
       email === initialEmail &&
       role === initialRole &&
       password === initialPassword &&
@@ -132,7 +132,7 @@ export const UpdateUser = ({ getUsers }) => {
       setMessage("No changes made to the form, lets try again.😅");
       return; // Stop execution if no fields have changed
     }
-    if (name) userData.name = name;
+    if (username) userData.name = username;
     if (email) userData.email = email;
     if (role) userData.role = role;
     if (password) userData.password = password;
@@ -148,7 +148,7 @@ export const UpdateUser = ({ getUsers }) => {
           Authorization: `Bearer ${token}`,
         },
 
-        body: JSON.stringify({ name, email, role, password }),
+        body: JSON.stringify({ username, email, role, password, energyLevel, points, avatarUrl }),
       });
       if (response.ok) {
         setMessage("User updated successfully");
@@ -168,7 +168,7 @@ export const UpdateUser = ({ getUsers }) => {
     let errors = {};
     //check that at least one field in the form is filled in
     if (
-      !name &&
+      !username &&
       !email &&
       !password &&
       !role &&
@@ -183,6 +183,18 @@ export const UpdateUser = ({ getUsers }) => {
     if (Object.keys(errors).length === 0) {
       // If no errors, celebrate and send the data to the server
       Update();
+
+      // Clear the form
+      setUserName("");
+      setEmail("");
+      setRole("user");
+      setPassword("");
+      setEnergyLevel(0);
+      setPoints(0);
+      setAvatarUrl("");
+      setId("");
+      setErrors({});
+      setMessage("");
     }
   };
 
@@ -202,14 +214,16 @@ export const UpdateUser = ({ getUsers }) => {
           <StyledLabel>Name</StyledLabel>
           <Input
             type="text"
-            name="name"
-            onChange={(e) => setName(e.target.value.trim())}
+            name="username"
+            value={username}
+            onChange={(e) => setUserName(e.target.value.trim())}
           />
           {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
           <StyledLabel>Email</StyledLabel>
           <Input
             type="text"
             name="email"
+            value={email}
             onChange={(e) => setEmail(e.target.value.trim())}
           />
           {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
@@ -222,7 +236,7 @@ export const UpdateUser = ({ getUsers }) => {
             <option value="user" disabled>
               User
             </option>
-            <option value="VIP">Editor</option>
+            <option value="VIP">VIP</option>
             <option value="admin">Admin</option>
           </StyledSelect>
           {errors.role && <ErrorMessage>{errors.role}</ErrorMessage>}
@@ -230,6 +244,7 @@ export const UpdateUser = ({ getUsers }) => {
           <Input
             type="password"
             name="password"
+            value={password}
             onChange={(e) => setPassword(e.target.value.trim())}
           />
           {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
@@ -239,6 +254,7 @@ export const UpdateUser = ({ getUsers }) => {
           <Input
             type="text"
             name="energyLevel"
+            value={energyLevel}
             onChange={(e) => setEnergyLevel(e.target.value.trim())}
           />
           {errors.energyLevel && (
@@ -250,6 +266,7 @@ export const UpdateUser = ({ getUsers }) => {
           <Input
             type="text"
             name="points"
+            value={points}
             onChange={(e) => setPoints(e.target.value.trim())}
           />
           {errors.points && <ErrorMessage>{errors.points}</ErrorMessage>}
@@ -259,6 +276,7 @@ export const UpdateUser = ({ getUsers }) => {
           <Input
             type="text"
             name="avatarUrl"
+            value={avatarUrl}
             onChange={(e) => setAvatarUrl(e.target.value.trim())}
           />
           {errors.avatarUrl && <ErrorMessage>{errors.avatarUrl}</ErrorMessage>}
