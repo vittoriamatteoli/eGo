@@ -83,14 +83,4 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-// This adds a pre-update hook to hash the password *before* updating it in the database
-userSchema.pre("findOneAndUpdate", async function (next) {
-  if (!this._update.password) {
-    return next();
-  }
-
-  this._update.password = await bcryptjs.hash(this._update.password, SALT_ROUNDS);
-  next();
-});
-
 export default mongoose.model("User", userSchema);

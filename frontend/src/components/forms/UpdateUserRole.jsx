@@ -92,7 +92,6 @@ export const UpdateUserRole = ({ getUsers }) => {
   const API = apiKey + "/admin";
 
 
-
   const updateRole = async (e) => {
     const token = sessionStorage.getItem('accessToken');
     e.preventDefault();
@@ -119,6 +118,11 @@ export const UpdateUserRole = ({ getUsers }) => {
       }
       setMessage('User role updated successfully');
       getUsers();
+
+      // Clear the form
+      setRole("user");
+      setId("");
+      setMessage("");
 
     } catch (error) {
       setMessage('An error occurred while updating the user role');

@@ -149,7 +149,6 @@ export const UpdateUser = ({ getUsers }) => {
         },
 
         body: JSON.stringify({ username, email, role, password, energyLevel, points, avatarUrl }),
-        //body: JSON.stringify(userData),
       });
       if (response.ok) {
         setMessage("User updated successfully");
@@ -184,6 +183,18 @@ export const UpdateUser = ({ getUsers }) => {
     if (Object.keys(errors).length === 0) {
       // If no errors, celebrate and send the data to the server
       Update();
+
+      // Clear the form
+      setUserName("");
+      setEmail("");
+      setRole("user");
+      setPassword("");
+      setEnergyLevel(0);
+      setPoints(0);
+      setAvatarUrl("");
+      setId("");
+      setErrors({});
+      setMessage("");
     }
   };
 
@@ -204,6 +215,7 @@ export const UpdateUser = ({ getUsers }) => {
           <Input
             type="text"
             name="username"
+            value={username}
             onChange={(e) => setUserName(e.target.value.trim())}
           />
           {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
@@ -211,6 +223,7 @@ export const UpdateUser = ({ getUsers }) => {
           <Input
             type="text"
             name="email"
+            value={email}
             onChange={(e) => setEmail(e.target.value.trim())}
           />
           {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
@@ -231,6 +244,7 @@ export const UpdateUser = ({ getUsers }) => {
           <Input
             type="password"
             name="password"
+            value={password}
             onChange={(e) => setPassword(e.target.value.trim())}
           />
           {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
@@ -240,6 +254,7 @@ export const UpdateUser = ({ getUsers }) => {
           <Input
             type="text"
             name="energyLevel"
+            value={energyLevel}
             onChange={(e) => setEnergyLevel(e.target.value.trim())}
           />
           {errors.energyLevel && (
@@ -251,6 +266,7 @@ export const UpdateUser = ({ getUsers }) => {
           <Input
             type="text"
             name="points"
+            value={points}
             onChange={(e) => setPoints(e.target.value.trim())}
           />
           {errors.points && <ErrorMessage>{errors.points}</ErrorMessage>}
@@ -260,6 +276,7 @@ export const UpdateUser = ({ getUsers }) => {
           <Input
             type="text"
             name="avatarUrl"
+            value={avatarUrl}
             onChange={(e) => setAvatarUrl(e.target.value.trim())}
           />
           {errors.avatarUrl && <ErrorMessage>{errors.avatarUrl}</ErrorMessage>}
