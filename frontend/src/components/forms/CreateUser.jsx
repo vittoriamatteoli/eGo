@@ -85,7 +85,7 @@ text-transform: uppercase;
 `;
 
 export const CreateUser = ({ getUsers }) => {
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("user");
   const [password, setPassword] = useState("");
@@ -100,7 +100,7 @@ export const CreateUser = ({ getUsers }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ name, email, role, password }),
+        body: JSON.stringify({ username, email, role, password }),
       });
       if (!response.ok) {
         const errorData = await response.json();
@@ -127,7 +127,7 @@ export const CreateUser = ({ getUsers }) => {
     e.preventDefault();
     let errors = {};
 
-    if (!name) errors.name = "Name is required.";
+    if (!username) errors.name = "Name is required.";
     if (!email) errors.email = "Email is required.";
     if (!password) errors.password = "Password is required.";
     if (!role) errors.role = "Role is required.";
@@ -148,8 +148,8 @@ export const CreateUser = ({ getUsers }) => {
           <StyledLabel>Name</StyledLabel>
           <Input
             type="text"
-            name="name"
-            onChange={(e) => setName(e.target.value.trim())}
+            name="username"
+            onChange={(e) => setUsername(e.target.value.trim())}
           />
           {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
           <StyledLabel>Email</StyledLabel>
@@ -168,7 +168,7 @@ export const CreateUser = ({ getUsers }) => {
             <option value="user" disabled>
               User
             </option>
-            <option value="VIP">Editor</option>
+            <option value="VIP">VIP</option>
             <option value="admin">Admin</option>
           </StyledSelect>
           {errors.role && <ErrorMessage>{errors.role}</ErrorMessage>}

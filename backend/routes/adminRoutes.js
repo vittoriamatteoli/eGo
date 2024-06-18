@@ -110,4 +110,27 @@ adminRouter.delete("/users/:id", async (req, res) => {
   }
 });
 
+//patch user with new role
+adminRouter.patch("/users/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { role } = req.body;
+    if (!role) {
+      return res.status(400).json({ error: "Role is required" });
+    }
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    user.role = role;
+    const updatedUser = await user.save();
+    res.json(updatedUser);
+  } catch (error) {
+    res.status(500).json({
+      message: "An error occurred while updating the user role",
+      error: error.message,
+    });
+  }
+});
+
 export default adminRouter;

@@ -125,27 +125,27 @@ export const UpdateUserRole = ({ getUsers }) => {
     }
   };
   return (
-     <FormContainer>
+    <FormContainer>
       <form onSubmit={updateRole}>
         <StyledH1>Update user role</StyledH1>
         <FormGroup>
-        <StyledLabel>ID</StyledLabel>
-        <Input type="text" name="id" value={id} onChange={(e) => setId(e.target.value.trim())} />
+          <StyledLabel>ID</StyledLabel>
+          <Input type="text" name="id" value={id} onChange={(e) => setId(e.target.value.trim())} />
         </FormGroup>
         <FormGroup>
-        <StyledLabel>Role</StyledLabel>
-        <StyledSelect name="role" value={role} onChange={e => setRole(e.target.value)}>
-          <option value="user" disabled>User</option>
-          <option value="user">User</option>
-          <option value="writer">VIP</option>
-          <option value="admin">Admin</option>
-        </StyledSelect>
+          <StyledLabel>Role</StyledLabel>
+          <StyledSelect name="role" value={role} onChange={e => setRole(e.target.value)}>
+            <option value="user" disabled>User</option>
+            <option value="user">User</option>
+            <option value="VIP">VIP</option>
+            <option value="admin">Admin</option>
+          </StyledSelect>
         </FormGroup>
         <FormGroup>
-        <EgoButton type="submit">Update role</EgoButton>
-        {message && <ErrorMessage>{message}</ErrorMessage>}
+          <EgoButton type="submit">Update role</EgoButton>
+          {message && <ErrorMessage>{message}</ErrorMessage>}
         </FormGroup>
       </form>
-      </FormContainer>
-    );
-  };
+    </FormContainer>
+  );
+};

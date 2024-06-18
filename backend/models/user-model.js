@@ -17,13 +17,11 @@ const userSchema = new mongoose.Schema({
     required: [true, "Email is required"],
     unique: true,
     match: [/\S+@\S+\.\S+/, "Email is invalid"],
-    match: [/\S+@\S+\.\S+/, "Email is invalid"],
   },
   password: {
     type: String,
     required: [true, "Password is required"],
     minlength: [6, "Password must be at least 6 characters long"],
-    maxlength: [30, "Password must be at most 30 characters long"],
   },
   role: {
     type: String,
@@ -82,6 +80,16 @@ userSchema.pre("save", async function (next) {
     this.avatarUrl = this.avatarUrl || getRandomAvatarUrl();
   }
 
+  next();
+});
+
+// This adds a pre-update hook to hash the password *before* updating it in the database
+userSchema.pre("findOneAndUpdate", async function (next) {
+  if (!this._update.password) {
+    return next();
+  }
+
+  this._update.password = await bcryptjs.hash(this._update.password, SALT_ROUNDS);
   next();
 });
 
