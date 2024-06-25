@@ -148,7 +148,7 @@ export const PointsCard = ({ id }) => {
     const intervalId = setInterval(handlePoints, 5000);
     // Clean up the interval on unmount
     return () => clearInterval(intervalId);
-  }, [API]);
+  }, [API, setPoints]);
 
   const togglePopUp = () => {
     if (event.type === "click") {
