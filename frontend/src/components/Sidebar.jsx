@@ -113,9 +113,8 @@ export const Sidebar = ({ id }) => {
     >
       <SidebarContent>
         <StyledList>
-          <Link to="/" aria-label="Home">
-            <Logo />
-          </Link>
+          <Logo />
+
           <StyledListItem>
             <Avatar id={id} />
             <Typography

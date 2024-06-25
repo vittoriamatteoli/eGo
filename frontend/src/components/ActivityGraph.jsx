@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Chart from "chart.js/auto";
 import { useMediaQuery } from "react-responsive";
+import { DashboardContext } from "./DashboardContext";
+import { useContext } from "react";
 
 const apikey = import.meta.env.VITE_API_KEY;
 
@@ -86,12 +88,14 @@ export const ActivityGraph = ({ id }) => {
   const [chartData, setChartData] = useState({ x: [], y: [], z: [] });
   const [chartInstance, setChartInstance] = useState(null);
   const [showPopUp, setShowPopUp] = useState(false);
+  const API = `${apikey}/user/${id}/travels`;
+  const { points, setPoints } = useContext(DashboardContext);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = sessionStorage.getItem("accessToken");
-        const response = await fetch(`${apikey}/user/${id}/travels`, {
+        const response = await fetch(API, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -100,7 +104,6 @@ export const ActivityGraph = ({ id }) => {
         });
 
         const data = await response.json();
-       
 
         const oneWeekAgo = new Date();
         oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
@@ -133,7 +136,9 @@ export const ActivityGraph = ({ id }) => {
     };
 
     fetchData();
-  }, [id, showPopUp]);
+    // const intervalId = setInterval(fetchData, 8000);
+    // return () => clearInterval(intervalId);
+  }, [id, showPopUp, points]);
 
   useEffect(() => {
     if (chartInstance) {
@@ -170,6 +175,7 @@ export const ActivityGraph = ({ id }) => {
               type: "bar",
               borderWidth: 1,
               order: 0,
+              barThickness: "flex",
             },
           ],
         },
@@ -177,9 +183,11 @@ export const ActivityGraph = ({ id }) => {
           scales: {
             x: {
               display: false,
+              stacked: true,
             },
             y: {
               display: false,
+              stacked: true,
             },
           },
           plugins: {
